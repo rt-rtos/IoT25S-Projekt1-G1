@@ -1,0 +1,34 @@
+# Backend for the MicroHydros climate node (outline section 6):
+# Mosquitto broker + Node-RED. Node-RED keeps its flows and the SQLite
+# file in the node-red-data volume.
+#
+#   docker compose up -d        start
+#   docker compose logs -f      follow logs
+#   docker compose down         stop (volumes are kept)
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: microhydros-mosquitto
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - mosquitto-data:/mosquitto/data
+
+  node-red:
+    image: nodered/node-red:latest
+    container_name: microhydros-node-red
+    restart: unless-stopped
+    ports:
+      - "1880:1880"
+    environment:
+      - TZ=Europe/Stockholm
+    volumes:
+      - node-red-data:/data
+    depends_on:
+      - mosquitto
+
+volumes:
+  mosquitto-data:
+  node-red-data:
