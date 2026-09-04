@@ -1,0 +1,2287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <style>
+  @font-face {
+  font-family: octicons-link;
+  src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+.markdown-body .octicon {
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+}
+
+.markdown-body .anchor {
+  float: left;
+  line-height: 1;
+  margin-left: -20px;
+  padding-right: 4px;
+}
+
+.markdown-body .anchor:focus {
+  outline: none;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+  color: #1b1f23;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+.markdown-body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  color: #24292e;
+  line-height: 1.5;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.markdown-body .pl-c {
+  color: #6a737d;
+}
+
+.markdown-body .pl-c1,
+.markdown-body .pl-s .pl-v {
+  color: #005cc5;
+}
+
+.markdown-body .pl-e,
+.markdown-body .pl-en {
+  color: #6f42c1;
+}
+
+.markdown-body .pl-s .pl-s1,
+.markdown-body .pl-smi {
+  color: #24292e;
+}
+
+.markdown-body .pl-ent {
+  color: #22863a;
+}
+
+.markdown-body .pl-k {
+  color: #d73a49;
+}
+
+.markdown-body .pl-pds,
+.markdown-body .pl-s,
+.markdown-body .pl-s .pl-pse .pl-s1,
+.markdown-body .pl-sr,
+.markdown-body .pl-sr .pl-cce,
+.markdown-body .pl-sr .pl-sra,
+.markdown-body .pl-sr .pl-sre {
+  color: #032f62;
+}
+
+.markdown-body .pl-smw,
+.markdown-body .pl-v {
+  color: #e36209;
+}
+
+.markdown-body .pl-bu {
+  color: #b31d28;
+}
+
+.markdown-body .pl-ii {
+  background-color: #b31d28;
+  color: #fafbfc;
+}
+
+.markdown-body .pl-c2 {
+  background-color: #d73a49;
+  color: #fafbfc;
+}
+
+.markdown-body .pl-c2:before {
+  content: "^M";
+}
+
+.markdown-body .pl-sr .pl-cce {
+  color: #22863a;
+  font-weight: 700;
+}
+
+.markdown-body .pl-ml {
+  color: #735c0f;
+}
+
+.markdown-body .pl-mh,
+.markdown-body .pl-mh .pl-en,
+.markdown-body .pl-ms {
+  color: #005cc5;
+  font-weight: 700;
+}
+
+.markdown-body .pl-mi {
+  color: #24292e;
+  font-style: italic;
+}
+
+.markdown-body .pl-mb {
+  color: #24292e;
+  font-weight: 700;
+}
+
+.markdown-body .pl-md {
+  background-color: #ffeef0;
+  color: #b31d28;
+}
+
+.markdown-body .pl-mi1 {
+  background-color: #f0fff4;
+  color: #22863a;
+}
+
+.markdown-body .pl-mc {
+  background-color: #ffebda;
+  color: #e36209;
+}
+
+.markdown-body .pl-mi2 {
+  background-color: #005cc5;
+  color: #f6f8fa;
+}
+
+.markdown-body .pl-mdr {
+  color: #6f42c1;
+  font-weight: 700;
+}
+
+.markdown-body .pl-ba {
+  color: #586069;
+}
+
+.markdown-body .pl-sg {
+  color: #959da5;
+}
+
+.markdown-body .pl-corl {
+  color: #032f62;
+  text-decoration: underline;
+}
+
+.markdown-body details {
+  display: block;
+}
+
+.markdown-body summary {
+  display: list-item;
+}
+
+.markdown-body a {
+  background-color: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline-width: 0;
+}
+
+.markdown-body strong {
+  font-weight: inherit;
+  font-weight: bolder;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: .67em 0;
+}
+
+.markdown-body img {
+  border-style: none;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+  font-family: monospace,monospace;
+  font-size: 1em;
+}
+
+.markdown-body hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+
+.markdown-body input {
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body input {
+  overflow: visible;
+}
+
+.markdown-body [type=checkbox] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body * {
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.markdown-body a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+.markdown-body a:hover {
+  text-decoration: underline;
+}
+
+.markdown-body strong {
+  font-weight: 600;
+}
+
+.markdown-body hr {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #dfe2e5;
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+}
+
+.markdown-body hr:before {
+  content: "";
+  display: table;
+}
+
+.markdown-body hr:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body details summary {
+  cursor: pointer;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.markdown-body h1 {
+  font-size: 32px;
+}
+
+.markdown-body h1,
+.markdown-body h2 {
+  font-weight: 600;
+}
+
+.markdown-body h2 {
+  font-size: 24px;
+}
+
+.markdown-body h3 {
+  font-size: 20px;
+}
+
+.markdown-body h3,
+.markdown-body h4 {
+  font-weight: 600;
+}
+
+.markdown-body h4 {
+  font-size: 16px;
+}
+
+.markdown-body h5 {
+  font-size: 14px;
+}
+
+.markdown-body h5,
+.markdown-body h6 {
+  font-weight: 600;
+}
+
+.markdown-body h6 {
+  font-size: 12px;
+}
+
+.markdown-body p {
+  margin-bottom: 10px;
+  margin-top: 0;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ol,
+.markdown-body ul {
+  margin-bottom: 0;
+  margin-top: 0;
+  padding-left: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ol ol ol,
+.markdown-body ol ul ol,
+.markdown-body ul ol ol,
+.markdown-body ul ul ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code,
+.markdown-body pre {
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.markdown-body input::-webkit-inner-spin-button,
+.markdown-body input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+.markdown-body .border {
+  border: 1px solid #e1e4e8!important;
+}
+
+.markdown-body .border-0 {
+  border: 0!important;
+}
+
+.markdown-body .border-bottom {
+  border-bottom: 1px solid #e1e4e8!important;
+}
+
+.markdown-body .rounded-1 {
+  border-radius: 3px!important;
+}
+
+.markdown-body .bg-white {
+  background-color: #fff!important;
+}
+
+.markdown-body .bg-gray-light {
+  background-color: #fafbfc!important;
+}
+
+.markdown-body .text-gray-light {
+  color: #6a737d!important;
+}
+
+.markdown-body .mb-0 {
+  margin-bottom: 0!important;
+}
+
+.markdown-body .my-2 {
+  margin-bottom: 8px!important;
+  margin-top: 8px!important;
+}
+
+.markdown-body .pl-0 {
+  padding-left: 0!important;
+}
+
+.markdown-body .py-0 {
+  padding-bottom: 0!important;
+  padding-top: 0!important;
+}
+
+.markdown-body .pl-1 {
+  padding-left: 4px!important;
+}
+
+.markdown-body .pl-2 {
+  padding-left: 8px!important;
+}
+
+.markdown-body .py-2 {
+  padding-bottom: 8px!important;
+  padding-top: 8px!important;
+}
+
+.markdown-body .pl-3,
+.markdown-body .px-3 {
+  padding-left: 16px!important;
+}
+
+.markdown-body .px-3 {
+  padding-right: 16px!important;
+}
+
+.markdown-body .pl-4 {
+  padding-left: 24px!important;
+}
+
+.markdown-body .pl-5 {
+  padding-left: 32px!important;
+}
+
+.markdown-body .pl-6 {
+  padding-left: 40px!important;
+}
+
+.markdown-body .f6 {
+  font-size: 12px!important;
+}
+
+.markdown-body .lh-condensed {
+  line-height: 1.25!important;
+}
+
+.markdown-body .text-bold {
+  font-weight: 600!important;
+}
+
+.markdown-body:before {
+  content: "";
+  display: table;
+}
+
+.markdown-body:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.markdown-body>:first-child {
+  margin-top: 0!important;
+}
+
+.markdown-body>:last-child {
+  margin-bottom: 0!important;
+}
+
+.markdown-body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.markdown-body blockquote,
+.markdown-body dl,
+.markdown-body ol,
+.markdown-body p,
+.markdown-body pre,
+.markdown-body table,
+.markdown-body ul {
+  margin-bottom: 16px;
+  margin-top: 0;
+}
+
+.markdown-body hr {
+  background-color: #e1e4e8;
+  border: 0;
+  height: .25em;
+  margin: 24px 0;
+  padding: 0;
+}
+
+.markdown-body blockquote {
+  border-left: .25em solid #dfe2e5;
+  color: #6a737d;
+  padding: 0 1em;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body kbd {
+  background-color: #fafbfc;
+  border: 1px solid #c6cbd1;
+  border-bottom-color: #959da5;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #959da5;
+  color: #444d56;
+  display: inline-block;
+  font-size: 11px;
+  line-height: 10px;
+  padding: 3px 5px;
+  vertical-align: middle;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  font-weight: 600;
+  line-height: 1.25;
+  margin-bottom: 16px;
+  margin-top: 24px;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+}
+
+.markdown-body h1,
+.markdown-body h2 {
+  border-bottom: 1px solid #eaecef;
+  padding-bottom: .3em;
+}
+
+.markdown-body h2 {
+  font-size: 1.5em;
+}
+
+.markdown-body h3 {
+  font-size: 1.25em;
+}
+
+.markdown-body h4 {
+  font-size: 1em;
+}
+
+.markdown-body h5 {
+  font-size: .875em;
+}
+
+.markdown-body h6 {
+  color: #6a737d;
+  font-size: .85em;
+}
+
+.markdown-body ol,
+.markdown-body ul {
+  padding-left: 2em;
+}
+
+.markdown-body ol ol,
+.markdown-body ol ul,
+.markdown-body ul ol,
+.markdown-body ul ul {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.markdown-body li {
+  word-wrap: break-all;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body li+li {
+  margin-top: .25em;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  font-size: 1em;
+  font-style: italic;
+  font-weight: 600;
+  margin-top: 16px;
+  padding: 0;
+}
+
+.markdown-body dl dd {
+  margin-bottom: 16px;
+  padding: 0 16px;
+}
+
+.markdown-body table {
+  display: block;
+  overflow: auto;
+  width: 100%;
+}
+
+.markdown-body table th {
+  font-weight: 600;
+}
+
+.markdown-body table td,
+.markdown-body table th {
+  border: 1px solid #dfe2e5;
+  padding: 6px 13px;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+.markdown-body img {
+  background-color: #fff;
+  box-sizing: content-box;
+  max-width: 100%;
+}
+
+.markdown-body img[align=right] {
+  padding-left: 20px;
+}
+
+.markdown-body img[align=left] {
+  padding-right: 20px;
+}
+
+.markdown-body code {
+  background-color: rgba(27,31,35,.05);
+  border-radius: 3px;
+  font-size: 85%;
+  margin: 0;
+  padding: .2em .4em;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre>code {
+  background: transparent;
+  border: 0;
+  font-size: 100%;
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  word-break: normal;
+}
+
+.markdown-body .highlight {
+  margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+  background-color: #f6f8fa;
+  border-radius: 3px;
+  font-size: 85%;
+  line-height: 1.45;
+  overflow: auto;
+  padding: 16px;
+}
+
+.markdown-body pre code {
+  background-color: transparent;
+  border: 0;
+  display: inline;
+  line-height: inherit;
+  margin: 0;
+  max-width: auto;
+  overflow: visible;
+  padding: 0;
+  word-wrap: normal;
+}
+
+.markdown-body .commit-tease-sha {
+  color: #444d56;
+  display: inline-block;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+  font-size: 90%;
+}
+
+.markdown-body .blob-wrapper {
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.markdown-body .blob-wrapper-embedded {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.markdown-body .blob-num {
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  color: rgba(27,31,35,.3);
+  cursor: pointer;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+  font-size: 12px;
+  line-height: 20px;
+  min-width: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: right;
+  user-select: none;
+  vertical-align: top;
+  white-space: nowrap;
+  width: 1%;
+}
+
+.markdown-body .blob-num:hover {
+  color: rgba(27,31,35,.6);
+}
+
+.markdown-body .blob-num:before {
+  content: attr(data-line-number);
+}
+
+.markdown-body .blob-code {
+  line-height: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  position: relative;
+  vertical-align: top;
+}
+
+.markdown-body .blob-code-inner {
+  color: #24292e;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+  font-size: 12px;
+  overflow: visible;
+  white-space: pre;
+  word-wrap: normal;
+}
+
+.markdown-body .pl-token.active,
+.markdown-body .pl-token:hover {
+  background: #ffea7f;
+  cursor: pointer;
+}
+
+.markdown-body kbd {
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-bottom-color: #c6cbd1;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #c6cbd1;
+  color: #444d56;
+  display: inline-block;
+  font: 11px SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+  line-height: 10px;
+  padding: 3px 5px;
+  vertical-align: middle;
+}
+
+.markdown-body :checked+.radio-label {
+  border-color: #0366d6;
+  position: relative;
+  z-index: 1;
+}
+
+.markdown-body .tab-size[data-tab-size="1"] {
+  -moz-tab-size: 1;
+  tab-size: 1;
+}
+
+.markdown-body .tab-size[data-tab-size="2"] {
+  -moz-tab-size: 2;
+  tab-size: 2;
+}
+
+.markdown-body .tab-size[data-tab-size="3"] {
+  -moz-tab-size: 3;
+  tab-size: 3;
+}
+
+.markdown-body .tab-size[data-tab-size="4"] {
+  -moz-tab-size: 4;
+  tab-size: 4;
+}
+
+.markdown-body .tab-size[data-tab-size="5"] {
+  -moz-tab-size: 5;
+  tab-size: 5;
+}
+
+.markdown-body .tab-size[data-tab-size="6"] {
+  -moz-tab-size: 6;
+  tab-size: 6;
+}
+
+.markdown-body .tab-size[data-tab-size="7"] {
+  -moz-tab-size: 7;
+  tab-size: 7;
+}
+
+.markdown-body .tab-size[data-tab-size="8"] {
+  -moz-tab-size: 8;
+  tab-size: 8;
+}
+
+.markdown-body .tab-size[data-tab-size="9"] {
+  -moz-tab-size: 9;
+  tab-size: 9;
+}
+
+.markdown-body .tab-size[data-tab-size="10"] {
+  -moz-tab-size: 10;
+  tab-size: 10;
+}
+
+.markdown-body .tab-size[data-tab-size="11"] {
+  -moz-tab-size: 11;
+  tab-size: 11;
+}
+
+.markdown-body .tab-size[data-tab-size="12"] {
+  -moz-tab-size: 12;
+  tab-size: 12;
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 .2em .25em -1.6em;
+  vertical-align: middle;
+}
+
+.markdown-body hr {
+  border-bottom-color: #eee;
+}
+
+.markdown-body .pl-0 {
+  padding-left: 0!important;
+}
+
+.markdown-body .pl-1 {
+  padding-left: 4px!important;
+}
+
+.markdown-body .pl-2 {
+  padding-left: 8px!important;
+}
+
+.markdown-body .pl-3 {
+  padding-left: 16px!important;
+}
+
+.markdown-body .pl-4 {
+  padding-left: 24px!important;
+}
+
+.markdown-body .pl-5 {
+  padding-left: 32px!important;
+}
+
+.markdown-body .pl-6 {
+  padding-left: 40px!important;
+}
+
+.markdown-body .pl-7 {
+  padding-left: 48px!important;
+}
+
+.markdown-body .pl-8 {
+  padding-left: 64px!important;
+}
+
+.markdown-body .pl-9 {
+  padding-left: 80px!important;
+}
+
+.markdown-body .pl-10 {
+  padding-left: 96px!important;
+}
+
+.markdown-body .pl-11 {
+  padding-left: 112px!important;
+}
+
+.markdown-body .pl-12 {
+  padding-left: 128px!important;
+}
+
+/*# sourceURL=webpack://./node_modules/github-markdown-css/github-markdown.css */
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8uL25vZGVfbW9kdWxlcy9naXRodWItbWFya2Rvd24tY3NzL2dpdGh1Yi1tYXJrZG93bi5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSwwQkFBMEI7RUFDMUIsMkRBQXF0RTtBQUN2dEU7O0FBRUE7RUFDRSxxQkFBcUI7RUFDckIsa0JBQWtCO0VBQ2xCLDJCQUEyQjtBQUM3Qjs7QUFFQTtFQUNFLFdBQVc7RUFDWCxjQUFjO0VBQ2Qsa0JBQWtCO0VBQ2xCLGtCQUFrQjtBQUNwQjs7QUFFQTtFQUNFLGFBQWE7QUFDZjs7QUFFQTs7Ozs7O0VBTUUsY0FBYztFQUNkLHNCQUFzQjtFQUN0QixrQkFBa0I7QUFDcEI7O0FBRUE7Ozs7OztFQU1FLHFCQUFxQjtBQUN2Qjs7QUFFQTs7Ozs7O0VBTUUsbUJBQW1CO0FBQ3JCOztBQUVBO0VBQ0UsMEJBQTBCO0VBQzFCLDhCQUE4QjtFQUM5QixjQUFjO0VBQ2QsZ0JBQWdCO0VBQ2hCLGtJQUFrSTtFQUNsSSxlQUFlO0VBQ2YsZ0JBQWdCO0VBQ2hCLHFCQUFxQjtBQUN2Qjs7QUFFQTtFQUNFLGNBQWM7QUFDaEI7O0FBRUE7O0VBRUUsY0FBYztBQUNoQjs7QUFFQTs7RUFFRSxjQUFjO0FBQ2hCOztBQUVBOztFQUVFLGNBQWM7QUFDaEI7O0FBRUE7RUFDRSxjQUFjO0FBQ2hCOztBQUVBO0VBQ0UsY0FBYztBQUNoQjs7QUFFQTs7Ozs7OztFQU9FLGNBQWM7QUFDaEI7O0FBRUE7O0VBRUUsY0FBYztBQUNoQjs7QUFFQTtFQUNFLGNBQWM7QUFDaEI7O0FBRUE7RUFDRSx5QkFBeUI7RUFDekIsY0FBYztBQUNoQjs7QUFFQTtFQUNFLHlCQUF5QjtFQUN6QixjQUFjO0FBQ2hCOztBQUVBO0VBQ0UsYUFBYTtBQUNmOztBQUVBO0VBQ0UsY0FBYztFQUNkLGdCQUFnQjtBQUNsQjs7QUFFQTtFQUNFLGNBQWM7QUFDaEI7O0FBRUE7OztFQUdFLGNBQWM7RUFDZCxnQkFBZ0I7QUFDbEI7O0FBRUE7RUFD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 */
+  </style>
+  <style>
+  /**
+ * prism.js default theme for JavaScript, CSS and HTML
+ * Based on dabblet (http://dabblet.com)
+ * @author Lea Verou
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: black;
+	background: none;
+	text-shadow: 0 1px white;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
+code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+	text-shadow: none;
+	background: #b3d4fc;
+}
+
+pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
+code[class*="language-"]::selection, code[class*="language-"] ::selection {
+	text-shadow: none;
+	background: #b3d4fc;
+}
+
+@media print {
+	code[class*="language-"],
+	pre[class*="language-"] {
+		text-shadow: none;
+	}
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #f5f2f0;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: slategray;
+}
+
+.token.punctuation {
+	color: #999;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #905;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #690;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+	color: #9a6e3a;
+	/* This background color was intended by the author of this theme. */
+	background: hsla(0, 0%, 100%, .5);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+	color: #07a;
+}
+
+.token.function,
+.token.class-name {
+	color: #DD4A68;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+	color: #e90;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+
+/*# sourceURL=webpack://./node_modules/prismjs/themes/prism.css */
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8uL25vZGVfbW9kdWxlcy9wcmlzbWpzL3RoZW1lcy9wcmlzbS5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7Ozs7RUFJRTs7QUFFRjs7Q0FFQyxZQUFZO0NBQ1osZ0JBQWdCO0NBQ2hCLHdCQUF3QjtDQUN4QixzRUFBc0U7Q0FDdEUsY0FBYztDQUNkLGdCQUFnQjtDQUNoQixnQkFBZ0I7Q0FDaEIsb0JBQW9CO0NBQ3BCLGtCQUFrQjtDQUNsQixpQkFBaUI7Q0FDakIsZ0JBQWdCOztDQUVoQixnQkFBZ0I7Q0FDaEIsY0FBYztDQUNkLFdBQVc7O0NBRVgscUJBQXFCO0NBQ3JCLGtCQUFrQjtDQUNsQixpQkFBaUI7Q0FDakIsYUFBYTtBQUNkOztBQUVBOztDQUVDLGlCQUFpQjtDQUNqQixtQkFBbUI7QUFDcEI7O0FBRUE7O0NBRUMsaUJBQWlCO0NBQ2pCLG1CQUFtQjtBQUNwQjs7QUFFQTtDQUNDOztFQUVDLGlCQUFpQjtDQUNsQjtBQUNEOztBQUVBLGdCQUFnQjtBQUNoQjtDQUNDLFlBQVk7Q0FDWixjQUFjO0NBQ2QsY0FBYztBQUNmOztBQUVBOztDQUVDLG1CQUFtQjtBQUNwQjs7QUFFQSxnQkFBZ0I7QUFDaEI7Q0FDQyxhQUFhO0NBQ2IsbUJBQW1CO0NBQ25CLG1CQUFtQjtBQUNwQjs7QUFFQTs7OztDQUlDLGdCQUFnQjtBQUNqQjs7QUFFQTtDQUNDLFdBQVc7QUFDWjs7QUFFQTtDQUNDLFdBQVc7QUFDWjs7QUFFQTs7Ozs7OztDQU9DLFdBQVc7QUFDWjs7QUFFQTs7Ozs7O0NBTUMsV0FBVztBQUNaOztBQUVBOzs7OztDQUtDLGNBQWM7Q0FDZCxvRUFBb0U7Q0FDcEUsaUNBQWlDO0FBQ2xDOztBQUVBOzs7Q0FHQyxXQUFXO0FBQ1o7O0FBRUE7O0NBRUMsY0FBYztBQUNmOztBQUVBOzs7Q0FHQyxXQUFXO0FBQ1o7O0FBRUE7O0NBRUMsaUJBQWlCO0FBQ2xCO0FBQ0E7Q0FDQyxrQkFBa0I7QUFDbkI7O0FBRUE7Q0FDQyxZQUFZO0FBQ2IiLCJzb3VyY2VSb290IjoiIn0= */
+  </style>
+  <style>
+  
+  </style>
+  <style>
+    .markdown-body {
+      font-family: -apple-system,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+      box-sizing: border-box;
+      min-width: 200px;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 45px;
+    }
+
+    @media not print {
+      .markdown-body {
+        padding: 45px;
+      }
+
+      @media (max-width: 767px) {
+        .markdown-body {
+          padding: 15px;
+        }
+      }
+    }
+
+    .hf-container {
+      color: #24292e;
+      line-height: 1.3;
+    }
+
+    .markdown-body .highlight pre,
+    .markdown-body pre {
+      white-space: pre-wrap;
+    }
+    .markdown-body table {
+      display: table;
+    }
+    .markdown-body img[data-align="center"] {
+      display: block;
+      margin: 0 auto;
+    }
+    .markdown-body img[data-align="right"] {
+      display: block;
+      margin: 0 0 0 auto;
+    }
+    .markdown-body li.task-list-item {
+      list-style-type: none;
+    }
+    .markdown-body li > [type=checkbox] {
+      margin: 0 0 0 -1.3em;
+    }
+    .markdown-body input[type="checkbox"] ~ p {
+      margin-top: 0;
+      display: inline-block;
+    }
+    .markdown-body ol ol,
+    .markdown-body ul ol {
+      list-style-type: decimal;
+    }
+    .markdown-body ol ol ol,
+    .markdown-body ol ul ol,
+    .markdown-body ul ol ol,
+    .markdown-body ul ul ol {
+      list-style-type: decimal;
+    }
+  </style>
+  <style>.markdown-body a.footnote-ref {
+  text-decoration: none;
+}
+
+.footnotes {
+  font-size: .85em;
+  opacity: .8;
+}
+
+.footnotes li[role="doc-endnote"] {
+  position: relative;
+}
+
+.footnotes .footnote-back {
+  position: absolute;
+  font-family: initial;
+  top: .2em;
+  right: 1em;
+  text-decoration: none;
+}
+
+.inline-math.invalid,
+.multiple-math.invalid {
+  color: rgb(255, 105, 105);
+}
+
+.toc-container {
+  width: 100%;
+}
+
+.toc-container .toc-title {
+  font-weight: 700;
+  font-size: 1.2em;
+  margin-bottom: 0;
+}
+
+.toc-container li,
+.toc-container ul,
+.toc-container ul li {
+  list-style: none !important;
+}
+
+.toc-container > ul {
+  padding-left: 0;
+}
+
+.toc-container ul li span {
+  display : flex;
+}
+
+.toc-container ul li span a {
+  color: inherit;
+  text-decoration: none;
+}
+.toc-container ul li span a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+.toc-container ul li span span.dots {
+  flex: 1;
+  height: 0.65em;
+  margin: 0 10px;
+  border-bottom: 2px dotted black;
+}
+
+/*# sourceURL=webpack://./src/muya/lib/assets/styles/exportStyle.css */
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8uL3NyYy9tdXlhL2xpYi9hc3NldHMvc3R5bGVzL2V4cG9ydFN0eWxlLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLHFCQUFxQjtBQUN2Qjs7QUFFQTtFQUNFLGdCQUFnQjtFQUNoQixXQUFXO0FBQ2I7O0FBRUE7RUFDRSxrQkFBa0I7QUFDcEI7O0FBRUE7RUFDRSxrQkFBa0I7RUFDbEIsb0JBQW9CO0VBQ3BCLFNBQVM7RUFDVCxVQUFVO0VBQ1YscUJBQXFCO0FBQ3ZCOztBQUVBOztFQUVFLHlCQUF5QjtBQUMzQjs7QUFFQTtFQUNFLFdBQVc7QUFDYjs7QUFFQTtFQUNFLGdCQUFnQjtFQUNoQixnQkFBZ0I7RUFDaEIsZ0JBQWdCO0FBQ2xCOztBQUVBOzs7RUFHRSwyQkFBMkI7QUFDN0I7O0FBRUE7RUFDRSxlQUFlO0FBQ2pCOztBQUVBO0VBQ0UsY0FBYztBQUNoQjs7QUFFQTtFQUNFLGNBQWM7RUFDZCxxQkFBcUI7QUFDdkI7QUFDQTtFQUNFLGNBQWM7RUFDZCxxQkFBcUI7QUFDdkI7O0FBRUE7RUFDRSxPQUFPO0VBQ1AsY0FBYztFQUNkLGNBQWM7RUFDZCwrQkFBK0I7QUFDakMiLCJzb3VyY2VSb290IjoiIn0= */</style>
+  <style>.markdown-body{}pre.front-matter{display:none!important;}</style>
+</head>
+<body>
+  <article class="markdown-body"><h1 class="atx" id="architecture-outline-v3---microhydros-climate-node">Architecture outline v3 - MicroHydros climate node</h1>
+<p>Status: working version, 2026-09-04. Supersedes
+<code>projekt1_architecture_outline_v2.md</code> (v2, kept unchanged for history).
+Sources: customer letter "Forfragan om utveckling av prototyp for MicroHydros"
+(HydroGreen Fingers AB, 2026-08-31), project brief "Projekt 1 MicroHydros"
+(Jensen IoT25), Projektplan_Guide.pdf, the group's own decisions, and the
+repository skeleton as it stands in <code>IoT25S-Projekt1-G1</code>.</p>
+<h2 class="atx" id="0-what-changed-since-v2">0. What changed since v2</h2>
+<p>v2 was a plan. v3 describes the repository after the skeleton was built,
+the pure modules were implemented and tested on a PC, and the remaining
+bodies were reduced to contracts plus TODO markers for their owners.
+Decisions that changed, with the reason:</p>
+<ul>
+<li>Toolchain is PlatformIO (VS Code extension or <code>pio</code> CLI) with the Arduino
+framework, not the Arduino IDE. PlatformIO is easier for Git; 
+it gives a proper <code>src/</code> and <code>lib/</code> split, a host-side test runner, recreatable project manifests via platformio.ini and
+<code>compile_commands.json</code> for editors. Section 5.5.</li>
+<li>No aggregation on the node. Every sample (default every 10 s) is published
+as one flat JSON object. The mean/min/max window, the "publish on fault
+change" rule and the <code>Aggregate</code> module are gone. Averaging is a query in
+the backend. Reason: irregular partial windows on fault changes mixed
+pre- and post-fault samples in one row, and 8640 rows per day is still
+nothing for SQLite. Sections 5.3, 5.4, 6.</li>
+<li>Validity keeps range, rate and stuck checks. The cross checks (<code>tIn</code>
+within a band of <code>tOut</code>, <code>tWater</code> of <code>tIn</code>) are dropped: they cannot
+tell a broken sensor from a lamp switching on, and blame the wrong
+channel when they fire. Section 5.2.</li>
+<li>Commands go over the USB serial port, not the MQTT cmd topic. The only
+demo use is switching the emulator scenario, and JSON parsing on the node
+without a library was more code than the feature was worth. The
+subscription plumbing stays in <code>Telemetry</code> for later. Section 5.4.</li>
+<li>No abstract <code>Sensor</code> base class. The SHT4x yields two channels from one
+frame, which did not fit a one-channel virtual interface, and with one
+static instance of each driver the polymorphism bought nothing.
+<code>Sensor.h</code> is now the written driver contract. Section 5.2.</li>
+<li>The JSON builder is a pure module (<code>lib/Payload</code>) with a unit test. It
+formats numbers itself: the Uno R4 core links newlib-nano without float
+<code>printf</code>, so <code>snprintf("%f")</code> prints nothing on the board. Section 5.6.</li>
+<li>Wi-Fi association and the MQTT connect block for seconds on WiFiS3 and
+ArduinoMqttClient. Documented as a limitation. Sections 5.3, 12.</li>
+<li><code>Reading</code> gained a <code>raw</code> word (stuck detection needs it) and <code>Validity</code>
+is a class with per-channel counters, not free functions.</li>
+</ul>
+<p>Kept from v2: Arduino Uno R4 WiFi, the sensor set and mapping, MQTT to a
+local Mosquitto with Node-RED and SQLite behind it, the SHT4x frame-level
+emulation seam, the non-blocking scheduler and state machine, the 4-week
+plan, the requirement and risk tables.</p>
+<h2 class="atx" id="1-requirements-derived-from-the-customer-letter-and-the-brief">1. Requirements derived from the customer letter and the brief</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Source</th>
+<th>Priority</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R1</td>
+<td>Measure air temperature inside the grow space</td>
+<td>Letter, brief 3.1</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>Measure air temperature outside the grow space</td>
+<td>Letter, brief 3.1</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>R3</td>
+<td>Measure water / nutrient solution temperature</td>
+<td>Letter, brief 3.1</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>R4</td>
+<td>Measure relative humidity inside the grow space</td>
+<td>Letter, brief 3.1</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>R5</td>
+<td>Measurements repeat at a fixed interval and form a time series</td>
+<td>Letter, brief 3.1, 9.2</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>R6</td>
+<td>Measurements are processed on the embedded device</td>
+<td>Brief 9.3</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>R7</td>
+<td>Data leaves the device to an external system</td>
+<td>Letter, brief 5, 9.4</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>R8</td>
+<td>Faulty or unreasonable readings and failure situations are detected and handled</td>
+<td>Letter, brief 9.5</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>R9</td>
+<td>Architecture documented so another developer understands it, with a diagram</td>
+<td>Brief 9.6, 10.3</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>R10</td>
+<td>No DHT11 / DHT22</td>
+<td>Letter, brief 3.1</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>R11</td>
+<td>Sensor choices motivated on technical criteria</td>
+<td>Letter, brief 4</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>R12</td>
+<td>Time series stored so history can be viewed</td>
+<td>Letter ("historiska matdata")</td>
+<td>Should</td>
+</tr>
+<tr>
+<td>R13</td>
+<td>Live and historic values visible in a simple dashboard</td>
+<td>Derived from R12</td>
+<td>Should</td>
+</tr>
+<tr>
+<td>R14</td>
+<td>Threshold warnings (too warm, too cold)</td>
+<td>Letter, future analysis example</td>
+<td>Could</td>
+</tr>
+<tr>
+<td>R15</td>
+<td>Several units can share one backend</td>
+<td>Letter, cloud vision</td>
+<td>Could (design for it, do not build it)</td>
+</tr>
+</tbody></table>
+<p>Out of scope (brief 14): cloud platform, mobile app, advanced web UI, machine
+learning, irrigation or lighting control, prediction, physical product design.</p>
+<h2 class="atx" id="2-decisions">2. Decisions</h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Decision</th>
+<th>Motivation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Board</td>
+<td>Arduino Uno R4 WiFi</td>
+<td>Group decision; Wi-Fi on board, 5 V and 3.3 V I/O, 14-bit ADC, LED matrix for status</td>
+</tr>
+<tr>
+<td>Toolchain</td>
+<td>PlatformIO, Arduino framework, C++</td>
+<td>Repo setup; <code>src/</code>+<code>lib/</code> split, host tests, compile database; the Arduino libraries are unchanged</td>
+</tr>
+<tr>
+<td>Communication</td>
+<td>Wi-Fi + MQTT 3.1.1 to a local Mosquitto broker</td>
+<td>Publish/subscribe matches the "many units, one service" vision (R15); tiny payloads; Last Will gives presence for free; trivially replaced by a cloud broker later</td>
+</tr>
+<tr>
+<td>Backend</td>
+<td>Mosquitto + Node-RED + SQLite in one docker-compose</td>
+<td>Smallest stack that stores a time series (R12) and shows a chart (R13); Grafana/InfluxDB only if time remains</td>
+</tr>
+<tr>
+<td>Inside T + RH</td>
+<td>SHT40, emulated at the I2C frame level, hardware-swappable</td>
+<td>Section 3.1</td>
+</tr>
+<tr>
+<td>Outside T</td>
+<td>DS18B20, real hardware</td>
+<td>Section 3.2</td>
+</tr>
+<tr>
+<td>Water T</td>
+<td>NTC thermistor 10 k in a voltage divider on the ADC, real hardware</td>
+<td>Section 3.3</td>
+</tr>
+<tr>
+<td>Node output</td>
+<td>One flat JSON object per sample, no on-node averaging</td>
+<td>Section 0; simpler node, simpler table, no partial windows</td>
+</tr>
+<tr>
+<td>Node input</td>
+<td>Serial line commands; MQTT cmd topic reserved but not subscribed</td>
+<td>Section 0; demo needs only scenario switching</td>
+</tr>
+</tbody></table>
+<p>Sensor mapping summary:</p>
+<table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>Sensor</th>
+<th>Interface</th>
+<th>Pin</th>
+<th>Real / emulated</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>T_in, RH_in</td>
+<td>SHT40</td>
+<td>I2C, 0x44</td>
+<td>none now; Qwiic / <code>Wire1</code> when hardware is attached</td>
+<td>emulated</td>
+</tr>
+<tr>
+<td>T_out</td>
+<td>DS18B20</td>
+<td>1-Wire</td>
+<td>D2, 4.7 k pull-up to 5 V</td>
+<td>hardware</td>
+</tr>
+<tr>
+<td>T_water</td>
+<td>NTC 10 k</td>
+<td>analog</td>
+<td>A0, 10 k series resistor to 5 V</td>
+<td>hardware</td>
+</tr>
+</tbody></table>
+<p>The mapping (DS18B20 in air, NTC in water) is a deliberate choice and is
+discussed in 3.4, including the alternative of swapping them.</p>
+<h2 class="atx" id="3-sensor-selection-and-motivation">3. Sensor selection and motivation</h2>
+<p>The customer's earlier prototype failed on DHT11/DHT22 measurement quality and
+stability. The three sensors below are argued against the criteria in the
+brief. Verify every datasheet number before it goes into the project plan;
+that datasheet reading is a week-1 task.</p>
+<h3 class="atx" id="31-sht40---inside-air-temperature-and-relative-humidity">3.1 SHT40 - inside air temperature and relative humidity</h3>
+<table>
+<thead>
+<tr>
+<th>Criterion</th>
+<th>SHT40 (Sensirion SHT4x family)</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Range</td>
+<td>0..100 %RH, -40..125 C</td>
+<td>Covers a grow space with margin</td>
+</tr>
+<tr>
+<td>Accuracy</td>
+<td>+/-1.8 %RH typ, +/-0.2 C typ</td>
+<td>DHT22 is +/-2..5 %RH, DHT11 +/-5 %RH</td>
+</tr>
+<tr>
+<td>Resolution</td>
+<td>0.01 %RH, 0.01 C (16-bit words)</td>
+<td></td>
+</tr>
+<tr>
+<td>Response</td>
+<td>tau63 about 4 s for RH</td>
+<td>Fast enough for a small enclosure</td>
+</tr>
+<tr>
+<td>Interface</td>
+<td>I2C, fixed address 0x44, 6-byte frame with CRC-8 per word</td>
+<td>Standard bus, CRC makes transport errors detectable</td>
+</tr>
+<tr>
+<td>Cost</td>
+<td>40..100 kr on a breakout</td>
+<td></td>
+</tr>
+<tr>
+<td>Power</td>
+<td>1.08..3.6 V, about 0.4 uA idle, 0.4 mA during measure</td>
+<td>Not relevant on USB power but good for a product</td>
+</tr>
+<tr>
+<td>Environment</td>
+<td>Humid, warm, lamps nearby. SHT4x has good long-term stability and a built-in heater for condensation recovery</td>
+<td>The exact weakness the customer hit with DHT</td>
+</tr>
+</tbody></table>
+<p>Datasheet facts the software relies on, now encoded in <code>lib/Sht4x/Sht4xTypes.h</code>:</p>
+<ul>
+<li>Measure command 0xFD, high precision, about 8 ms conversion (the driver
+waits 9 ms). 0xF6 and 0xE0 are the lower precision variants.</li>
+<li>Response frame: <code>T_MSB, T_LSB, CRC_T, RH_MSB, RH_LSB, CRC_RH</code>.</li>
+<li>CRC-8: polynomial 0x31, init 0xFF, no reflection, final XOR 0x00, per word.
+Datasheet test vector: CRC of <code>0xBE 0xEF</code> is <code>0x92</code> (a unit test).</li>
+<li><code>RH[%] = -6 + 125 * S_RH / 65535</code>, clipped to 0..100.
+<code>T[C] = -45 + 175 * S_T / 65535</code>.</li>
+<li>Serial number command 0x89, same frame and CRC scheme.</li>
+</ul>
+<p>Status in this prototype: emulated. The emulator produces the exact 6-byte
+frame with valid CRC, so the decoder, validity checks and everything above
+them run unchanged. A physical SHT40 breakout on the Qwiic connector (3.3 V,
+<code>Wire1</code>) replaces the emulator with <code>SHT4X_SIMULATED 0</code> in <code>config.h</code>. This
+is a documented limitation (section 12): the prototype does not physically
+sense inside temperature or humidity, it demonstrates the full data path
+for it.</p>
+<h3 class="atx" id="32-ds18b20---outside-air-temperature">3.2 DS18B20 - outside air temperature</h3>
+<table>
+<thead>
+<tr>
+<th>Criterion</th>
+<th>DS18B20</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Range</td>
+<td>-55..125 C</td>
+<td></td>
+</tr>
+<tr>
+<td>Accuracy</td>
+<td>+/-0.5 C over -10..85 C, factory calibrated</td>
+<td>No calibration step needed</td>
+</tr>
+<tr>
+<td>Resolution</td>
+<td>9..12 bit configurable; 12 bit = 0.0625 C</td>
+<td></td>
+</tr>
+<tr>
+<td>Response</td>
+<td>Conversion 750 ms at 12 bit; thermal response tens of seconds in still air in TO-92</td>
+<td>Slow, but ambient air outside the unit changes slowly</td>
+</tr>
+<tr>
+<td>Interface</td>
+<td>1-Wire, one data pin, 64-bit ROM ID per device, 9-byte scratchpad with CRC-8</td>
+<td>Many sensors on one pin; ID doubles as sensor identity in the data</td>
+</tr>
+<tr>
+<td>Cost</td>
+<td>15..40 kr TO-92, 30..60 kr as a sealed cable probe</td>
+<td></td>
+</tr>
+<tr>
+<td>Power</td>
+<td>3.0..5.5 V, about 1 mA during conversion</td>
+<td>5 V from the Uno header, no level shifting</td>
+</tr>
+<tr>
+<td>Environment</td>
+<td>Room air; cable can be a few metres so the probe sits clearly outside the enclosure</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>Why here and not elsewhere: outside air is the least demanding point (dry,
+slow) and the DS18B20 gives a calibrated digital value with a CRC, so it
+also serves as the reference when calibrating the NTC (section 3.3).</p>
+<p>Fault signatures the firmware must recognise: no presence pulse (sensor
+disconnected), scratchpad CRC failure (cable noise), the power-on reset value
+85.0 C returned when a conversion never ran, and clone parts that ignore
+resolution settings. Library: <code>OneWire</code> + <code>DallasTemperature</code>, used in
+asynchronous mode (<code>setWaitForConversion(false)</code>) so the 750 ms conversion
+never blocks the loop. The library reports both "no device" and "bad CRC"
+as disconnected (<code>DEVICE_DISCONNECTED_RAW</code>), so both map to <code>NO_DEVICE</code>.
+Option: 11-bit resolution halves the conversion to 375 ms at 0.125 C,
+which is plenty for outside air; <code>DS18B20_RESOLUTION_BITS</code> in <code>config.h</code>.</p>
+<h3 class="atx" id="33-ntc-thermistor---water--nutrient-solution-temperature">3.3 NTC thermistor - water / nutrient solution temperature</h3>
+<p>Assumed part: 10 kOhm at 25 C, B25/85 about 3950 K, 1 % tolerance, glass or
+epoxy bead. Verify against the actual part's datasheet.</p>
+<table>
+<thead>
+<tr>
+<th>Criterion</th>
+<th>NTC 10 k in a divider</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Range</td>
+<td>-40..125 C for the bead; the divider is designed for 5..40 C</td>
+<td>Nutrient solution stays well inside</td>
+</tr>
+<tr>
+<td>Accuracy</td>
+<td>1 % R and 1 % B give about +/-1 C uncalibrated; about +/-0.3 C after a single-point calibration against the DS18B20</td>
+<td>Calibration is part of the test plan</td>
+</tr>
+<tr>
+<td>Resolution</td>
+<td>Set by the ADC: 14-bit on the R4 gives about 0.02 C near 25 C</td>
+<td></td>
+</tr>
+<tr>
+<td>Response</td>
+<td>A few seconds in water; water couples heat far better than air</td>
+<td>This is why the NTC goes in the water and not in the air</td>
+</tr>
+<tr>
+<td>Interface</td>
+<td>Analog voltage, one ADC pin, no protocol</td>
+<td>Demonstrates the analog acquisition and calibration path</td>
+</tr>
+<tr>
+<td>Cost</td>
+<td>5..20 kr</td>
+<td>Cheapest of the three</td>
+</tr>
+<tr>
+<td>Power</td>
+<td>5 V across 20 k = 0.25 mA</td>
+<td>Self-heating about 0.6 mW at the NTC; in water this is well under 0.1 C</td>
+</tr>
+<tr>
+<td>Environment</td>
+<td>Immersed in a conductive nutrient solution, so the bead and leads must be sealed (heat-shrink with adhesive lining or a potted probe)</td>
+<td>Sealing is a build task and a risk</td>
+</tr>
+</tbody></table>
+<p>Circuit: 5 V -&gt; R_s 10 k -&gt; A0 -&gt; NTC -&gt; GND. The divider is fed from the
+same 5 V that is the ADC reference, so supply variation cancels:</p>
+<pre><code class="indented-code-block">R_ntc = R_s * ADC / (ADC_max - ADC)
+1/T   = 1/T0 + (1/B) * ln(R_ntc / R0)        T in kelvin, T0 = 298.15 K</code></pre>
+<p>R_s = 10 k puts the best sensitivity around 25 C. <code>analogReadResolution(14)</code>
+and 16 samples averaged per reading. The math is in <code>lib/NtcMath</code> with unit
+tests; the constants (R_s, R0, B, offset) are in <code>config.h</code>.</p>
+<p>Fault signatures: ADC at or near 0 means the NTC is shorted or R_s is open;
+ADC near full scale means the NTC is open or unplugged. Both are mapped to
+<code>NO_DEVICE</code>, never to a temperature (16 counts of margin at each rail).</p>
+<h3 class="atx" id="34-why-this-mapping-and-the-alternative">3.4 Why this mapping, and the alternative</h3>
+<p>The two hardware sensors could be swapped: a sealed DS18B20 cable probe is
+the more robust water sensor for a product, and an NTC works fine in room air.
+The chosen mapping keeps the digital, calibrated sensor where it can act as a
+reference and puts the fast, cheap sensor where its weaknesses (self-heating,
+calibration need) are smallest - known tradeoff weighed against the cost and time delay of waiting for a sealed cable probe. It also exercises three different acquisition
+paths (I2C frame, 1-Wire, analog), which is worth more in a first prototype
+than two of the same. Possibilities for the next phase (section 12): use a
+sealed DS18B20 probe for the water and a second one, or an NTC, for outside
+air, and fit the real SHT40.</p>
+<p>The honest caveat for the plan and the demo: this sensor set also matches
+what the group already has. That is acceptable only because each choice
+stands on its own criteria above; the plan should present the criteria, not
+the availability.</p>
+<h2 class="atx" id="4-system-architecture">4. System architecture</h2>
+<div class="mermaid" data-processed="true"><svg id="mermaid-1788530576395" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="557.5714721679688" style="max-width: 1482.9822998046875px;" viewBox="0 0 1482.9822998046875 557.5714721679688"><style>#mermaid-1788530576395 {font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#mermaid-1788530576395 .error-icon{fill:#552222;}#mermaid-1788530576395 .error-text{fill:#552222;stroke:#552222;}#mermaid-1788530576395 .edge-thickness-normal{stroke-width:2px;}#mermaid-1788530576395 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-1788530576395 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-1788530576395 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-1788530576395 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-1788530576395 .marker{fill:#333333;stroke:#333333;}#mermaid-1788530576395 .marker.cross{stroke:#333333;}#mermaid-1788530576395 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-1788530576395 .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#333;}#mermaid-1788530576395 .cluster-label text{fill:#333;}#mermaid-1788530576395 .cluster-label span{color:#333;}#mermaid-1788530576395 .label text,#mermaid-1788530576395 span{fill:#333;color:#333;}#mermaid-1788530576395 .node rect,#mermaid-1788530576395 .node circle,#mermaid-1788530576395 .node ellipse,#mermaid-1788530576395 .node polygon,#mermaid-1788530576395 .node path{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#mermaid-1788530576395 .node .label{text-align:center;}#mermaid-1788530576395 .node.clickable{cursor:pointer;}#mermaid-1788530576395 .arrowheadPath{fill:#333333;}#mermaid-1788530576395 .edgePath .path{stroke:#333333;stroke-width:2.0px;}#mermaid-1788530576395 .flowchart-link{stroke:#333333;fill:none;}#mermaid-1788530576395 .edgeLabel{background-color:#e8e8e8;text-align:center;}#mermaid-1788530576395 .edgeLabel rect{opacity:0.5;background-color:#e8e8e8;fill:#e8e8e8;}#mermaid-1788530576395 .cluster rect{fill:#ffffde;stroke:#aaaa33;stroke-width:1px;}#mermaid-1788530576395 .cluster text{fill:#333;}#mermaid-1788530576395 .cluster span{color:#333;}#mermaid-1788530576395 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:hsl(80, 100%, 96.2745098039%);border:1px solid #aaaa33;border-radius:2px;pointer-events:none;z-index:100;}#mermaid-1788530576395 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g transform="translate(0, 0)"><marker id="flowchart-pointEnd" class="marker flowchart" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="flowchart-pointStart" class="marker flowchart" viewBox="0 0 10 10" refX="0" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="flowchart-circleEnd" class="marker flowchart" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="flowchart-circleStart" class="marker flowchart" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="flowchart-crossEnd" class="marker cross flowchart" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="flowchart-crossStart" class="marker cross flowchart" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><g class="root"><g class="clusters"><g class="cluster default" id="Node"><rect style="" rx="0" ry="0" x="8" y="8" width="575.8214340209961" height="441.2857208251953"></rect><g class="cluster-label" transform="translate(168.2678565979004, 13)"><foreignObject width="255.2857208251953" height="25.142858505249023"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel">Arduino Uno R4 WiFi - climate node</span></div></foreignObject></g></g></g><g class="edgePaths"><path d="M197.18750762939453,88.21428680419922L213.126495997111,88.21428680419922C229.06548436482748,88.21428680419922,260.94346110026044,88.21428680419922,298.25287757884576,115.7857157389323C335.5622940574311,143.35714467366537,378.30315027916873,198.5000025431315,399.6735783900376,226.0714314778646L421.04400650090645,253.64286041259766" id="L-SHT-FW-0" class=" edge-thickness-normal edge-pattern-solid flowchart-link LS-SHT LE-FW" style="fill:none;" marker-end="url(#flowchart-pointEnd)"></path><path d="M186.33036422729492,228.64286041259766L204.07887649536133,228.64286041259766C221.82738876342773,228.64286041259766,257.32441329956055,228.64286041259766,285.1622117360433,232.98181633105207C313.00001017252606,237.3207722495065,333.1785825093587,245.9986840864153,343.2678686777751,250.3376400048697L353.3571548461914,254.6765959233241" id="L-DS-FW-0" class=" edge-thickness-normal edge-pattern-solid flowchart-link LS-DS LE-FW" style="fill:none;" marker-end="url(#flowchart-pointEnd)"></path><path d="M196.79464721679688,369.0714340209961L212.7991123199463,369.0714340209961C228.8035774230957,369.0714340209961,260.81250762939453,369.0714340209961,286.90625890096027,364.73247810254173C313.00001017252606,360.39352218408726,333.1785825093587,351.7156103471784,343.2678686777751,347.37665442872407L353.3571548461914,343.03769851026965" id="L-NTC-FW-0" class=" edge-thickness-normal edge-pattern-solid flowchart-link LS-NTC LE-FW" style="fill:none;" marker-end="url(#flowchart-pointEnd)"></path><path d="M181.16895562186184,484.2857208251953L199.7777026575004,471.767863591512C218.38644969313904,459.2500063578288,255.6039437644162,434.2142918904622,290.2716797208765,410.8452440897624C324.93941567733674,387.4761962890625,357.0573935189802,365.7738151550293,373.1163824398018,354.9226245880127L389.1753713606235,344.0714340209961" id="L-PC-FW-0" class=" edge-thickness-normal edge-pattern-solid flowchart-link LS-PC LE-FW" style="fill:none;" marker-end="url(#flowchart-pointEnd)"></path><path d="M558.8214340209961,298.8571472167969L562.9881006876627,298.8571472167969C567.1547673543295,298.8571472167969,575.4881006876627,298.8571472167969,591.1756013234457,298.8571472167969C606.8631019592285,298.8571472167969,629.9047698974609,298.8571472167969,652.9464378356934,298.8571472167969C675.9881057739258,298.8571472167969,699.0297737121582,298.8571472167969,710.5506076812744,298.8571472167969L722.0714416503906,298.8571472167969" id="L-FW-B-0" class=" edge-thickness-normal edge-pattern-solid flowchart-link LS-FW LE-B" style="fill:none;" marker-end="url(#flowchart-pointEnd)"></path><path d="M858.5357360839844,298.8571472167969L862.702402750651,298.8571472167969C866.8690694173177,298.8571472167969,875.202402750651,298.8571472167969,883.5357360839844,298.8571472167969C891.8690694173177,298.8571472167969,900.202402750651,298.8571472167969,904.3690694173177,298.8571472167969L908.5357360839844,298.8571472167969" id="L-B-NR-0" class=" edge-thickness-normal edge-pattern-solid flowchart-link LS-B LE-NR" style="fill:none;" marker-end="url(#flowchart-pointEnd)"></path><path d="M1100.500015258789,298.8571472167969L1104.6666819254558,298.8571472167969C1108.8333485921223,298.8571472167969,1117.1666819254558,298.8571472167969,1125.500015258789,298.8571472167969C1133.8333485921223,298.8571472167969,1142.1666819254558,298.8571472167969,1146.3333485921223,298.8571472167969L1150.500015258789,298.8571472167969" id="L-NR-DB-0" class=" edge-thickness-normal edge-pattern-solid flowchart-link LS-NR LE-DB" style="fill:none;" marker-end="url(#flowchart-pointEnd)"></path><path d="M1244.4285888671875,298.8571472167969L1248.5952555338542,298.8571472167969C1252.7619222005208,298.8571472167969,1261.0952555338542,298.8571472167969,1269.4285888671875,298.8571472167969C1277.7619222005208,298.8571472167969,1286.0952555338542,298.8571472167969,1290.2619222005208,298.8571472167969L1294.4285888671875,298.8571472167969" id="L-DB-UI-0" class=" edge-thickness-normal edge-pattern-solid flowchart-link LS-DB LE-UI" style="fill:none;" marker-end="url(#flowchart-pointEnd)"></path></g><g class="edgeLabels"><g class="edgeLabel"><g class="label" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(292.82143783569336, 409.1785774230957)"><g class="label" transform="translate(-35.53571701049805, -12.571429252624512)"><foreignObject width="71.0714340209961" height="25.142858505249023"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">USB serial</span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(652.9464378356934, 298.8571472167969)"><g class="label" transform="translate(-44.125003814697266, -12.571429252624512)"><foreignObject width="88.25000762939453" height="25.142858505249023"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">Wi-Fi, MQTT</span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default default" id="flowchart-SHT-1979" transform="translate(132.64286041259766, 88.21428680419922)"><rect class="basic label-container" style="" rx="0" ry="0" x="-64.54464721679688" y="-45.21428680419922" width="129.08929443359375" height="90.42857360839844"></rect><g class="label" style="" transform="translate(-57.044647216796875, -37.71428680419922)"><foreignObject width="114.08929443359375" height="75.42857360839844"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel">SHT40 emulator<br>T_in, RH_in<br>I2C frame level</span></div></foreignObject></g></g><g class="node default default" id="flowchart-DS-1980" transform="translate(132.64286041259766, 228.64286041259766)"><rect class="basic label-container" style="" rx="0" ry="0" x="-53.687503814697266" y="-45.21428680419922" width="107.37500762939453" height="90.42857360839844"></rect><g class="label" style="" transform="translate(-46.187503814697266, -37.71428680419922)"><foreignObject width="92.37500762939453" height="75.42857360839844"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel">DS18B20<br>T_out<br>1-Wire on D2</span></div></foreignObject></g></g><g class="node default default" id="flowchart-NTC-1981" transform="translate(132.64286041259766, 369.0714340209961)"><rect class="basic label-container" style="" rx="0" ry="0" x="-64.15178680419922" y="-45.21428680419922" width="128.30357360839844" height="90.42857360839844"></rect><g class="label" style="" transform="translate(-56.65178680419922, -37.71428680419922)"><foreignObject width="113.30357360839844" height="75.42857360839844"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel">NTC 10k divider<br>T_water<br>ADC on A0</span></div></foreignObject></g></g><g class="node default default" id="flowchart-FW-1982" transform="translate(456.08929443359375, 298.8571472167969)"><rect class="basic label-container" style="" rx="0" ry="0" x="-102.73214721679688" y="-45.21428680419922" width="205.46429443359375" height="90.42857360839844"></rect><g class="label" style="" transform="translate(-95.23214721679688, -37.71428680419922)"><foreignObject width="190.46429443359375" height="75.42857360839844"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel">Firmware<br>acquire, decode, validate,<br>publish every sample</span></div></foreignObject></g></g><g class="node default default" id="flowchart-PC-1989" transform="translate(132.64286041259766, 516.928581237793)"><rect class="basic label-container" style="" rx="0" ry="0" x="-99.64286041259766" y="-32.64285850524902" width="199.2857208251953" height="65.28571701049805"></rect><g class="label" style="" transform="translate(-92.14286041259766, -25.142858505249023)"><foreignObject width="184.2857208251953" height="50.28571701049805"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel">Laptop<br>serial monitor, commands</span></div></foreignObject></g></g><g class="node default default" id="flowchart-B-1992" transform="translate(790.3035888671875, 298.8571472167969)"><rect class="basic label-container" style="" rx="0" ry="0" x="-68.23214721679688" y="-20.07142925262451" width="136.46429443359375" height="40.14285850524902"></rect><g class="label" style="" transform="translate(-60.732147216796875, -12.571429252624512)"><foreignObject width="121.46429443359375" height="25.142858505249023"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel">Mosquitto broker</span></div></foreignObject></g></g><g class="node default default" id="flowchart-NR-1994" transform="translate(1004.5178756713867, 298.8571472167969)"><rect class="basic label-container" style="" rx="0" ry="0" x="-95.98214721679688" y="-32.64285850524902" width="191.96429443359375" height="65.28571701049805"></rect><g class="label" style="" transform="translate(-88.48214721679688, -25.142858505249023)"><foreignObject width="176.96429443359375" height="50.28571701049805"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel">Node-RED<br>ingest, timestamp, store</span></div></foreignObject></g></g><g class="node default default" id="flowchart-DB-1996" transform="translate(1197.4643020629883, 298.8571472167969)"><rect class="basic label-container" style="" rx="0" ry="0" x="-46.96428680419922" y="-32.64285850524902" width="93.92857360839844" height="65.28571701049805"></rect><g class="label" style="" transform="translate(-39.46428680419922, -25.142858505249023)"><foreignObject width="78.92857360839844" height="50.28571701049805"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel">SQLite<br>time series</span></div></foreignObject></g></g><g class="node default default" id="flowchart-UI-1998" transform="translate(1384.7053756713867, 298.8571472167969)"><rect class="basic label-container" style="" rx="0" ry="0" x="-90.27678680419922" y="-32.64285850524902" width="180.55357360839844" height="65.28571701049805"></rect><g class="label" style="" transform="translate(-82.77678680419922, -25.142858505249023)"><foreignObject width="165.55357360839844" height="50.28571701049805"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel">Dashboard<br>live values, 24 h charts</span></div></foreignObject></g></g></g></g></g></svg></div>
+<p>Everything right of the broker runs in one docker-compose on a laptop or a
+Raspberry Pi. The broker is the seam towards the customer's future cloud
+service: a cloud MQTT endpoint replaces the local broker with a config
+change on the node.</p>
+<h2 class="atx" id="5-firmware-architecture">5. Firmware architecture</h2>
+<h3 class="atx" id="51-layers">5.1 Layers</h3>
+<div class="mermaid" data-processed="true"><svg id="mermaid-1788530576470" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="427.1429443359375" style="max-width: 1406.96435546875px;" viewBox="0 0 1406.96435546875 427.1429443359375"><style>#mermaid-1788530576470 {font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#mermaid-1788530576470 .error-icon{fill:#552222;}#mermaid-1788530576470 .error-text{fill:#552222;stroke:#552222;}#mermaid-1788530576470 .edge-thickness-normal{stroke-width:2px;}#mermaid-1788530576470 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-1788530576470 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-1788530576470 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-1788530576470 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-1788530576470 .marker{fill:#333333;stroke:#333333;}#mermaid-1788530576470 .marker.cross{stroke:#333333;}#mermaid-1788530576470 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-1788530576470 .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#333;}#mermaid-1788530576470 .cluster-label text{fill:#333;}#mermaid-1788530576470 .cluster-label span{color:#333;}#mermaid-1788530576470 .label text,#mermaid-1788530576470 span{fill:#333;color:#333;}#mermaid-1788530576470 .node rect,#mermaid-1788530576470 .node circle,#mermaid-1788530576470 .node ellipse,#mermaid-1788530576470 .node polygon,#mermaid-1788530576470 .node path{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#mermaid-1788530576470 .node .label{text-align:center;}#mermaid-1788530576470 .node.clickable{cursor:pointer;}#mermaid-1788530576470 .arrowheadPath{fill:#333333;}#mermaid-1788530576470 .edgePath .path{stroke:#333333;stroke-width:2.0px;}#mermaid-1788530576470 .flowchart-link{stroke:#333333;fill:none;}#mermaid-1788530576470 .edgeLabel{background-color:#e8e8e8;text-align:center;}#mermaid-1788530576470 .edgeLabel rect{opacity:0.5;background-color:#e8e8e8;fill:#e8e8e8;}#mermaid-1788530576470 .cluster rect{fill:#ffffde;stroke:#aaaa33;stroke-width:1px;}#mermaid-1788530576470 .cluster text{fill:#333;}#mermaid-1788530576470 .cluster span{color:#333;}#mermaid-1788530576470 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:hsl(80, 100%, 96.2745098039%);border:1px solid #aaaa33;border-radius:2px;pointer-events:none;z-index:100;}#mermaid-1788530576470 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g transform="translate(0, -0.000003814697265625)"><marker id="flowchart-pointEnd" class="marker flowchart" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="flowchart-pointStart" class="marker flowchart" viewBox="0 0 10 10" refX="0" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="flowchart-circleEnd" class="marker flowchart" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="flowchart-circleStart" class="marker flowchart" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="flowchart-crossEnd" class="marker cross flowchart" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="flowchart-crossStart" class="marker cross flowchart" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path d="M965.065788414719,73.28572082519531L988.6188133182146,77.45238749186198C1012.1718382217105,81.61905415852864,1059.277888028702,89.95238749186198,1082.8309129321976,98.28572082519531C1106.3839378356934,106.61905415852864,1106.3839378356934,114.95238749186198,1106.3839378356934,119.11905415852864L1106.3839378356934,123.28572082519531" id="L-APP-ACQ-0" class=" edge-thickness-normal edge-pattern-solid flowchart-link LS-APP LE-ACQ" style="fill:none;" marker-end="url(#flowchart-pointEnd)"></path><path d="M780.5446434020996,73.28572082519531L780.5446434020996,77.45238749186198C780.5446434020996,81.61905415852864,780.5446434020996,89.95238749186198,780.5446434020996,98.28572082519531C780.5446434020996,106.61905415852864,780.5446434020996,114.95238749186198,780.5446434020996,119.11905415852864L780.5446434020996,123.28572082519531" id="L-APP-VAL-0" class=" edge-thickness-normal edge-pattern-solid flowchart-link LS-APP LE-VAL" style="fill:none;" marker-end="url(#flowchart-pointEnd)"></path><path d="M554.410701751709,69.6141415057403L517.1115961074829,74.3927380589828C479.81249046325684,79.17133461222531,405.2142791748047,88.72852771871031,367.9151735305786,97.67379093861946C330.61606788635254,106.61905415852864,330.61606788635254,114.95238749186198,330.61606788635254,119.11905415852864L330.61606788635254,123.28572082519531" id="L-APP-TEL-0" class=" edge-thickness-normal edge-pattern-solid flowchart-link LS-APP LE-TEL" style="fill:none;" marker-end="url(#flowchart-pointEnd)"></path><path d="M245.45946891425064,188.57144165039062L234.58973636327528,192.73810831705728C223.7200038122999,196.90477498372397,201.98053871034918,205.23810831705728,191.11080615937382,213.57144165039062C180.24107360839844,221.90477498372397,180.24107360839844,230.23810831705728,180.24107360839844,234.40477498372397L180.24107360839844,238.57144165039062" id="L-TEL-PAY-0" class=" edge-thickness-normal edge-pattern-solid flowchart-link LS-TEL LE-PAY" style="fill:none;" marker-end="url(#flowchart-pointEnd)"></path><path d="M439.4104366035916,188.57144165039062L453.2973896440249,192.73810831705728C467.1843426844582,196.90477498372397,494.95824876532487,205.23810831705728,508.8452018057581,213.57144165039062C522.7321548461914,221.90477498372397,522.7321548461914,230.23810831705728,522.7321548461914,234.40477498372397L522.7321548461914,238.57144165039062" id="L-TEL-NET-0" class=" edge-thickness-normal edge-pattern-solid flowchart-link LS-TEL LE-NET" style="fill:none;" marker-end="url(#flowchart-pointEnd)"></path><path d="M961.410717010498,187.84711550697787L941.9375044504801,192.13450319754665C922.4642918904623,196.42189088811543,883.5178667704264,204.99666626925304,864.0446542104086,213.4507206264885C844.5714416503906,221.90477498372397,844.5714416503906,230.23810831705728,844.5714416503906,234.40477498372397L844.5714416503906,238.57144165039062" id="L-ACQ-S1-0" class=" edge-thickness-normal edge-pattern-solid flowchart-link LS-ACQ LE-S1" style="fill:none;" marker-end="url(#flowchart-pointEnd)"></path><path d="M1106.3839378356934,188.57144165039062L1106.3839378356934,192.73810831705728C1106.3839378356934,196.90477498372397,1106.3839378356934,205.23810831705728,1106.3839378356934,213.57144165039062C1106.3839378356934,221.90477498372397,1106.3839378356934,230.23810831705728,1106.3839378356934,234.40477498372397L1106.3839378356934,238.57144165039062" id="L-ACQ-S2-0" class=" edge-thickness-normal edge-pattern-solid flowchart-link LS-ACQ LE-S2" style="fill:none;" marker-end="url(#flowchart-pointEnd)"></path><path d="M1220.436753587062,188.57144165039062L1234.9949160649833,192.73810831705728C1249.5530785429046,196.90477498372397,1278.6694034987472,205.23810831705728,1293.2275659766685,213.57144165039062C1307.7857284545898,221.90477498372397,1307.7857284545898,230.23810831705728,1307.7857284545898,234.40477498372397L1307.7857284545898,238.57144165039062" id="L-ACQ-S3-0" class=" edge-thickness-normal edge-pattern-solid flowchart-link LS-ACQ LE-S3" style="fill:none;" marker-end="url(#flowchart-pointEnd)"></path><path d="M783.3534393305056,303.85716247558594L775.5393260315451,308.0238291422526C767.7252127325847,312.19049580891925,752.0969861346639,320.5238291422526,744.2828728357035,328.85716247558594C736.4687595367432,337.19049580891925,736.4687595367432,345.5238291422526,736.4687595367432,349.69049580891925L736.4687595367432,353.85716247558594" id="L-S1-HW-0" class=" edge-thickness-normal edge-pattern-solid flowchart-link LS-S1 LE-HW" style="fill:none;" marker-end="url(#flowchart-pointEnd)"></path><path d="M905.7894439702757,303.85716247558594L913.6035572692361,308.0238291422526C921.4176705681965,312.19049580891925,937.0458971661174,320.5238291422526,944.8600104650777,328.85716247558594C952.6741237640381,337.19049580891925,952.6741237640381,345.5238291422526,952.6741237640381,349.69049580891925L952.6741237640381,353.85716247558594" id="L-S1-SIM-0" class=" edge-thickness-normal edge-pattern-solid flowchart-link LS-S1 LE-SIM" style="fill:none;" marker-end="url(#flowchart-pointEnd)"></path></g><g class="edgeLabels"><g class="edgeLabel"><g class="label" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default default" id="flowchart-APP-2031" transform="translate(780.5446434020996, 40.642860412597656)"><rect class="basic label-container" style="" rx="0" ry="0" x="-226.13394165039062" y="-32.64285850524902" width="452.26788330078125" height="65.28571701049805"></rect><g class="label" style="" transform="translate(-218.63394165039062, -25.142858505249023)"><foreignObject width="437.26788330078125" height="50.28571701049805"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel">Application loop - main.cpp<br>millis scheduler, state machine, serial commands, LED status</span></div></foreignObject></g></g><g class="node default default" id="flowchart-ACQ-2032" transform="translate(1106.3839378356934, 155.92858123779297)"><rect class="basic label-container" style="" rx="0" ry="0" x="-144.9732208251953" y="-32.64285850524902" width="289.9464416503906" height="65.28571701049805"></rect><g class="label" style="" transform="translate(-137.4732208251953, -25.142858505249023)"><foreignObject width="274.9464416503906" height="50.28571701049805"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel">Acquisition - SensorManager<br>startCycle, update, collect a Snapshot</span></div></foreignObject></g></g><g class="node default default" id="flowchart-VAL-2033" transform="translate(780.5446434020996, 155.92858123779297)"><rect class="basic label-container" style="" rx="0" ry="0" x="-130.86607360839844" y="-32.64285850524902" width="261.7321472167969" height="65.28571701049805"></rect><g class="label" style="" transform="translate(-123.36607360839844, -25.142858505249023)"><foreignObject width="246.73214721679688" height="50.28571701049805"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel">Validity<br>range, rate of change, stuck value</span></div></foreignObject></g></g><g class="node default default" id="flowchart-PAY-2034" transform="translate(180.24107360839844, 271.2143020629883)"><rect class="basic label-container" style="" rx="0" ry="0" x="-172.24107360839844" y="-32.64285850524902" width="344.4821472167969" height="65.28571701049805"></rect><g class="label" style="" transform="translate(-164.74107360839844, -25.142858505249023)"><foreignObject width="329.4821472167969" height="50.28571701049805"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel">Payload<br>flat JSON per sample, snprintf, no float printf</span></div></foreignObject></g></g><g class="node default default" id="flowchart-TEL-2035" transform="translate(330.61606788635254, 155.92858123779297)"><rect class="basic label-container" style="" rx="0" ry="0" x="-118.68750762939453" y="-32.64285850524902" width="237.37501525878906" height="65.28571701049805"></rect><g class="label" style="" transform="translate(-111.18750762939453, -25.142858505249023)"><foreignObject width="222.37501525878906" height="50.28571701049805"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel">Telemetry<br>MQTT publish, status, Last Will</span></div></foreignObject></g></g><g class="node default default" id="flowchart-NET-2036" transform="translate(522.7321548461914, 271.2143020629883)"><rect class="basic label-container" style="" rx="0" ry="0" x="-120.25000762939453" y="-32.64285850524902" width="240.50001525878906" height="65.28571701049805"></rect><g class="label" style="" transform="translate(-112.75000762939453, -25.142858505249023)"><foreignObject width="225.50001525878906" height="50.28571701049805"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel">Network<br>Wi-Fi connect and retry, WiFiS3</span></div></foreignObject></g></g><g class="node default default" id="flowchart-S1-2037" transform="translate(844.5714416503906, 271.2143020629883)"><rect class="basic label-container" style="" rx="0" ry="0" x="-151.58929443359375" y="-32.64285850524902" width="303.1785888671875" height="65.28571701049805"></rect><g class="label" style="" transform="translate(-144.08929443359375, -25.142858505249023)"><foreignObject width="288.1785888671875" height="50.28571701049805"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel">Sht4xSensor<br>frame source + decoder -&gt; two Readings</span></div></foreignObject></g></g><g class="node default default" id="flowchart-S2-2038" transform="translate(1106.3839378356934, 271.2143020629883)"><rect class="basic label-container" style="" rx="0" ry="0" x="-60.22321701049805" y="-32.64285850524902" width="120.4464340209961" height="65.28571701049805"></rect><g class="label" style="" transform="translate(-52.72321701049805, -25.142858505249023)"><foreignObject width="105.4464340209961" height="50.28571701049805"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel">Ds18b20Sensor<br>OneWire async</span></div></foreignObject></g></g><g class="node default default" id="flowchart-S3-2039" transform="translate(1307.7857284545898, 271.2143020629883)"><rect class="basic label-container" style="" rx="0" ry="0" x="-91.17857360839844" y="-32.64285850524902" width="182.35714721679688" height="65.28571701049805"></rect><g class="label" style="" transform="translate(-83.67857360839844, -25.142858505249023)"><foreignObject width="167.35714721679688" height="50.28571701049805"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel">NtcSensor<br>ADC average + NtcMath</span></div></foreignObject></g></g><g class="node default default" id="flowchart-HW-2040" transform="translate(736.4687595367432, 386.5000228881836)"><rect class="basic label-container" style="" rx="0" ry="0" x="-61.73214340209961" y="-32.64285850524902" width="123.46428680419922" height="65.28571701049805"></rect><g class="label" style="" transform="translate(-54.23214340209961, -25.142858505249023)"><foreignObject width="108.46428680419922" height="50.28571701049805"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel">Sht4xHardware<br>I2C on Wire1</span></div></foreignObject></g></g><g class="node default default" id="flowchart-SIM-2041" transform="translate(952.6741237640381, 386.5000228881836)"><rect class="basic label-container" style="" rx="0" ry="0" x="-104.47322082519531" y="-32.64285850524902" width="208.94644165039062" height="65.28571701049805"></rect><g class="label" style="" transform="translate(-96.97322082519531, -25.142858505249023)"><foreignObject width="193.94644165039062" height="50.28571701049805"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel">Sht4xSimulated<br>model -&gt; raw words -&gt; CRC</span></div></foreignObject></g></g></g></g></g></svg></div>
+<p>Two seams matter. The driver contract (5.2) makes the three physical paths
+look alike to <code>SensorManager</code>. Below it, the SHT4x frame seam is unchanged
+from v1: <code>Sht4xSensor</code> sees six bytes whether they came from silicon or from
+the emulator, and a bad CRC is rejected the same way in both cases.</p>
+<p>A third boundary is the <code>lib/</code> versus <code>src/</code> split: everything in <code>lib/</code> has
+no Arduino dependency and is compiled and unit-tested on the PC; everything
+in <code>src/</code> touches the board.</p>
+<h3 class="atx" id="52-interface-contracts">5.2 Interface contracts</h3>
+<p><code>Reading</code> (<code>lib/Reading</code>)</p>
+<ul>
+<li><code>float value</code>, <code>bool valid</code>, <code>uint8_t fault</code>, <code>uint32_t sampledAtMs</code>,
+<code>uint32_t raw</code>. <code>raw</code> is the sensor word, used only for stuck detection.</li>
+<li><code>fault</code> codes: <code>NONE</code>, <code>NO_DEVICE</code>, <code>CRC</code>, <code>TIMEOUT</code>, <code>RANGE</code>, <code>RATE</code>,
+<code>STUCK</code>, <code>NOT_READY</code>. <code>valid</code> is true only when <code>fault == NONE</code>.
+<code>faultName()</code> gives the string for logs.</li>
+<li>Helpers: <code>set(value, raw, nowMs)</code> marks valid; <code>fail(fault, nowMs)</code> sets
+<code>value</code> to NaN.</li>
+</ul>
+<p><code>Snapshot</code></p>
+<ul>
+<li><code>Reading tIn, rhIn, tOut, tWater</code>, <code>uint32_t seq</code>, <code>uint32_t uptimeMs</code>.</li>
+</ul>
+<p>Driver contract (<code>lib/Sensor/Sensor.h</code>, text only, no base class)</p>
+<ul>
+<li><code>bool begin()</code>: initialise; false if the device does not answer. Emulator
+always true. Called once from <code>setup()</code>.</li>
+<li><code>void start(uint32_t nowMs)</code>: trigger one measurement. Returns immediately.</li>
+<li><code>bool ready(uint32_t nowMs) const</code>: true when <code>read()</code> will not block.
+Implementations compare <code>nowMs</code> against the datasheet conversion time.</li>
+<li><code>bool read(Reading&amp; out, uint32_t nowMs)</code> for one channel, or
+<code>bool read(Reading&amp; t, Reading&amp; rh, uint32_t nowMs)</code> for the SHT4x: fill
+the readings, always set <code>fault</code> and <code>sampledAtMs</code>, return <code>valid</code>. On a
+transport failure <code>value</code> is NaN. Never blocks longer than about 20 ms.
+Not callable from an interrupt.</li>
+<li>Timing: SHT4x 8 ms (emulator: immediate), DS18B20 750 ms at 12 bit, NTC
+immediate (16 ADC reads, under 1 ms).</li>
+</ul>
+<p><code>Sht4xDecoder</code> (<code>lib/Sht4x</code>, pure functions)</p>
+<ul>
+<li><code>uint8_t crc8(const uint8_t* data, size_t len)</code></li>
+<li><code>bool decode(const uint8_t frame[6], float&amp; tC, float&amp; rh)</code>: false if
+either CRC fails; outputs untouched on false; RH clipped to 0..100.</li>
+<li><code>wordToTemperature</code>, <code>wordToHumidity</code>, <code>temperatureToWord</code>,
+<code>humidityToWord</code>, <code>encode(tWord, rhWord, frame)</code> for the emulator and tests.</li>
+</ul>
+<p><code>Sht4xFrameSource</code> (abstract, <code>lib/Sht4x</code>)</p>
+<ul>
+<li><code>begin()</code>, <code>startMeasurement(nowMs)</code>, <code>frameReady(nowMs)</code>,
+<code>readFrame(out[6])</code>. <code>readFrame</code> returns false on a transport failure and
+does not check CRC. Implemented by <code>Sht4xHardware</code> (src) and
+<code>Sht4xSimulated</code> (lib).</li>
+</ul>
+<p><code>Sht4xSimulated</code></p>
+<ul>
+<li>Model: <code>T_in = T_ref + lampOffset(t) + drift + noise</code>, where <code>T_ref</code> is a
+constant or, via <code>setReferenceTemperature()</code>, the latest valid <code>T_out</code>
+reading so the demo stays physically coherent. <code>RH_in</code> from a simple
+inverse relation to <code>T_in</code> plus a base level and noise. Scenarios by
+<code>setScenario()</code> or <code>setScenarioByName()</code>: <code>steady</code>, <code>heatup</code> (lamp on
+ramp), <code>cooldown</code>, <code>stuck</code> (same raw words every frame), <code>badcrc</code> (valid
+words, corrupted CRC).</li>
+<li>Status: frame building, scenario selection and <code>badcrc</code> are implemented
+and tested; the model itself returns constants (<code>TODO(emulator)</code>).</li>
+</ul>
+<p><code>NtcMath</code> (<code>lib/NtcMath</code>, pure functions)</p>
+<ul>
+<li><code>adcIsShort</code>, <code>adcIsOpen</code>, <code>adcPlausible</code>, <code>resistanceFromAdc</code>,
+<code>temperatureFromResistance</code>, <code>temperatureFromAdc</code>, with a <code>Params</code> struct
+(R_s, R0, B, T0, calibration offset). Tested at the 25 C midpoint and two
+beta-equation points.</li>
+</ul>
+<p><code>Validity</code> (<code>lib/Validity</code>, class with per-channel stuck counters)</p>
+<ul>
+<li><code>void check(Snapshot&amp; s, const Snapshot&amp; prev)</code>: applies, per channel,
+physical range, maximum rate of change against <code>prev</code> (time delta from
+<code>sampledAtMs</code>), and stuck detection (N identical <code>raw</code> values in a row).
+Downgrades <code>valid</code> and sets <code>fault</code>, never changes <code>value</code>. Channels that
+are already invalid keep their driver-level fault.</li>
+<li>Default limits (tune in week 2): T_in 5..45 C, T_out -20..45 C, T_water
+5..40 C, RH 5..100 %; rate limit 2 C/min for air, 1 C/min for water,
+5 %RH/min; stuck after 30 identical raw readings.</li>
+<li>Status: limits and structure in place, rules are <code>TODO(validity)</code>.</li>
+</ul>
+<p><code>Payload</code> (<code>lib/Payload</code>, pure)</p>
+<ul>
+<li><code>int buildTelemetryJson(char* buf, size_t len, const Snapshot&amp;, const SourceInfo&amp;)</code>:
+snprintf semantics (returns the full length, so <code>&gt;= len</code> means truncated),
+buffer always terminated. Numbers are formatted as fixed-point integers
+with one decimal. Invalid channels are <code>null</code>. Format in 5.4. Tested
+against the exact expected string.</li>
+</ul>
+<p><code>SensorManager</code> (<code>src/sensors</code>)</p>
+<ul>
+<li>Owns the three drivers. <code>startCycle(nowMs)</code> calls <code>start()</code> on all;
+<code>update(nowMs, Snapshot&amp;)</code> is called every loop pass and returns true
+exactly once per cycle, when all drivers are ready or 1000 ms has passed,
+with the snapshot filled in. A driver that is not ready by the deadline
+gets <code>TIMEOUT</code>; a driver that fails keeps its slot with <code>valid=false</code>;
+the other channels are unaffected. This is requirement R8 at the
+acquisition level: one broken sensor never stops the others.</li>
+</ul>
+<p><code>Network</code> (<code>src/net</code>)</p>
+<ul>
+<li><code>begin()</code> false if the Wi-Fi module does not answer. <code>poll(nowMs)</code>
+refreshes the status and re-issues <code>WiFi.begin()</code> at most every
+<code>WIFI_RETRY_MS</code> while disconnected. <code>connected()</code>, <code>rssi()</code>.</li>
+</ul>
+<p><code>Telemetry</code> (<code>src/net</code>)</p>
+<ul>
+<li>Config struct with host, port, credentials, client id, topics, retry and
+keep-alive intervals. <code>begin()</code>, <code>poll(nowMs)</code> (keep-alives, reconnect at
+most every <code>MQTT_RETRY_MS</code>), <code>connected()</code>,
+<code>publish(const Snapshot&amp;, const SourceInfo&amp;)</code>. Last Will <code>offline</code>,
+retained, on the status topic; <code>online</code> published retained on connect.
+<code>onCommand()</code> and the cmd subscription exist but the topic is not
+subscribed (5.4).</li>
+</ul>
+<p><code>SerialCommand</code> (<code>src/ui</code>)</p>
+<ul>
+<li>Line-based commands from the USB serial port, handler gets the first word
+and the rest: <code>scenario &lt;name&gt;</code> (emulator only), <code>sample &lt;seconds&gt;</code> with a
+2 s floor, <code>help</code>.</li>
+</ul>
+<p><code>StatusLed</code> (<code>src/ui</code>)</p>
+<ul>
+<li><code>show(state, faultPresent)</code>, <code>blinkPublish(nowMs)</code>, <code>update(nowMs)</code> over
+the 12x8 LED matrix. Frame format from the <code>Arduino_LED_Matrix</code> example.</li>
+</ul>
+<p>Selection between emulator and hardware: <code>#define SHT4X_SIMULATED 1</code> in
+<code>config.h</code>.</p>
+<h3 class="atx" id="53-runtime-behaviour">5.3 Runtime behaviour</h3>
+<p>Non-blocking loop on <code>millis()</code> timers. Sampling and validation run in
+every state; publishing only when Online.</p>
+<div class="mermaid" data-processed="true"><svg id="mermaid-1788530576534" width="100%" xmlns="http://www.w3.org/2000/svg" class="statediagram" height="566.2857666015625" style="max-width: 1170.75px;" viewBox="0.00000762939453125 9.5367431640625e-7 669 566.2857666015625"><style>#mermaid-1788530576534 {font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#mermaid-1788530576534 .error-icon{fill:#552222;}#mermaid-1788530576534 .error-text{fill:#552222;stroke:#552222;}#mermaid-1788530576534 .edge-thickness-normal{stroke-width:2px;}#mermaid-1788530576534 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-1788530576534 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-1788530576534 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-1788530576534 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-1788530576534 .marker{fill:#333333;stroke:#333333;}#mermaid-1788530576534 .marker.cross{stroke:#333333;}#mermaid-1788530576534 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-1788530576534 defs #statediagram-barbEnd{fill:#333333;stroke:#333333;}#mermaid-1788530576534 g.stateGroup text{fill:#9370DB;stroke:none;font-size:10px;}#mermaid-1788530576534 g.stateGroup text{fill:#333;stroke:none;font-size:10px;}#mermaid-1788530576534 g.stateGroup .state-title{font-weight:bolder;fill:#131300;}#mermaid-1788530576534 g.stateGroup rect{fill:#ECECFF;stroke:#9370DB;}#mermaid-1788530576534 g.stateGroup line{stroke:#333333;stroke-width:1;}#mermaid-1788530576534 .transition{stroke:#333333;stroke-width:1;fill:none;}#mermaid-1788530576534 .stateGroup .composit{fill:white;border-bottom:1px;}#mermaid-1788530576534 .stateGroup .alt-composit{fill:#e0e0e0;border-bottom:1px;}#mermaid-1788530576534 .state-note{stroke:#aaaa33;fill:#fff5ad;}#mermaid-1788530576534 .state-note text{fill:black;stroke:none;font-size:10px;}#mermaid-1788530576534 .stateLabel .box{stroke:none;stroke-width:0;fill:#ECECFF;opacity:0.5;}#mermaid-1788530576534 .edgeLabel .label rect{fill:#ECECFF;opacity:0.5;}#mermaid-1788530576534 .edgeLabel .label text{fill:#333;}#mermaid-1788530576534 .label div .edgeLabel{color:#333;}#mermaid-1788530576534 .stateLabel text{fill:#131300;font-size:10px;font-weight:bold;}#mermaid-1788530576534 .node circle.state-start{fill:#333333;stroke:#333333;}#mermaid-1788530576534 .node .fork-join{fill:#333333;stroke:#333333;}#mermaid-1788530576534 .node circle.state-end{fill:#9370DB;stroke:white;stroke-width:1.5;}#mermaid-1788530576534 .end-state-inner{fill:white;stroke-width:1.5;}#mermaid-1788530576534 .node rect{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#mermaid-1788530576534 .node polygon{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#mermaid-1788530576534 #statediagram-barbEnd{fill:#333333;}#mermaid-1788530576534 .statediagram-cluster rect{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#mermaid-1788530576534 .cluster-label,#mermaid-1788530576534 .nodeLabel{color:#131300;}#mermaid-1788530576534 .statediagram-cluster rect.outer{rx:5px;ry:5px;}#mermaid-1788530576534 .statediagram-state .divider{stroke:#9370DB;}#mermaid-1788530576534 .statediagram-state .title-state{rx:5px;ry:5px;}#mermaid-1788530576534 .statediagram-cluster.statediagram-cluster .inner{fill:white;}#mermaid-1788530576534 .statediagram-cluster.statediagram-cluster-alt .inner{fill:#f0f0f0;}#mermaid-1788530576534 .statediagram-cluster .inner{rx:0;ry:0;}#mermaid-1788530576534 .statediagram-state rect.basic{rx:5px;ry:5px;}#mermaid-1788530576534 .statediagram-state rect.divider{stroke-dasharray:10,10;fill:#f0f0f0;}#mermaid-1788530576534 .note-edge{stroke-dasharray:5;}#mermaid-1788530576534 .statediagram-note rect{fill:#fff5ad;stroke:#aaaa33;stroke-width:1px;rx:0;ry:0;}#mermaid-1788530576534 .statediagram-note rect{fill:#fff5ad;stroke:#aaaa33;stroke-width:1px;rx:0;ry:0;}#mermaid-1788530576534 .statediagram-note text{fill:black;}#mermaid-1788530576534 .statediagram-note .nodeLabel{color:black;}#mermaid-1788530576534 .statediagram .edgeLabel{color:red;}#mermaid-1788530576534 #dependencyStart,#mermaid-1788530576534 #dependencyEnd{fill:#333333;stroke:#333333;stroke-width:1;}#mermaid-1788530576534 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g><defs><marker id="statediagram-barbEnd" refX="19" refY="7" markerWidth="20" markerHeight="14" markerUnits="strokeWidth" orient="auto"><path d="M 19,7 L9,13 L14,7 L9,1 Z"></path></marker></defs><g class="root"><g class="clusters"><g class="note-cluster" id="WifiConnecting----parent"><rect x="252.52679443359375" y="187.2857151031494" width="408.47322845458984" height="255.71428871154785" fill="none"></rect></g></g><g class="edgePaths"><path d="M412.65626335144043,22L412.65626335144043,26.166666666666668C412.65626335144043,30.333333333333332,412.65626335144043,38.666666666666664,412.65626335144043,47C412.65626335144043,55.333333333333336,412.65626335144043,63.666666666666664,412.65626335144043,67.83333333333333L412.65626335144043,72" id="edge112" class=" edge-thickness-normal transition" style="fill:none" marker-end="url(#statediagram-barbEnd)"></path><path d="M412.65626335144043,112.14285659790039L412.65626335144043,118.40476147333781C412.65626335144043,124.66666634877522,412.65626335144043,137.19047609965006,412.65626335144043,149.7142858505249C412.65626335144043,162.23809560139975,412.65626335144043,174.76190535227457,412.65626335144043,185.19047689437866C412.65626335144043,195.61904843648276,412.65626335144043,203.95238176981607,412.65626335144043,208.11904843648276L412.65626335144043,212.2857151031494" id="edge113" class=" edge-thickness-normal transition" style="fill:none" marker-end="url(#statediagram-barbEnd)"></path><path d="M374.187579296451,252.4285717010498L362.18607962000806,258.69047657648724C350.18457994356504,264.9523814519246,326.181580590679,277.4761912027995,289.9988034214552,294.1904773712158C253.81602625223135,310.90476353963214,205.4534712666697,331.80952612559,181.27219377388894,342.2619074185689L157.09091628110812,352.71428871154785" id="edge114" class=" edge-thickness-normal transition" style="fill:none" marker-end="url(#statediagram-barbEnd)"></path><path d="M99.34821039702462,392.85714530944824L94.63987816593685,401.21428839365643C89.9315459348491,409.57143147786456,80.51488147267357,426.28571764628094,75.80654924158581,440.9047656059265C71.09821701049805,455.5238135655721,71.09821701049805,468.04762331644696,82.74628321329753,480.9883249109434C94.394349416097,493.9290265054398,117.69048182169597,507.2866199435578,129.33854802449545,513.9654166626168L140.98661422729492,520.6442133816759" id="edge115" class=" edge-thickness-normal transition" style="fill:none" marker-end="url(#statediagram-barbEnd)"></path><path d="M179.08630665775365,518.1428623199463L181.4126973867104,511.88095744450885C183.73908811566716,505.61905256907147,188.39186957358064,493.0952428181966,190.71826030253737,480.5714330673218C193.04465103149414,468.04762331644696,193.04465103149414,455.5238135655721,183.2385041713912,440.9047656059265C173.4323573112883,426.28571764628094,153.82006359108246,409.57143147786456,144.01391673097953,401.21428839365643L134.2077698708766,392.85714530944824" id="edge116" class=" edge-thickness-normal transition" style="fill:none" marker-end="url(#statediagram-barbEnd)"></path><path d="M202.27233123779297,534.1582717956394L269.7462914784749,525.2271320075864C337.2202517191569,516.2959922195336,472.1681722005208,498.43371264342767,539.6421324412028,483.2406679799373C607.1160926818848,468.04762331644696,607.1160926818848,455.5238135655721,607.1160926818848,437.5595275561015C607.1160926818848,419.59524154663086,607.1160926818848,396.19047927856445,607.1160926818848,370.6904788017273C607.1160926818848,345.19047832489014,607.1160926818848,317.5952396392822,584.9918355941772,297.2394257113436C562.8675785064697,276.8836117834049,518.6190643310547,263.7672226131354,496.49480724334717,257.2090280280007L474.37055015563965,250.650833442866" id="edge117" class=" edge-thickness-normal transition" style="fill:none" marker-end="url(#statediagram-barbEnd)"></path><path d="M174.62054252624512,353.534037486732L209.8028351465861,342.94503139788907C244.9851277669271,332.3560253090461,315.34971300760907,311.1780131313602,353.45878666898926,294.32710216707983C391.5678603303695,277.4761912027995,397.42142241244807,264.9523814519246,400.3482034534873,258.69047657648724L403.2749844945266,252.4285717010498" id="edge118" class=" edge-thickness-normal transition" style="fill:none" marker-end="url(#statediagram-barbEnd)"></path><path d="M422.03754220835424,252.4285717010498L424.96432324939354,258.69047657648724C427.8911042904328,264.9523814519246,433.74466637251135,277.4761912027995,436.6714474135506,290.0000009536743C439.59822845458984,302.52381070454913,439.59822845458984,315.047620455424,439.59822845458984,321.3095253308614L439.59822845458984,327.5714302062988" class=" edge-thickness-normal transition note-edge" style="fill:none"></path></g><g class="edgeLabels"><g class="edgeLabel"><g class="label" transform="translate(0, 0)"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(412.65626335144043, 149.7142858505249)"><g class="label" transform="translate(-67.65178680419922, -12.571429252624512)"><rect rx="0" ry="0" width="135.30357360839844" height="25.142860412597656"></rect><foreignObject width="135.30357360839844" height="25.142858505249023"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">sensors begin done</span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(302.17858123779297, 290.0000009536743)"><g class="label" transform="translate(-29.65178680419922, -12.571429252624512)"><rect rx="0" ry="0" width="59.30357360839844" height="25.142860412597656"></rect><foreignObject width="59.30357360839844" height="25.142858505249023"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">Wi-Fi up</span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(71.09821701049805, 480.5714330673218)"><g class="label" transform="translate(-63.09821701049805, -12.571429252624512)"><rect rx="0" ry="0" width="126.19644165039062" height="25.142860412597656"></rect><foreignObject width="126.1964340209961" height="25.142858505249023"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">broker connected</span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(193.04465103149414, 480.5714330673218)"><g class="label" transform="translate(-38.84821701049805, -12.571429252624512)"><rect rx="0" ry="0" width="77.69644165039062" height="25.142860412597656"></rect><foreignObject width="77.6964340209961" height="25.142858505249023"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">broker lost</span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(607.1160926818848, 372.78571701049805)"><g class="label" transform="translate(-33.88393020629883, -12.571429252624512)"><rect rx="0" ry="0" width="67.76786804199219" height="25.142860412597656"></rect><foreignObject width="67.76786041259766" height="25.142858505249023"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">Wi-Fi lost</span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(385.714298248291, 290.0000009536743)"><g class="label" transform="translate(-33.88393020629883, -12.571429252624512)"><rect rx="0" ry="0" width="67.76786804199219" height="25.142860412597656"></rect><foreignObject width="67.76786041259766" height="25.142858505249023"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">Wi-Fi lost</span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" transform="translate(0, 0)"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default" id="state-root_start-112" transform="translate(412.65626335144043, 15)"><circle class="state-start" r="7" width="14" height="14"></circle></g><g class="node statediagram-state" id="state-Boot-113" transform="translate(412.65626335144043, 92.0714282989502)"><rect class="basic label-container" style="" x="-23.785715103149414" y="-20.07142925262451" width="47.57143020629883" height="40.14285850524902"></rect><g class="label" style="" transform="translate(-16.285715103149414, -12.571429252624512)"><foreignObject width="32.57143020629883" height="25.142858505249023"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel">Boot</span></div></foreignObject></g></g><g class="node statediagram-state" id="state-WifiConnecting-119" transform="translate(412.65626335144043, 232.3571434020996)"><rect class="basic label-container" style="" x="-61.71428680419922" y="-20.07142925262451" width="123.42857360839844" height="40.14285850524902"></rect><g class="label" style="" transform="translate(-54.21428680419922, -12.571429252624512)"><foreignObject width="108.42857360839844" height="25.142858505249023"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel">WifiConnecting</span></div></foreignObject></g></g><g class="node statediagram-state" id="state-MqttConnecting-118" transform="translate(110.6562557220459, 372.78571701049805)"><rect class="basic label-container" style="" x="-63.96428680419922" y="-20.07142925262451" width="127.92857360839844" height="40.14285850524902"></rect><g class="label" style="" transform="translate(-56.46428680419922, -12.571429252624512)"><foreignObject width="112.92857360839844" height="25.142858505249023"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel">MqttConnecting</span></div></foreignObject></g></g><g class="node statediagram-state" id="state-Online-117" transform="translate(171.62947273254395, 538.2142906188965)"><rect class="basic label-container" style="" x="-30.642858505249023" y="-20.07142925262451" width="61.28571701049805" height="40.14285850524902"></rect><g class="label" style="" transform="translate(-23.142858505249023, -12.571429252624512)"><foreignObject width="46.28571701049805" height="25.142858505249023"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel">Online</span></div></foreignObject></g></g><g class="node statediagram-note" id="state-WifiConnecting----note-119" transform="translate(439.59822845458984, 372.78571701049805)"><rect x="-98.6339340209961" y="-45.21428680419922" width="197.2678680419922" height="90.42857360839844"></rect><g class="label" style="" transform="translate(-91.1339340209961, -37.71428680419922)"><foreignObject width="182.2678680419922" height="75.42857360839844"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="nodeLabel">Sampling and validation<br>        run in every state.<br>        Publishing only in Online.</span></div></foreignObject></g></g></g></g></g></svg></div>
+<p>Known blocking spots: <code>WiFi.begin()</code> on WiFiS3 stalls for a few seconds
+while the module associates, and the MQTT connect for up to
+<code>MQTT_CONNECT_TIMEOUT_MS</code> (5 s). Sampling pauses during a reconnect attempt
+and resumes afterwards. The DS18B20 timing is <code>millis</code>-based, so a late
+read is still a correct read. Accepted for the prototype and listed in
+section 12.</p>
+<p>Sample cycle:</p>
+<div class="mermaid" data-processed="true"><svg id="mermaid-1788530576568" width="100%" xmlns="http://www.w3.org/2000/svg" height="765" style="max-width: 1066px;" viewBox="-50 -10 1066 765"><style>#mermaid-1788530576568 {font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#mermaid-1788530576568 .error-icon{fill:#552222;}#mermaid-1788530576568 .error-text{fill:#552222;stroke:#552222;}#mermaid-1788530576568 .edge-thickness-normal{stroke-width:2px;}#mermaid-1788530576568 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-1788530576568 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-1788530576568 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-1788530576568 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-1788530576568 .marker{fill:#333333;stroke:#333333;}#mermaid-1788530576568 .marker.cross{stroke:#333333;}#mermaid-1788530576568 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-1788530576568 .actor{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;}#mermaid-1788530576568 text.actor&gt;tspan{fill:black;stroke:none;}#mermaid-1788530576568 .actor-line{stroke:grey;}#mermaid-1788530576568 .messageLine0{stroke-width:1.5;stroke-dasharray:none;stroke:#333;}#mermaid-1788530576568 .messageLine1{stroke-width:1.5;stroke-dasharray:2,2;stroke:#333;}#mermaid-1788530576568 #arrowhead path{fill:#333;stroke:#333;}#mermaid-1788530576568 .sequenceNumber{fill:white;}#mermaid-1788530576568 #sequencenumber{fill:#333;}#mermaid-1788530576568 #crosshead path{fill:#333;stroke:#333;}#mermaid-1788530576568 .messageText{fill:#333;stroke:#333;}#mermaid-1788530576568 .labelBox{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;}#mermaid-1788530576568 .labelText,#mermaid-1788530576568 .labelText&gt;tspan{fill:black;stroke:none;}#mermaid-1788530576568 .loopText,#mermaid-1788530576568 .loopText&gt;tspan{fill:black;stroke:none;}#mermaid-1788530576568 .loopLine{stroke-width:2px;stroke-dasharray:2,2;stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);}#mermaid-1788530576568 .note{stroke:#aaaa33;fill:#fff5ad;}#mermaid-1788530576568 .noteText,#mermaid-1788530576568 .noteText&gt;tspan{fill:black;stroke:none;}#mermaid-1788530576568 .activation0{fill:#f4f4f4;stroke:#666;}#mermaid-1788530576568 .activation1{fill:#f4f4f4;stroke:#666;}#mermaid-1788530576568 .activation2{fill:#f4f4f4;stroke:#666;}#mermaid-1788530576568 .actorPopupMenu{position:absolute;}#mermaid-1788530576568 .actorPopupMenuPanel{position:absolute;fill:#ECECFF;box-shadow:0px 8px 16px 0px rgba(0,0,0,0.2);filter:drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));}#mermaid-1788530576568 .actor-man line{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;}#mermaid-1788530576568 .actor-man circle,#mermaid-1788530576568 line{stroke:hsl(259.6261682243, 59.7765363128%, 87.9019607843%);fill:#ECECFF;stroke-width:2px;}#mermaid-1788530576568 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g></g><defs><symbol id="computer" width="24" height="24"><path transform="scale(.5)" d="M2 2v13h20v-13h-20zm18 11h-16v-9h16v9zm-10.228 6l.466-1h3.524l.467 1h-4.457zm14.228 3h-24l2-6h2.104l-1.33 4h18.45l-1.297-4h2.073l2 6zm-5-10h-14v-7h14v7z"></path></symbol></defs><defs><symbol id="database" fill-rule="evenodd" clip-rule="evenodd"><path transform="scale(.5)" d="M12.258.001l.256.004.255.005.253.008.251.01.249.012.247.015.246.016.242.019.241.02.239.023.236.024.233.027.231.028.229.031.225.032.223.034.22.036.217.038.214.04.211.041.208.043.205.045.201.046.198.048.194.05.191.051.187.053.183.054.18.056.175.057.172.059.168.06.163.061.16.063.155.064.15.066.074.033.073.033.071.034.07.034.069.035.068.035.067.035.066.035.064.036.064.036.062.036.06.036.06.037.058.037.058.037.055.038.055.038.053.038.052.038.051.039.05.039.048.039.047.039.045.04.044.04.043.04.041.04.04.041.039.041.037.041.036.041.034.041.033.042.032.042.03.042.029.042.027.042.026.043.024.043.023.043.021.043.02.043.018.044.017.043.015.044.013.044.012.044.011.045.009.044.007.045.006.045.004.045.002.045.001.045v17l-.001.045-.002.045-.004.045-.006.045-.007.045-.009.044-.011.045-.012.044-.013.044-.015.044-.017.043-.018.044-.02.043-.021.043-.023.043-.024.043-.026.043-.027.042-.029.042-.03.042-.032.042-.033.042-.034.041-.036.041-.037.041-.039.041-.04.041-.041.04-.043.04-.044.04-.045.04-.047.039-.048.039-.05.039-.051.039-.052.038-.053.038-.055.038-.055.038-.058.037-.058.037-.06.037-.06.036-.062.036-.064.036-.064.036-.066.035-.067.035-.068.035-.069.035-.07.034-.071.034-.073.033-.074.033-.15.066-.155.064-.16.063-.163.061-.168.06-.172.059-.175.057-.18.056-.183.054-.187.053-.191.051-.194.05-.198.048-.201.046-.205.045-.208.043-.211.041-.214.04-.217.038-.22.036-.223.034-.225.032-.229.031-.231.028-.233.027-.236.024-.239.023-.241.02-.242.019-.246.016-.247.015-.249.012-.251.01-.253.008-.255.005-.256.004-.258.001-.258-.001-.256-.004-.255-.005-.253-.008-.251-.01-.249-.012-.247-.015-.245-.016-.243-.019-.241-.02-.238-.023-.236-.024-.234-.027-.231-.028-.228-.031-.226-.032-.223-.034-.22-.036-.217-.038-.214-.04-.211-.041-.208-.043-.204-.045-.201-.046-.198-.048-.195-.05-.19-.051-.187-.053-.184-.054-.179-.056-.176-.057-.172-.059-.167-.06-.164-.061-.159-.063-.155-.064-.151-.066-.074-.033-.072-.033-.072-.034-.07-.034-.069-.035-.068-.035-.067-.035-.066-.035-.064-.036-.063-.036-.062-.036-.061-.036-.06-.037-.058-.037-.057-.037-.056-.038-.055-.038-.053-.038-.052-.038-.051-.039-.049-.039-.049-.039-.046-.039-.046-.04-.044-.04-.043-.04-.041-.04-.04-.041-.039-.041-.037-.041-.036-.041-.034-.041-.033-.042-.032-.042-.03-.042-.029-.042-.027-.042-.026-.043-.024-.043-.023-.043-.021-.043-.02-.043-.018-.044-.017-.043-.015-.044-.013-.044-.012-.044-.011-.045-.009-.044-.007-.045-.006-.045-.004-.045-.002-.045-.001-.045v-17l.001-.045.002-.045.004-.045.006-.045.007-.045.009-.044.011-.045.012-.044.013-.044.015-.044.017-.043.018-.044.02-.043.021-.043.023-.043.024-.043.026-.043.027-.042.029-.042.03-.042.032-.042.033-.042.034-.041.036-.041.037-.041.039-.041.04-.041.041-.04.043-.04.044-.04.046-.04.046-.039.049-.039.049-.039.051-.039.052-.038.053-.038.055-.038.056-.038.057-.037.058-.037.06-.037.061-.036.062-.036.063-.036.064-.036.066-.035.067-.035.068-.035.069-.035.07-.034.072-.034.072-.033.074-.033.151-.066.155-.064.159-.063.164-.061.167-.06.172-.059.176-.057.179-.056.184-.054.187-.053.19-.051.195-.05.198-.048.201-.046.204-.045.208-.043.211-.041.214-.04.217-.038.22-.036.223-.034.226-.032.228-.031.231-.028.234-.027.236-.024.238-.023.241-.02.243-.019.245-.016.247-.015.249-.012.251-.01.253-.008.255-.005.256-.004.258-.001.258.001zm-9.258 20.499v.01l.001.021.003.021.004.022.005.021.006.022.007.022.009.023.01.022.011.023.012.023.013.023.015.023.016.024.017.023.018.024.019.024.021.024.022.025.023.024.024.025.052.049.056.05.061.051.066.051.07.051.075.051.079.052.084.052.088.052.092.052.097.052.102.051.105.052.11.052.114.051.119.051.123.051.127.05.131.05.135.05.139.048.144.049.147.047.152.047.155.047.16.045.163.045.167.043.171.043.176.041.178.041.183.039.187.039.19.037.194.035.197.035.202.033.204.031.209.03.212.029.216.027.219.025.222.024.226.021.23.02.233.018.236.016.24.015.243.012.246.01.249.008.253.005.256.004.259.001.26-.001.257-.004.254-.005.25-.008.247-.011.244-.012.241-.014.237-.016.233-.018.231-.021.226-.021.224-.024.22-.026.216-.027.212-.028.21-.031.205-.031.202-.034.198-.034.194-.036.191-.037.187-.039.183-.04.179-.04.175-.042.172-.043.168-.044.163-.045.16-.046.155-.046.152-.047.148-.048.143-.049.139-.049.136-.05.131-.05.126-.05.123-.051.118-.052.114-.051.11-.052.106-.052.101-.052.096-.052.092-.052.088-.053.083-.051.079-.052.074-.052.07-.051.065-.051.06-.051.056-.05.051-.05.023-.024.023-.025.021-.024.02-.024.019-.024.018-.024.017-.024.015-.023.014-.024.013-.023.012-.023.01-.023.01-.022.008-.022.006-.022.006-.022.004-.022.004-.021.001-.021.001-.021v-4.127l-.077.055-.08.053-.083.054-.085.053-.087.052-.09.052-.093.051-.095.05-.097.05-.1.049-.102.049-.105.048-.106.047-.109.047-.111.046-.114.045-.115.045-.118.044-.12.043-.122.042-.124.042-.126.041-.128.04-.13.04-.132.038-.134.038-.135.037-.138.037-.139.035-.142.035-.143.034-.144.033-.147.032-.148.031-.15.03-.151.03-.153.029-.154.027-.156.027-.158.026-.159.025-.161.024-.162.023-.163.022-.165.021-.166.02-.167.019-.169.018-.169.017-.171.016-.173.015-.173.014-.175.013-.175.012-.177.011-.178.01-.179.008-.179.008-.181.006-.182.005-.182.004-.184.003-.184.002h-.37l-.184-.002-.184-.003-.182-.004-.182-.005-.181-.006-.179-.008-.179-.008-.178-.01-.176-.011-.176-.012-.175-.013-.173-.014-.172-.015-.171-.016-.17-.017-.169-.018-.167-.019-.166-.02-.165-.021-.163-.022-.162-.023-.161-.024-.159-.025-.157-.026-.156-.027-.155-.027-.153-.029-.151-.03-.15-.03-.148-.031-.146-.032-.145-.033-.143-.034-.141-.035-.14-.035-.137-.037-.136-.037-.134-.038-.132-.038-.13-.04-.128-.04-.126-.041-.124-.042-.122-.042-.12-.044-.117-.043-.116-.045-.113-.045-.112-.046-.109-.047-.106-.047-.105-.048-.102-.049-.1-.049-.097-.05-.095-.05-.093-.052-.09-.051-.087-.052-.085-.053-.083-.054-.08-.054-.077-.054v4.127zm0-5.654v.011l.001.021.003.021.004.021.005.022.006.022.007.022.009.022.01.022.011.023.012.023.013.023.015.024.016.023.017.024.018.024.019.024.021.024.022.024.023.025.024.024.052.05.056.05.061.05.066.051.07.051.075.052.079.051.084.052.088.052.092.052.097.052.102.052.105.052.11.051.114.051.119.052.123.05.127.051.131.05.135.049.139.049.144.048.147.048.152.047.155.046.16.045.163.045.167.044.171.042.176.042.178.04.183.04.187.038.19.037.194.036.197.034.202.033.204.032.209.03.212.028.216.027.219.025.222.024.226.022.23.02.233.018.236.016.24.014.243.012.246.01.249.008.253.006.256.003.259.001.26-.001.257-.003.254-.006.25-.008.247-.01.244-.012.241-.015.237-.016.233-.018.231-.02.226-.022.224-.024.22-.025.216-.027.212-.029.21-.03.205-.032.202-.033.198-.035.194-.036.191-.037.187-.039.183-.039.179-.041.175-.042.172-.043.168-.044.163-.045.16-.045.155-.047.152-.047.148-.048.143-.048.139-.05.136-.049.131-.05.126-.051.123-.051.118-.051.114-.052.11-.052.106-.052.101-.052.096-.052.092-.052.088-.052.083-.052.079-.052.074-.051.07-.052.065-.051.06-.05.056-.051.051-.049.023-.025.023-.024.021-.025.02-.024.019-.024.018-.024.017-.024.015-.023.014-.023.013-.024.012-.022.01-.023.01-.023.008-.022.006-.022.006-.022.004-.021.004-.022.001-.021.001-.021v-4.139l-.077.054-.08.054-.083.054-.085.052-.087.053-.09.051-.093.051-.095.051-.097.05-.1.049-.102.049-.105.048-.106.047-.109.047-.111.046-.114.045-.115.044-.118.044-.12.044-.122.042-.124.042-.126.041-.128.04-.13.039-.132.039-.134.038-.135.037-.138.036-.139.036-.142.035-.143.033-.144.033-.147.033-.148.031-.15.03-.151.03-.153.028-.154.028-.156.027-.158.026-.159.025-.161.024-.162.023-.163.022-.165.021-.166.02-.167.019-.169.018-.169.017-.171.016-.173.015-.173.014-.175.013-.175.012-.177.011-.178.009-.179.009-.179.007-.181.007-.182.005-.182.004-.184.003-.184.002h-.37l-.184-.002-.184-.003-.182-.004-.182-.005-.181-.007-.179-.007-.179-.009-.178-.009-.176-.011-.176-.012-.175-.013-.173-.014-.172-.015-.171-.016-.17-.017-.169-.018-.167-.019-.166-.02-.165-.021-.163-.022-.162-.023-.161-.024-.159-.025-.157-.026-.156-.027-.155-.028-.153-.028-.151-.03-.15-.03-.148-.031-.146-.033-.145-.033-.143-.033-.141-.035-.14-.036-.137-.036-.136-.037-.134-.038-.132-.039-.13-.039-.128-.04-.126-.041-.124-.042-.122-.043-.12-.043-.117-.044-.116-.044-.113-.046-.112-.046-.109-.046-.106-.047-.105-.048-.102-.049-.1-.049-.097-.05-.095-.051-.093-.051-.09-.051-.087-.053-.085-.052-.083-.054-.08-.054-.077-.054v4.139zm0-5.666v.011l.001.02.003.022.004.021.005.022.006.021.007.022.009.023.01.022.011.023.012.023.013.023.015.023.016.024.017.024.018.023.019.024.021.025.022.024.023.024.024.025.052.05.056.05.061.05.066.051.07.051.075.052.079.051.084.052.088.052.092.052.097.052.102.052.105.051.11.052.114.051.119.051.123.051.127.05.131.05.135.05.139.049.144.048.147.048.152.047.155.046.16.045.163.045.167.043.171.043.176.042.178.04.183.04.187.038.19.037.194.036.197.034.202.033.204.032.209.03.212.028.216.027.219.025.222.024.226.021.23.02.233.018.236.017.24.014.243.012.246.01.249.008.253.006.256.003.259.001.26-.001.257-.003.254-.006.25-.008.247-.01.244-.013.241-.014.237-.016.233-.018.231-.02.226-.022.224-.024.22-.025.216-.027.212-.029.21-.03.205-.032.202-.033.198-.035.194-.036.191-.037.187-.039.183-.039.179-.041.175-.042.172-.043.168-.044.163-.045.16-.045.155-.047.152-.047.148-.048.143-.049.139-.049.136-.049.131-.051.126-.05.123-.051.118-.052.114-.051.11-.052.106-.052.101-.052.096-.052.092-.052.088-.052.083-.052.079-.052.074-.052.07-.051.065-.051.06-.051.056-.05.051-.049.023-.025.023-.025.021-.024.02-.024.019-.024.018-.024.017-.024.015-.023.014-.024.013-.023.012-.023.01-.022.01-.023.008-.022.006-.022.006-.022.004-.022.004-.021.001-.021.001-.021v-4.153l-.077.054-.08.054-.083.053-.085.053-.087.053-.09.051-.093.051-.095.051-.097.05-.1.049-.102.048-.105.048-.106.048-.109.046-.111.046-.114.046-.115.044-.118.044-.12.043-.122.043-.124.042-.126.041-.128.04-.13.039-.132.039-.134.038-.135.037-.138.036-.139.036-.142.034-.143.034-.144.033-.147.032-.148.032-.15.03-.151.03-.153.028-.154.028-.156.027-.158.026-.159.024-.161.024-.162.023-.163.023-.165.021-.166.02-.167.019-.169.018-.169.017-.171.016-.173.015-.173.014-.175.013-.175.012-.177.01-.178.01-.179.009-.179.007-.181.006-.182.006-.182.004-.184.003-.184.001-.185.001-.185-.001-.184-.001-.184-.003-.182-.004-.182-.006-.181-.006-.179-.007-.179-.009-.178-.01-.176-.01-.176-.012-.175-.013-.173-.014-.172-.015-.171-.016-.17-.017-.169-.018-.167-.019-.166-.02-.165-.021-.163-.023-.162-.023-.161-.024-.159-.024-.157-.026-.156-.027-.155-.028-.153-.028-.151-.03-.15-.03-.148-.032-.146-.032-.145-.033-.143-.034-.141-.034-.14-.036-.137-.036-.136-.037-.134-.038-.132-.039-.13-.039-.128-.041-.126-.041-.124-.041-.122-.043-.12-.043-.117-.044-.116-.044-.113-.046-.112-.046-.109-.046-.106-.048-.105-.048-.102-.048-.1-.05-.097-.049-.095-.051-.093-.051-.09-.052-.087-.052-.085-.053-.083-.053-.08-.054-.077-.054v4.153zm8.74-8.179l-.257.004-.254.005-.25.008-.247.011-.244.012-.241.014-.237.016-.233.018-.231.021-.226.022-.224.023-.22.026-.216.027-.212.028-.21.031-.205.032-.202.033-.198.034-.194.036-.191.038-.187.038-.183.04-.179.041-.175.042-.172.043-.168.043-.163.045-.16.046-.155.046-.152.048-.148.048-.143.048-.139.049-.136.05-.131.05-.126.051-.123.051-.118.051-.114.052-.11.052-.106.052-.101.052-.096.052-.092.052-.088.052-.083.052-.079.052-.074.051-.07.052-.065.051-.06.05-.056.05-.051.05-.023.025-.023.024-.021.024-.02.025-.019.024-.018.024-.017.023-.015.024-.014.023-.013.023-.012.023-.01.023-.01.022-.008.022-.006.023-.006.021-.004.022-.004.021-.001.021-.001.021.001.021.001.021.004.021.004.022.006.021.006.023.008.022.01.022.01.023.012.023.013.023.014.023.015.024.017.023.018.024.019.024.02.025.021.024.023.024.023.025.051.05.056.05.06.05.065.051.07.052.074.051.079.052.083.052.088.052.092.052.096.052.101.052.106.052.11.052.114.052.118.051.123.051.126.051.131.05.136.05.139.049.143.048.148.048.152.048.155.046.16.046.163.045.168.043.172.043.175.042.179.041.183.04.187.038.191.038.194.036.198.034.202.033.205.032.21.031.212.028.216.027.22.026.224.023.226.022.231.021.233.018.237.016.241.014.244.012.247.011.25.008.254.005.257.004.26.001.26-.001.257-.004.254-.005.25-.008.247-.011.244-.012.241-.014.237-.016.233-.018.231-.021.226-.022.224-.023.22-.026.216-.027.212-.028.21-.031.205-.032.202-.033.198-.034.194-.036.191-.038.187-.038.183-.04.179-.041.175-.042.172-.043.168-.043.163-.045.16-.046.155-.046.152-.048.148-.048.143-.048.139-.049.136-.05.131-.05.126-.051.123-.051.118-.051.114-.052.11-.052.106-.052.101-.052.096-.052.092-.052.088-.052.083-.052.079-.052.074-.051.07-.052.065-.051.06-.05.056-.05.051-.05.023-.025.023-.024.021-.024.02-.025.019-.024.018-.024.017-.023.015-.024.014-.023.013-.023.012-.023.01-.023.01-.022.008-.022.006-.023.006-.021.004-.022.004-.021.001-.021.001-.021-.001-.021-.001-.021-.004-.021-.004-.022-.006-.021-.006-.023-.008-.022-.01-.022-.01-.023-.012-.023-.013-.023-.014-.023-.015-.024-.017-.023-.018-.024-.019-.024-.02-.025-.021-.024-.023-.024-.023-.025-.051-.05-.056-.05-.06-.05-.065-.051-.07-.052-.074-.051-.079-.052-.083-.052-.088-.052-.092-.052-.096-.052-.101-.052-.106-.052-.11-.052-.114-.052-.118-.051-.123-.051-.126-.051-.131-.05-.136-.05-.139-.049-.143-.048-.148-.048-.152-.048-.155-.046-.16-.046-.163-.045-.168-.043-.172-.043-.175-.042-.179-.041-.183-.04-.187-.038-.191-.038-.194-.036-.198-.034-.202-.033-.205-.032-.21-.031-.212-.028-.216-.027-.22-.026-.224-.023-.226-.022-.231-.021-.233-.018-.237-.016-.241-.014-.244-.012-.247-.011-.25-.008-.254-.005-.257-.004-.26-.001-.26.001z"></path></symbol></defs><defs><symbol id="clock" width="24" height="24"><path transform="scale(.5)" d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.848 12.459c.202.038.202.333.001.372-1.907.361-6.045 1.111-6.547 1.111-.719 0-1.301-.582-1.301-1.301 0-.512.77-5.447 1.125-7.445.034-.192.312-.181.343.014l.985 6.238 5.394 1.011z"></path></symbol></defs><g><line id="actor73" x1="75" y1="5" x2="75" y2="699" class="200" stroke-width="0.5px" stroke="#999"></line><g id="root-73"><rect x="0" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="75" y="32.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle; font-size: 14px; font-weight: 400; font-family: Open-Sans, sans-serif;"><tspan x="75" dy="0">Loop</tspan></text></g></g><g><line id="actor74" x1="275" y1="5" x2="275" y2="699" class="200" stroke-width="0.5px" stroke="#999"></line><g id="root-74"><rect x="200" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="275" y="32.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle; font-size: 14px; font-weight: 400; font-family: Open-Sans, sans-serif;"><tspan x="275" dy="0">SensorManager</tspan></text></g></g><g><line id="actor75" x1="491" y1="5" x2="491" y2="699" class="200" stroke-width="0.5px" stroke="#999"></line><g id="root-75"><rect x="416" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="491" y="32.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle; font-size: 14px; font-weight: 400; font-family: Open-Sans, sans-serif;"><tspan x="491" dy="0">Drivers x3</tspan></text></g></g><g><line id="actor76" x1="691" y1="5" x2="691" y2="699" class="200" stroke-width="0.5px" stroke="#999"></line><g id="root-76"><rect x="616" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="691" y="32.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle; font-size: 14px; font-weight: 400; font-family: Open-Sans, sans-serif;"><tspan x="691" dy="0">Validity</tspan></text></g></g><g><line id="actor77" x1="891" y1="5" x2="891" y2="699" class="200" stroke-width="0.5px" stroke="#999"></line><g id="root-77"><rect x="816" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="891" y="32.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle; font-size: 14px; font-weight: 400; font-family: Open-Sans, sans-serif;"><tspan x="891" dy="0">Telemetry</tspan></text></g></g><defs><marker id="arrowhead" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z"></path></marker></defs><defs><marker id="crosshead" markerWidth="15" markerHeight="8" orient="auto" refX="16" refY="4"><path fill="black" stroke="#000000" stroke-width="1px" d="M 9,2 V 6 L16,4 Z" style="stroke-dasharray: 0, 0;"></path><path fill="none" stroke="#000000" stroke-width="1px" d="M 0,1 L 6,7 M 6,1 L 0,7" style="stroke-dasharray: 0, 0;"></path></marker></defs><defs><marker id="filled-head" refX="18" refY="7" markerWidth="20" markerHeight="28" orient="auto"><path d="M 18,7 L9,13 L14,7 L9,1 Z"></path></marker></defs><defs><marker id="sequencenumber" refX="15" refY="15" markerWidth="60" markerHeight="40" orient="auto"><circle cx="15" cy="15" r="6"></circle></marker></defs><text x="175" y="80" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="messageText" dy="1em" style="font-family: &quot;trebuchet ms&quot;, verdana, arial, sans-serif; font-size: 16px; font-weight: 400;">startCycle(now)</text><line x1="75" y1="113" x2="275" y2="113" class="messageLine0" stroke-width="2" stroke="none" marker-end="url(#arrowhead)" style="fill: none;"></line><text x="383" y="128" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="messageText" dy="1em" style="font-family: &quot;trebuchet ms&quot;, verdana, arial, sans-serif; font-size: 16px; font-weight: 400;">start all</text><line x1="275" y1="159" x2="491" y2="159" class="messageLine0" stroke-width="2" stroke="none" marker-end="url(#arrowhead)" style="fill: none;"></line><text x="175" y="237" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="messageText" dy="1em" style="font-family: &quot;trebuchet ms&quot;, verdana, arial, sans-serif; font-size: 16px; font-weight: 400;">update(now)</text><line x1="75" y1="270" x2="275" y2="270" class="messageLine0" stroke-width="2" stroke="none" marker-end="url(#arrowhead)" style="fill: none;"></line><text x="383" y="285" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="messageText" dy="1em" style="font-family: &quot;trebuchet ms&quot;, verdana, arial, sans-serif; font-size: 16px; font-weight: 400;">ready?</text><line x1="275" y1="316" x2="491" y2="316" class="messageLine0" stroke-width="2" stroke="none" marker-end="url(#arrowhead)" style="fill: none;"></line><g><line x1="65" y1="169" x2="501" y2="169" class="loopLine"></line><line x1="501" y1="169" x2="501" y2="326" class="loopLine"></line><line x1="65" y1="326" x2="501" y2="326" class="loopLine"></line><line x1="65" y1="169" x2="65" y2="326" class="loopLine"></line><polygon points="65,169 115,169 115,182 106.6,189 65,189" class="labelBox"></polygon><text x="90" y="182" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="labelText" style="font-family: &quot;trebuchet ms&quot;, verdana, arial, sans-serif; font-size: 16px; font-weight: 400;">loop</text><text x="308" y="187" text-anchor="middle" class="loopText" style="font-family: &quot;trebuchet ms&quot;, verdana, arial, sans-serif; font-size: 16px; font-weight: 400;"><tspan x="308">[every loop pass until</tspan></text><text x="308" y="205" text-anchor="middle" class="loopText" style="font-family: &quot;trebuchet ms&quot;, verdana, arial, sans-serif; font-size: 16px; font-weight: 400;"><tspan x="308">all ready or 1000 ms]</tspan></text></g><text x="383" y="341" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="messageText" dy="1em" style="font-family: &quot;trebuchet ms&quot;, verdana, arial, sans-serif; font-size: 16px; font-weight: 400;">read each</text><line x1="275" y1="372" x2="491" y2="372" class="messageLine0" stroke-width="2" stroke="none" marker-end="url(#arrowhead)" style="fill: none;"></line><text x="383" y="387" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="messageText" dy="1em" style="font-family: &quot;trebuchet ms&quot;, verdana, arial, sans-serif; font-size: 16px; font-weight: 400;">Reading per channel</text><line x1="491" y1="418" x2="275" y2="418" class="messageLine1" stroke-width="2" stroke="none" marker-end="url(#arrowhead)" style="stroke-dasharray: 3, 3; fill: none;"></line><text x="175" y="433" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="messageText" dy="1em" style="font-family: &quot;trebuchet ms&quot;, verdana, arial, sans-serif; font-size: 16px; font-weight: 400;">Snapshot</text><line x1="275" y1="464" x2="75" y2="464" class="messageLine1" stroke-width="2" stroke="none" marker-end="url(#arrowhead)" style="stroke-dasharray: 3, 3; fill: none;"></line><text x="383" y="479" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="messageText" dy="1em" style="font-family: &quot;trebuchet ms&quot;, verdana, arial, sans-serif; font-size: 16px; font-weight: 400;">check(snapshot, prev)</text><line x1="75" y1="510" x2="691" y2="510" class="messageLine0" stroke-width="2" stroke="none" marker-end="url(#arrowhead)" style="fill: none;"></line><text x="383" y="525" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="messageText" dy="1em" style="font-family: &quot;trebuchet ms&quot;, verdana, arial, sans-serif; font-size: 16px; font-weight: 400;">valid flags and fault codes</text><line x1="691" y1="556" x2="75" y2="556" class="messageLine1" stroke-width="2" stroke="none" marker-end="url(#arrowhead)" style="stroke-dasharray: 3, 3; fill: none;"></line><text x="483" y="616" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="messageText" dy="1em" style="font-family: &quot;trebuchet ms&quot;, verdana, arial, sans-serif; font-size: 16px; font-weight: 400;">publish(snapshot)</text><line x1="75" y1="649" x2="891" y2="649" class="messageLine0" stroke-width="2" stroke="none" marker-end="url(#arrowhead)" style="fill: none;"></line><g><line x1="65" y1="566" x2="901" y2="566" class="loopLine"></line><line x1="901" y1="566" x2="901" y2="659" class="loopLine"></line><line x1="65" y1="659" x2="901" y2="659" class="loopLine"></line><line x1="65" y1="566" x2="65" y2="659" class="loopLine"></line><polygon points="65,566 115,566 115,579 106.6,586 65,586" class="labelBox"></polygon><text x="90" y="579" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" class="labelText" style="font-family: &quot;trebuchet ms&quot;, verdana, arial, sans-serif; font-size: 16px; font-weight: 400;">alt</text><text x="508" y="584" text-anchor="middle" class="loopText" style="font-family: &quot;trebuchet ms&quot;, verdana, arial, sans-serif; font-size: 16px; font-weight: 400;"><tspan x="508">[state is Online]</tspan></text></g><g><rect x="0" y="679" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="75" y="711.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle; font-size: 14px; font-weight: 400; font-family: Open-Sans, sans-serif;"><tspan x="75" dy="0">Loop</tspan></text></g><g><rect x="200" y="679" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="275" y="711.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle; font-size: 14px; font-weight: 400; font-family: Open-Sans, sans-serif;"><tspan x="275" dy="0">SensorManager</tspan></text></g><g><rect x="416" y="679" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="491" y="711.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle; font-size: 14px; font-weight: 400; font-family: Open-Sans, sans-serif;"><tspan x="491" dy="0">Drivers x3</tspan></text></g><g><rect x="616" y="679" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="691" y="711.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle; font-size: 14px; font-weight: 400; font-family: Open-Sans, sans-serif;"><tspan x="691" dy="0">Validity</tspan></text></g><g><rect x="816" y="679" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="891" y="711.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle; font-size: 14px; font-weight: 400; font-family: Open-Sans, sans-serif;"><tspan x="891" dy="0">Telemetry</tspan></text></g></svg></div>
+<p>How often to measure (a customer question): the enclosure is small, so air
+temperature can move a degree in a minute when the lamps switch, but nothing
+in the grow space changes meaningfully in seconds. Default: sample and
+publish every 10 s. That gives 8640 rows per day, which SQLite handles for
+years, and enough resolution to see lamp cycles. Trend views average in
+the backend with a query, which is where the outline already placed trend
+analysis. The interval is a <code>config.h</code> constant and can be changed at
+runtime with the serial <code>sample</code> command. The answer for the plan: 10 s
+sampling and storage; if storage ever matters, 1 or 5 min averages computed
+in the backend are still plenty for trend analysis.</p>
+<h3 class="atx" id="54-mqtt-topics-and-payload">5.4 MQTT topics and payload</h3>
+<ul>
+<li><p><code>microhydros/&lt;device_id&gt;/telemetry</code>, one flat JSON object per sample,
+built by <code>lib/Payload</code>:</p>
+<pre><code class="indented-code-block">{"seq":123,"uptime_s":4567,
+ "t_in":24.1,"rh_in":61.0,"t_out":20.3,"t_water":null,
+ "faults":{"t_in":0,"rh_in":0,"t_out":0,"t_water":1},
+ "src":{"sht40":"sim","ds18b20":"hw","ntc":"hw"}}</code></pre>
+<p>An invalid channel publishes <code>null</code> and a non-zero fault code, never a
+fake number and never a missing key, so the gap and its reason are
+visible in the history. Payload is about 170 bytes; buffer 256, built
+with <code>snprintf</code>, no JSON library.</p>
+</li>
+<li><p><code>microhydros/&lt;device_id&gt;/status</code>: <code>online</code> / <code>offline</code>, retained, with
+<code>offline</code> as Last Will.</p>
+</li>
+<li><p><code>microhydros/&lt;device_id&gt;/cmd</code>: reserved, not subscribed in this
+prototype. Commands go over the USB serial port (5.2, <code>SerialCommand</code>).</p>
+</li>
+</ul>
+<p>Data representation (a documentation deliverable): units are C and %RH,
+floats with one decimal in transit, raw sensor words kept only inside the
+drivers (and in <code>Reading.raw</code> for stuck detection). The node has no
+real-time clock, so the backend stamps each row on ingest and the node
+supplies <code>seq</code> and <code>uptime_s</code> for ordering and gap detection. <code>device_id</code>
+in the topic is what makes R15 possible without touching the backend.</p>
+<h3 class="atx" id="55-repository-layout-platformio-project">5.5 Repository layout (PlatformIO project)</h3>
+<pre><code class="fenced-code-block">platformio.ini            envs: uno_r4_wifi (board), native (PC tests);
+                          every build also writes compile_commands.json
+compiledb.py              extra script: toolchain includes in the compile db
+src/                      Arduino-dependent code, one directory per area
+  main.cpp                setup(), loop(), scheduler, state machine
+  config.h                intervals, limits, pins, SHT4X_SIMULATED, topics
+  secrets.h.example       template; copy to secrets.h (git-ignored)
+  sensors/
+    SensorManager.h/.cpp  startCycle / update / collect
+    Ds18b20Sensor.h/.cpp  OneWire async, fault mapping
+    NtcSensor.h/.cpp      ADC average, calls NtcMath
+    sht4x/
+      Sht4xSensor.h/.cpp  adapter: frame source + decoder -&gt; two Readings
+      Sht4xHardware.h/.cpp I2C on Wire1
+  net/
+    Network.h/.cpp        Wi-Fi state handling
+    Telemetry.h/.cpp      MQTT client, status, Last Will
+  ui/
+    StatusLed.h/.cpp      LED matrix frames
+    SerialCommand.h/.cpp  line parser for serial commands
+lib/                      pure C++, no Arduino, compiled for board and PC
+  Reading/                Reading, Snapshot, fault codes
+  Sensor/                 driver contract (text)
+  Sht4x/                  Sht4xTypes, Sht4xDecoder, Sht4xFrameSource, Sht4xSimulated
+  NtcMath/                divider and beta equation
+  Validity/               range, rate, stuck
+  Payload/                JSON builder
+test/test_native/         Unity tests for lib/, `pio test -e native`
+examples/                 unmodified library examples the modules derive from
+backend/                  docker-compose, mosquitto.conf, backend README
+README.md                 build, layout, where to start, runtime notes</code></pre>
+<p>Includes: headers under <code>src/</code> subdirectories are included with their
+directory (<code>#include "net/Network.h"</code>); <code>lib/</code> headers are included bare.</p>
+<p>Build and run:</p>
+<pre><code class="indented-code-block">cp src/secrets.h.example src/secrets.h
+pio run                    build (also regenerates compile_commands.json)
+pio run -t upload          flash
+pio device monitor         serial log, 115200 baud
+pio test -e native         PC tests of lib/</code></pre>
+<p>Libraries, declared in <code>platformio.ini</code>: <code>ArduinoMqttClient</code>, <code>OneWire</code>,
+<code>DallasTemperature</code>. <code>WiFiS3</code>, <code>Wire</code> and <code>Arduino_LED_Matrix</code> come with
+the board core. Nothing for the NTC, the emulator or the payload. The
+HiTECH Wi-Fi manager that was in the initial config is commented out;
+<code>examples/BasicAutoConnect</code> shows what it does if a captive-portal setup
+is ever wanted.</p>
+<p>Memory after the skeleton build: about 6 KB of 32 KB RAM, 59 KB of 256 KB
+flash.</p>
+<h3 class="atx" id="56-toolchain-notes">5.6 Toolchain notes</h3>
+<ul>
+<li>The Uno R4 core links with <code>--specs=nano.specs</code> and does not pull in
+float <code>printf</code>. <code>snprintf("%f")</code> produces an empty field on the board.
+<code>Serial.print(float)</code> is unaffected because <code>Print</code> formats floats
+itself. <code>Payload</code> formats numbers as integers for this reason; do not
+reintroduce <code>%f</code> elsewhere.</li>
+<li><code>pio test -e native</code> builds only <code>lib/</code> modules that the test file pulls
+in, so <code>lib/</code> may never include Arduino headers. Anything that does
+belongs in <code>src/</code>.</li>
+<li>The compile database includes the cross-toolchain's system include paths
+(<code>compiledb.py</code>), so clangd resolves <code>&lt;Arduino.h&gt;</code> and the C++ headers
+against arm-none-eabi.</li>
+</ul>
+<h2 class="atx" id="6-backend-and-history">6. Backend and history</h2>
+<p>One docker-compose (<code>backend/</code>) with Mosquitto 2 and Node-RED, named
+volumes for both. Node-RED subscribes to <code>microhydros/+/telemetry</code>, stamps
+<code>received_at</code>, takes <code>device_id</code> from the topic, and inserts one row per
+message into SQLite. The table matches the flat payload one to one:</p>
+<pre><code class="indented-code-block">telemetry(received_at, device_id, seq, uptime_s,
+          t_in, rh_in, t_out, t_water,
+          fault_t_in, fault_rh_in, fault_t_out, fault_t_water)</code></pre>
+<p>Averages for trend views are <code>AVG(...) GROUP BY</code> over stored rows. A second
+<code>mqtt in</code> on <code>microhydros/+/status</code> feeds a last-seen indicator.</p>
+<p>Dashboard: current values with fault indication, 24 h line chart per channel,
+last-seen per device from the status topic. Node-RED dashboard is enough for
+the brief; Grafana is the upgrade path if someone has spare time in week 3.</p>
+<p>Status: compose file, broker config and a README with the test commands
+(<code>mosquitto_sub</code>, a <code>mosquitto_pub</code> line that fakes a node message) exist.
+Flow, table and dashboard are the backend area's work.</p>
+<h2 class="atx" id="7-wiring">7. Wiring</h2>
+<table>
+<thead>
+<tr>
+<th>Pin</th>
+<th>Use</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>D2</td>
+<td>DS18B20 data</td>
+<td>4.7 k pull-up to 5 V; VDD to 5 V, GND to GND (no parasite power)</td>
+</tr>
+<tr>
+<td>A0</td>
+<td>NTC divider midpoint</td>
+<td>10 k 1 % from 5 V to A0, NTC from A0 to GND; 100 nF from A0 to GND against noise</td>
+</tr>
+<tr>
+<td>Qwiic / <code>Wire1</code></td>
+<td>SHT40 breakout if one is fitted</td>
+<td>3.3 V I2C, no level shifting</td>
+</tr>
+<tr>
+<td>LED matrix</td>
+<td>Status</td>
+<td>Wi-Fi state, fault present, publish blink</td>
+</tr>
+<tr>
+<td>USB-C</td>
+<td>Power, serial log, serial commands</td>
+<td>No battery, the energy section is one paragraph</td>
+</tr>
+</tbody></table>
+<p>Water probe build: NTC bead soldered to a twisted pair, sealed in adhesive
+heat-shrink, then a second layer, then tested for leakage resistance (megohm
+range) before it goes into nutrient solution.</p>
+<h2 class="atx" id="8-mapping-to-the-briefand39s-deliverables">8. Mapping to the brief's deliverables</h2>
+<table>
+<thead>
+<tr>
+<th>Brief item</th>
+<th>What goes there</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>10.1 Projektplan</td>
+<td>Summary of the letter; R1..R15 with priorities; out of scope list; backlog from section 9 below; time plan (section 9); roles per section 9.1</td>
+</tr>
+<tr>
+<td>10.2 Repository README</td>
+<td>Exists: purpose, PlatformIO build, libraries, <code>secrets.h</code> from the example, layout, where to start, runtime notes; add <code>docker compose up</code> and how to see data when the backend lands</td>
+</tr>
+<tr>
+<td>10.3 Technical documentation</td>
+<td>Sections 2..7 of this outline become architecture.md and sensors.md; data representation is 5.4; toolchain notes 5.6; known limitations is section 12</td>
+</tr>
+<tr>
+<td>10.4 Testing</td>
+<td>Section 11, with an actual-result column filled in during week 3 and 4, plus the plausibility discussion; the native tests are the component part and already run</td>
+</tr>
+<tr>
+<td>10.5 Demo</td>
+<td>Live chain: node on the bench, DS18B20 warmed by hand, NTC in a cup of water with a kettle refill, emulator scenario switched over the serial monitor, chart on the dashboard, a sensor unplugged live to show fault handling</td>
+</tr>
+<tr>
+<td>9 Technical requirements 1..6</td>
+<td>R1..R4 and R5 (section 5.3), R6 (section 5.1), R7 (5.4), R8 (5.2 Validity and SensorManager), R9 (this document)</td>
+</tr>
+</tbody></table>
+<h2 class="atx" id="9-four-week-time-plan-31-aug---25-sep-2026">9. Four-week time plan (31 Aug - 25 Sep 2026)</h2>
+<table>
+<thead>
+<tr>
+<th>Week</th>
+<th>Focus (brief 11)</th>
+<th>Deliverable</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Requirements, sensor research, datasheets, plan, backlog; repo skeleton; PC build of decoder, payload, NTC math</td>
+<td>Project plan submitted; skeleton builds; native tests run (done 2026-09-04); broker + Node-RED compose up</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Firmware bodies per area: drivers, state machine, Wi-Fi + MQTT publish; emulator model; Validity rules</td>
+<td>Node publishes all four channels to the broker; NTC calibrated against DS18B20</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Storage and dashboard; validity limits tuned on real data; reconnect behaviour; test execution starts</td>
+<td>End-to-end demo working; tests.md half filled</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Remaining tests, fixes, documentation, demo rehearsal, individual reflection</td>
+<td>Test results, technical documentation, demo, reflections</td>
+</tr>
+</tbody></table>
+<p>Nothing waits for the dashboard. Each body compiles against its header from the first line, so areas can proceed in parallel; the <code>TODO(&lt;area&gt;)</code> markers in the code list the steps and the library example to adapt.</p>
+<h3 class="atx" id="91-responsibility-split">9.1 Responsibility split</h3>
+<p>Five areas, one owner each. The owner drives the area, writes its code and
+its part of the documentation and tests, and is the person to ask about it.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Area</th>
+<th>Owner</th>
+<th>Covers</th>
+<th>Left to do</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Sensor emulation layer</td>
+<td>Rasmus</td>
+<td><code>lib/Sht4x</code> (types, decoder, frame source, emulator), <code>src/sensors/sht4x</code> (adapter, I2C hardware), <code>lib/Payload</code>; section 3.1 and the emulator parts of 5.2</td>
+<td>Emulator model and scenario tests; SHT40 hardware bring-up if bought; glue and help.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Backend</td>
+<td>Stas</td>
+<td><code>backend/</code>: docker-compose, Mosquitto config, Node-RED flows, SQLite table and dashboard; section 6</td>
+<td>Flow, table, dashboard, status/last-seen, flow export, backend docs</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Arduino side networking</td>
+<td>Ali</td>
+<td><code>src/net</code> (Network, Telemetry), <code>src/ui/SerialCommand</code>, <code>secrets.h.example</code>; Wi-Fi and MQTT state handling, topics and payload in 5.4</td>
+<td>Connect and retry bodies, Last Will &amp; Testament(MQTT Feature), publish, serial parser; reconnect tests with AP and broker pulled; back-off</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Sensor readings</td>
+<td>Zaka</td>
+<td><code>src/sensors/NtcSensor</code>, <code>lib/NtcMath</code>, <code>lib/Reading</code>, <code>lib/Sensor</code> (contract), <code>lib/Validity</code>; the driver contract in 5.2, NTC circuit and calibration in 3.3</td>
+<td>Validity rules with tests; NTC circuit, probe sealing, calibration, limit tuning on real data. DS18B20 driver(Linus or Zaka)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Arduino firmware</td>
+<td>Linus</td>
+<td><code>src/main.cpp</code> (scheduler, state machine, LED and command wiring), <code>src/sensors/Ds18b20Sensor</code>, <code>src/ui/StatusLed</code>, <code>config.h</code>, <code>src/sensors/SensorManager</code>, and the pre-made libraries <code>WiFiS3</code>, <code>OneWire</code>, <code>DallasTemperature</code>, <code>ArduinoMqttClient</code></td>
+<td>State machine, publish trigger,  LED frames, command handler, hardware bring-up. DS18B20 driver(Linus or Zaka)</td>
+</tr>
+</tbody></table>
+<p>Rasmus also glues the pieces together where work falls between areas,
+handles communication between the subsystems (for example the Snapshot to
+JSON to SQLite column mapping across areas 3, 4 and 2), and is generally
+available to help and answer questions.</p>
+<p>Changes from v2's split, to be confirmed at the planning meeting:
+<code>SerialCommand</code> goes to area 3 (it is the command path that replaced the
+cmd topic); <code>Validity</code> to area 4; <code>Ds18b20Sensor</code>(4 or 5?), <code>SensorManager</code> and
+<code>config.h</code> to area 5; <code>Payload</code> to area 1 as glue. <code>test/</code> and <code>docs/</code> are
+shared: whoever fills in a <code>lib/</code> body adds its test.</p>
+<h2 class="atx" id="10-risks">10. Risks</h2>
+<table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Probability</th>
+<th>Impact</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Emulated inside T/RH is judged as not meeting "four measurement points"</td>
+<td>Medium</td>
+<td>High</td>
+<td>State it up front in the plan as a design decision with the hardware swap path; keep a real SHT40 breakout as a week-3 purchase option (about 100 kr)</td>
+</tr>
+<tr>
+<td>NTC probe leaks in nutrient solution</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Double heat-shrink, leakage test before immersion, spare probe</td>
+</tr>
+<tr>
+<td>NTC reads 1..2 C off</td>
+<td>High</td>
+<td>Low</td>
+<td>Single-point calibration against DS18B20 in the same bath is in the plan; document the residual error</td>
+</tr>
+<tr>
+<td>DS18B20 clone behaves oddly (resolution, 85 C)</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Buy from a known distributor; the 85 C and CRC fault paths are tested explicitly; <code>examples/Tester</code> prints what the part reports</td>
+</tr>
+<tr>
+<td>WiFiS3 / MQTT reconnect misbehaves</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>State machine with retry intervals; test by pulling the AP and stopping the broker; blocking connects are known (5.3)</td>
+</tr>
+<tr>
+<td>Example-derived bodies untested on hardware</td>
+<td>Medium</td>
+<td>Low</td>
+<td>Each area brings its own part up on the bench in week 2 before integration</td>
+</tr>
+<tr>
+<td>Three sensors and a scheduler grow messy</td>
+<td>Low</td>
+<td>Low</td>
+<td>Fixed layout by area, one class per sensor, contracts in headers, PR review on each driver</td>
+</tr>
+<tr>
+<td>Uno R4 SRAM (32 KB) with libraries</td>
+<td>Low</td>
+<td>Medium</td>
+<td>Skeleton uses about 6 KB; <code>snprintf</code> payloads, no JSON library, check free RAM in the serial log</td>
+</tr>
+<tr>
+<td>Schedule slip</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Core chain by end of week 2; dashboard polish and LED frames are the first things dropped</td>
+</tr>
+</tbody></table>
+<h2 class="atx" id="11-test-plan">11. Test plan</h2>
+<p>Each test is recorded as what / how / expected / actual (brief 10.4).</p>
+<p>Component (<code>pio test -e native</code>, 9 tests pass as of 2026-09-04)</p>
+<ul>
+<li><code>crc8</code> against the SHT4x datasheet test vector (done).</li>
+<li><code>decode</code> with a known-good frame, a corrupted CRC, and boundary words
+0x0000 and 0xFFFF (clipping) (done).</li>
+<li>Emulator: <code>steady</code> decodes, <code>badcrc</code> does not, unknown scenario name is
+refused (done); <code>heatup</code>, <code>cooldown</code>, <code>stuck</code> behaviour (when the model
+is written).</li>
+<li>NTC: 25 C midpoint, two beta-equation points, short/open ADC values
+flagged (done).</li>
+<li>Payload: exact string for a snapshot with one invalid channel and a
+negative value; truncation reported (done).</li>
+<li>Validity: a snapshot outside range, a jump above the rate limit, 30 stuck
+readings, each produce the right fault code and leave <code>value</code> untouched
+(when the rules are written).</li>
+</ul>
+<p>Integration (on the board, serial log)</p>
+<ul>
+<li>Each sensor alone: <code>begin</code>, <code>start</code>, <code>ready</code> timing within datasheet
+limits, <code>read</code> values plausible.</li>
+<li>DS18B20 unplugged while running: <code>NO_DEVICE</code> within one sample, other
+channels unaffected, recovers when replugged.</li>
+<li>NTC shorted / open: fault code, no temperature published.</li>
+<li>Broker stopped and restarted: node reconnects, publishing resumes, <code>seq</code>
+shows the gap.</li>
+<li>Wi-Fi AP off and on: same.</li>
+<li><code>sample 2</code> over serial changes the cadence; <code>sample 1</code> is refused.</li>
+</ul>
+<p>System</p>
+<ol>
+<li>Node boots with emulator scenario <code>steady</code>; all four channels valid on
+the dashboard within two samples.</li>
+<li><code>scenario heatup</code> over the serial monitor; T_in rises on the chart, RH
+falls.</li>
+<li>Warm the DS18B20 by hand; T_out rises by a few degrees and returns.</li>
+<li>Move the NTC from room water to warm water; T_water follows within a few
+seconds; compare against the DS18B20 dipped in the same water.</li>
+<li>Unplug the DS18B20; dashboard shows the fault, the other three continue.</li>
+<li>Leave the system running overnight; the SQLite table has about 8640 rows
+with no gaps beyond the ones caused on purpose.</li>
+</ol>
+<p>Plausibility (brief 10.4 asks for this reasoning)</p>
+<ul>
+<li>T_out should sit near a reference room thermometer, within 1 C.</li>
+<li>T_water in a room-temperature cup should converge to T_out within 1 C
+after 15 min.</li>
+<li>The NTC and DS18B20 in the same water bath should agree within 0.5 C after
+calibration.</li>
+<li>RH_in from the emulator is only as plausible as its model; state that.</li>
+</ul>
+<h2 class="atx" id="12-known-limitations-and-recommendations-for-the-next-phase">12. Known limitations and recommendations for the next phase</h2>
+<p>Limitations of this prototype</p>
+<ul>
+<li>Inside temperature and humidity come from an emulated SHT40. The data
+path is real, the measurement is not. A physical SHT40 on Qwiic removes
+this with a config change.</li>
+<li>The NTC needs calibration and a hand-built seal; its absolute accuracy is
+documented from the calibration, not from a datasheet. The beta equation
+is used, not Steinhart-Hart.</li>
+<li>No real-time clock on the node; timestamps are assigned by the backend.</li>
+<li>Wi-Fi association and the MQTT connect block the loop for seconds;
+sampling pauses during reconnect attempts.</li>
+<li>Local broker only; no TLS, no authentication beyond a username/password.</li>
+<li>No alarm logic beyond fault codes and optional fixed thresholds.</li>
+<li>Commands only over USB serial; the MQTT cmd topic is reserved, not used.</li>
+</ul>
+<p>Recommendations for improvements (theoretical unless decided otherwise)</p>
+<ul>
+<li>Use a sealed DS18B20 probe for the water in a product; keep the NTC path
+as the low-cost option or for a second water point.</li>
+<li>Move the broker to a managed MQTT endpoint with TLS when the cloud service
+is chosen; the node needs only a new host, port and credentials.</li>
+<li>Add an RTC or NTP time on the node so offline samples can be buffered and
+back-filled with correct timestamps (<code>examples/WiFiUdpNtpClient</code> and
+<code>examples/RTC_NTPSync</code> are the starting points).</li>
+<li>Trend and anomaly detection belongs in the backend on the stored series,
+not on the node.</li>
+</ul>
+<h2 class="atx" id="13-open-decisions">13. Open decisions</h2>
+<ol>
+<li>Buy a real SHT40 breakout now (about 100 kr) to close the biggest risk in
+section 10, or stay emulated for the whole prototype?</li>
+<li>Exact NTC part and its B value; single-point or three-point calibration.</li>
+<li>Backend host: laptop or Raspberry Pi. Affects whether the overnight test
+in section 11 is practical.</li>
+<li>Dashboard: Node-RED dashboard or Grafana.</li>
+<li>DS18B20 resolution: 12 bit (750 ms) or 11 bit (375 ms).</li>
+<li>Confirm the ownership changes in 9.1 (<code>SerialCommand</code> to area 3,
+<code>Validity</code> to area 4,  <code>SensorManager</code>, <code>config.h</code> to
+area 5). <code>Ds18b20Sensor</code>, to 4 or 5.</li>
+</ol>
+</article>
+</body>
+</html>
