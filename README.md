@@ -5,6 +5,30 @@ and humidity (SHT40, emulated for now), outside air temperature (DS18B20)
 and nutrient water temperature (NTC thermistor), validates the readings and
 publishes them over MQTT.
 
+## Plain-language descriptions for the project board
+
+A few terms that appear throughout, explained once:
+
+- The node: the Arduino Uno R4 WiFi board with the three sensors on it.
+- Indoor sensor (SHT40): measures air temperature and humidity inside the
+  grow space. We do not have the physical part yet, so the firmware
+  contains a software stand-in (the "emulator") that produces realistic
+  fake readings.
+- Outdoor sensor (DS18B20): a digital temperature sensor on a cable,
+  measuring air temperature outside the grow space.
+- Water sensor (NTC): a small resistor whose resistance changes with
+  temperature, sealed into a waterproof probe and dipped in the nutrient
+  water.
+- The broker (Mosquitto): a small message post office on a PC. The node
+  sends its readings there; the backend picks them up.
+- The backend (Node-RED + SQLite): the program that receives the readings,
+  stores them in a database file, and shows them on a web dashboard.
+- Fault code: a small number attached to each reading that says "this
+  value is fine" (0) or why it is not (sensor missing, out of range, and
+  so on).
+
+---
+
 ## Build
 
 PlatformIO project. Install the PlatformIO IDE extension in VS Code or
