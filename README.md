@@ -5,6 +5,30 @@ and humidity (SHT40, emulated for now), outside air temperature (DS18B20)
 and nutrient water temperature (NTC thermistor), validates the readings and
 publishes them over MQTT.
 
+## Plain-language descriptions for the project board
+
+A few terms that appear throughout, explained once:
+
+- The node: the Arduino Uno R4 WiFi board with the three sensors on it.
+- Indoor sensor (SHT40): measures air temperature and humidity inside the
+  grow space. We do not have the physical part yet, so the firmware
+  contains a software stand-in (the "emulator") that produces realistic
+  fake readings.
+- Outdoor sensor (DS18B20): a digital temperature sensor on a cable,
+  measuring air temperature outside the grow space.
+- Water sensor (NTC): a small resistor whose resistance changes with
+  temperature, sealed into a waterproof probe and dipped in the nutrient
+  water.
+- The broker (Mosquitto): a small message post office on a PC. The node
+  sends its readings there; the backend picks them up.
+- The backend (Node-RED + SQLite): the program that receives the readings,
+  stores them in a database file, and shows them on a web dashboard.
+- Fault code: a small number attached to each reading that says "this
+  value is fine" (0) or why it is not (sensor missing, out of range, and
+  so on).
+
+---
+
 ## Build
 
 PlatformIO project. Install the PlatformIO IDE extension in VS Code or
@@ -57,6 +81,12 @@ Each `examples/` directory named in a TODO is the library example to adapt.
 The pure modules in `lib/` have tests in `test/test_native`; add a test
 when you fill in a `lib/` body. Note that `snprintf("%f")` prints nothing
 on this core (newlib-nano), which is why Payload formats numbers itself.
+
+## Contributing
+
+Nothing goes into `main` directly: branch, pull request, one approval,
+squash merge. Step by step in `docs/workflow.md`. Native tests and how
+to extend them: `docs/native_tests.md`.
 
 ## Runtime notes
 
