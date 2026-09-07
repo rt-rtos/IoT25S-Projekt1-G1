@@ -18,13 +18,21 @@ void Validity::checkChannel(Reading& r, const Reading& prev, const ChannelLimits
         r.fault = FAULT_RANGE;
 
     }
-
-    if (r.sampledAtMs - prev.sampledAtMs >= lim.maxRatePerMin) {
-        r.valid = false;
-        r.fault = FAULT_RATE;
+    const uint32_t sampleMsDelta = r.sampledAtMs - prev.sampledAtMs;
+    if (prev.valid && sampleMsDelta != 0){
+        float delta = r.value - prev.value;
+        if(delta<0.0f) delta = -delta;
+        if (delta * 60000.0f > lim.maxRatePerMin * sampleMsDelta) {
+            r.valid = false;
+            r.fault = FAULT_RATE;
+        }
     }
     if (r.raw == prev.raw) stuckCounter++;
+    else stuckCounter = 1;
 
-    //if(stuckCounter == lim.stuck)
+    if(stuckCounter >= limits_.stuckCount) {
+        r.valid = false;
+        r.fault = FAULT_STUCK;
+    }
 
 }
