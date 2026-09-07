@@ -23,8 +23,9 @@ bool Telemetry::connect() {
 }
 
 void Telemetry::poll(uint32_t nowMs) {
-    // TODO(telemetry): if connected, mqtt_.poll() (keep-alives); otherwise
-    // call connect() at most every cfg_.retryMs using lastAttemptMs_.
+    // TODO(telemetry): if connected, mqtt_.poll() (keep-alives, delivers
+    // incoming messages to dispatch); otherwise call connect() at most every
+    // cfg_.retryMs using lastAttemptMs_. See examples/WiFiSimpleSender loop().
     (void)nowMs;
 }
 
@@ -45,6 +46,9 @@ void Telemetry::dispatch(int size) {
 }
 
 void Telemetry::handleMessage(int size) {
-    // TODO(telemetry): drain mqtt_.read() into buf_, terminate, call handler_.
+    // TODO(telemetry): while mqtt_.available() and room in buf_, buf_[n++] =
+    // mqtt_.read(); terminate; call handler_(buf_, n) if set. Drain the rest
+    // if size exceeds buf_. See examples/WiFiSimpleReceiveCallback
+    // onMqttMessage(). mqtt_.messageTopic() gives the topic if ever needed.
     (void)size;
 }

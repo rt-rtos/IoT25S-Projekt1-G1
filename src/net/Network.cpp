@@ -12,7 +12,10 @@ bool Network::begin() {
 void Network::poll(uint32_t nowMs) {
     // TODO(network): refresh status_ from WiFi.status(); while not
     // connected, call WiFi.begin(ssid_, pass_) at most every retryMs_
-    // (use lastAttemptMs_). See examples/ConnectWithWPA and outline 5.3.
+    // (use lastAttemptMs_). examples/ConnectWithWPA does this in a
+    // blocking while-loop in setup(); here it is one attempt per call so
+    // loop() keeps running. WiFi.begin() itself still blocks a few seconds
+    // (outline 5.3, 12).
     (void)nowMs;
 }
 
