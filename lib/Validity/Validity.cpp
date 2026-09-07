@@ -13,4 +13,18 @@ void Validity::checkChannel(Reading& r, const Reading& prev, const ChannelLimits
     // TODO(validity): range -> FAULT_RANGE, rate vs prev (use sampledAtMs
     // delta) -> FAULT_RATE, stuck raw counter -> FAULT_STUCK. Set
     // r.valid = false and r.fault, leave r.value untouched.
+    if(r.value <= lim.min || r.value >= lim.max) {
+        r.valid = false;
+        r.fault = FAULT_RANGE;
+
+    }
+
+    if (r.sampledAtMs - prev.sampledAtMs >= lim.maxRatePerMin) {
+        r.valid = false;
+        r.fault = FAULT_RATE;
+    }
+    if (r.raw == prev.raw) stuckCounter++;
+
+    //if(stuckCounter == lim.stuck)
+
 }
