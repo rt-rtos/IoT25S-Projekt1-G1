@@ -82,6 +82,12 @@ The pure modules in `lib/` have tests in `test/test_native`; add a test
 when you fill in a `lib/` body. Note that `snprintf("%f")` prints nothing
 on this core (newlib-nano), which is why Payload formats numbers itself.
 
+## Contributing
+
+Nothing goes into `main` directly: branch, pull request, one approval,
+squash merge. Step by step in `docs/workflow.md`. Native tests and how
+to extend them: `docs/native_tests.md`.
+
 ## Runtime notes
 
 - Every sample (default every 10 s) is published as one flat JSON object
