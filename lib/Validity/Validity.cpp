@@ -8,29 +8,36 @@ void Validity::check(Snapshot& s, const Snapshot& prev) {
 }
 
 void Validity::checkChannel(Reading& r, const Reading& prev, const ChannelLimits& lim, uint16_t& stuckCounter) {
-    (void)prev; (void)lim; (void)stuckCounter;
     if (!r.valid) return;
 
+<<<<<<< HEAD
     if(r.value < lim.min || r.value > lim.max) {
         r.valid = false;
         r.fault = FAULT_RANGE;
 
+=======
+    if (r.value < lim.min || r.value > lim.max) {
+        r.reject(FAULT_RANGE);
+        return;
+>>>>>>> main
     }
-    const uint32_t sampleMsDelta = r.sampledAtMs - prev.sampledAtMs;
-    if (prev.valid && sampleMsDelta != 0){
+
+    const uint32_t elapsedMs = r.sampledAtMs - prev.sampledAtMs;
+    if (prev.valid && elapsedMs != 0) {
         float delta = r.value - prev.value;
-        if(delta<0.0f) delta = -delta;
-        if (delta * 60000.0f > lim.maxRatePerMin * sampleMsDelta) {
-            r.valid = false;
-            r.fault = FAULT_RATE;
+        if (delta < 0.0f) delta = -delta;
+        if (delta * 60000.0f > lim.maxRatePerMin * elapsedMs) {
+            r.reject(FAULT_RATE);
+            return;
         }
     }
-    if (r.raw == prev.raw) stuckCounter++;
-    else stuckCounter = 1;
 
-    if(stuckCounter >= limits_.stuckCount) {
-        r.valid = false;
-        r.fault = FAULT_STUCK;
+    if (prev.valid && r.raw == prev.raw) {
+        if (stuckCounter != UINT16_MAX) ++stuckCounter;
+    } else {
+        stuckCounter = 1;
     }
-
+    if (stuckCounter >= limits_.stuckCount) {
+        r.reject(FAULT_STUCK);
+    }
 }

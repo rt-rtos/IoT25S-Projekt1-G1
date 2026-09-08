@@ -20,8 +20,10 @@ enum Fault : uint8_t {
 const char* faultName(uint8_t fault);
 
 struct Reading {
-    float    value       = NAN;             // C or %RH; NaN whenever valid == false
-    bool     valid       = false;           // true only when fault == FAULT_NONE
+    float    value       = NAN;             // C or %RH. NaN when the driver failed. A value rejected by
+                                            // Validity is kept for the serial debug line. Only meaningful
+                                            // when valid, so check that, not isnan().
+    bool     valid       = false;           // same as fault == FAULT_NONE
     uint8_t  fault       = FAULT_NOT_READY;
     uint32_t sampledAtMs = 0;
     uint32_t raw         = 0;               // raw sensor word, for stuck detection only
@@ -31,6 +33,10 @@ struct Reading {
     }
     void fail(uint8_t f, uint32_t nowMs) {
         value = NAN; sampledAtMs = nowMs; fault = f; valid = false;
+    }
+    // Validity rejected a reading the driver delivered; value stays as measured.
+    void reject(uint8_t f) {
+        fault = f; valid = false;
     }
 };
 
