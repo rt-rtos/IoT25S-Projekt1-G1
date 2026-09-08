@@ -20,8 +20,8 @@ enum Fault : uint8_t {
 const char* faultName(uint8_t fault);
 
 struct Reading {
-    float    value       = NAN;             // C or %RH; NaN whenever valid == false
-    bool     valid       = false;           // true only when fault == FAULT_NONE
+    float    value       = NAN;             // C or %RH. Only meaningful when valid; fail() sets NaN, skipped check yields NaN, never a plausible number.
+    bool     valid       = false;           // fault == FAULT_NONE. Check this, not isnan(value).
     uint8_t  fault       = FAULT_NOT_READY;
     uint32_t sampledAtMs = 0;
     uint32_t raw         = 0;               // raw sensor word, for stuck detection only
