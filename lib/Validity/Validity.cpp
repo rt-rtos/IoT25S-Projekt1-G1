@@ -10,16 +10,9 @@ void Validity::check(Snapshot& s, const Snapshot& prev) {
 void Validity::checkChannel(Reading& r, const Reading& prev, const ChannelLimits& lim, uint16_t& stuckCounter) {
     if (!r.valid) return;
 
-<<<<<<< HEAD
-    if(r.value < lim.min || r.value > lim.max) {
-        r.valid = false;
-        r.fault = FAULT_RANGE;
-
-=======
     if (r.value < lim.min || r.value > lim.max) {
         r.reject(FAULT_RANGE);
         return;
->>>>>>> main
     }
 
     const uint32_t elapsedMs = r.sampledAtMs - prev.sampledAtMs;
