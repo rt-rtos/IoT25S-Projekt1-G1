@@ -139,7 +139,8 @@ void test_validity_rate_to_high(){
 
     current.rhIn.set(15.0f,0,0);
     prev.rhIn.set(25.0f,0,0);
-    prev.rhIn.sampledAtMs =- 1;
+    current.rhIn.sampledAtMs = 60000;
+    prev.rhIn.sampledAtMs = 0;
 
     validity.check(current,prev);
 
