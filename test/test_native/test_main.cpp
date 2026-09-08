@@ -109,6 +109,59 @@ void test_payload_null_for_invalid_and_fixed_point() {
 }
 
 // TODO(validity): range, rate and stuck tests once Validity is implemented.
+void test_validity_assert_range(Reading& r){
+    TEST_ASSERT_FALSE(r.valid);
+    TEST_ASSERT_EQUAL_INT(FAULT_RANGE,r.fault);
+    TEST_ASSERT_FALSE(isnan(r.value));
+}
+void test_validity_out_of_range(){
+    Snapshot s;
+    Validity v;
+    s.seq = 123; s.uptimeMs = 3236890;
+    s.tIn.set(3.0f, 0, 0);
+    s.rhIn.set(110.0f, 0, 0);
+    s.tOut.set(-20.1f, 0, 0);
+    s.tWater.set(40.1f,0,0);
+
+    v.check(s,s);
+
+    test_validity_assert_range(s.tIn);
+    test_validity_assert_range(s.rhIn);
+    test_validity_assert_range(s.tOut);
+    test_validity_assert_range(s.tWater);
+}
+
+void test_validity_rate_to_high(){
+    Snapshot current;
+    Snapshot prev;
+
+    Validity validity;
+
+    current.rhIn.set(15.0f,0,0);
+    prev.rhIn.set(25.0f,0,0);
+    prev.rhIn.sampledAtMs =- 1;
+
+    validity.check(current,prev);
+
+    TEST_ASSERT_FALSE(current.rhIn.valid);
+    TEST_ASSERT_EQUAL_INT(FAULT_RATE,current.rhIn.fault);
+}
+
+void test_validity_sensor_stuck(){
+    Snapshot snapshot;
+    Validity validity;
+
+    int limit = 30;
+
+    snapshot.rhIn.set(15.0f,0,0);
+
+    for(int iteration = 0;iteration < limit++;iteration++){
+        validity.check(snapshot,snapshot);
+    }
+
+    TEST_ASSERT_FALSE(snapshot.rhIn.valid);
+    TEST_ASSERT_EQUAL_INT(FAULT_STUCK,snapshot.rhIn.fault);
+}
 
 int main() {
     UNITY_BEGIN();
@@ -121,5 +174,8 @@ int main() {
     RUN_TEST(test_ntc_hand_computed_points);
     RUN_TEST(test_ntc_short_open_are_faults);
     RUN_TEST(test_payload_null_for_invalid_and_fixed_point);
+    RUN_TEST(test_validity_out_of_range);
+    RUN_TEST(test_validity_rate_to_high);
+    RUN_TEST(test_validity_sensor_stuck);
     return UNITY_END();
 }
