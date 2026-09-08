@@ -155,7 +155,7 @@ void test_validity_sensor_stuck(){
 
     snapshot.rhIn.set(15.0f,0,0);
 
-    for(int iteration = 0;iteration < limit++;iteration++){
+    for(int iteration = 0;iteration < limit;iteration++){
         validity.check(snapshot,snapshot);
     }
 
