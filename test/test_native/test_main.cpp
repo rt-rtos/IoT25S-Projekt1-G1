@@ -111,7 +111,7 @@ void test_payload_null_for_invalid_and_fixed_point() {
 void test_validity_assert_range(Reading& r){
     TEST_ASSERT_FALSE(r.valid);
     TEST_ASSERT_EQUAL_INT(FAULT_RANGE,r.fault);
-    TEST_ASSERT_FLOAT_IS_NAN(r.value);
+    TEST_ASSERT_FALSE(isnan(r.value));
 }
 void test_validity_out_of_range(){
     Snapshot s;
