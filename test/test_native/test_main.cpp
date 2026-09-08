@@ -108,7 +108,6 @@ void test_payload_null_for_invalid_and_fixed_point() {
     TEST_ASSERT_EQUAL_UINT(31, strlen(small));
 }
 
-// TODO(validity): range, rate and stuck tests once Validity is implemented.
 void test_validity_assert_range(Reading& r){
     TEST_ASSERT_FALSE(r.valid);
     TEST_ASSERT_EQUAL_INT(FAULT_RANGE,r.fault);
