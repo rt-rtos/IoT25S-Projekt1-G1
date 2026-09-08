@@ -11,7 +11,7 @@ void Validity::checkChannel(Reading& r, const Reading& prev, const ChannelLimits
     (void)prev; (void)lim; (void)stuckCounter;
     if (!r.valid) return;
 
-    if(r.value <= lim.min || r.value >= lim.max) {
+    if(r.value < lim.min || r.value > lim.max) {
         r.valid = false;
         r.fault = FAULT_RANGE;
 
