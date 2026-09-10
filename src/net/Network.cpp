@@ -10,13 +10,23 @@ bool Network::begin() {
 }
 
 void Network::poll(uint32_t nowMs) {
-    // TODO(network): refresh status_ from WiFi.status(); while not
-    // connected, call WiFi.begin(ssid_, pass_) at most every retryMs_
-    // (use lastAttemptMs_). See examples/ConnectWithWPA and outline 5.3.
-    (void)nowMs;
+   status_ = WiFi.status();
+    if (status_ != WL_CONNECTED) {
+        if (nowMs - lastAttemptMs_ >= retryMs_) {
+            WiFi.begin(ssid_, pass_);
+            lastAttemptMs_ = nowMs;
+        }
+    }
 }
 
+
 void Network::printInfo(Print& out) const {
-    // TODO(network): SSID, IP, RSSI, as in examples/ConnectWithWPA printCurrentNet().
-    (void)out;
+     out.print("SSID: ");
+    out.println(WiFi.SSID());
+
+    out.print("RSSI: ");
+    out.println(WiFi.RSSI());
+
+    out.print("IP: ");
+    out.println(WiFi.localIP());
 }
