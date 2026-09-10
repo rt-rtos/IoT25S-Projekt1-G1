@@ -23,25 +23,32 @@ bool Ds18b20Sensor::detect() {
     // TODO(ds18b20): dallas_.begin(), getAddress(addr_, 0) -> found_,
     // setResolution(addr_, resolutionBits_), conversionMs_ from
     // DallasTemperature::millisToWaitForConversion(resolutionBits_).
+    dallas_.begin();
+    found_ = dallas_.getAddress(addr_,0);
+    dallas_.setResolution(addr_,resolutionBits_);
     return found_;
 }
 
 bool Ds18b20Sensor::begin() {
     // TODO(ds18b20): setWaitForConversion(false) so requests never block,
     // then detect(). See examples/WaitForConversion2 setup().
+    dallas_.setWaitForConversion(false);
     return detect();
 }
 
 void Ds18b20Sensor::start(uint32_t nowMs) {
     // TODO(ds18b20): if not found_, try detect() again (replug recovery);
     // requestTemperaturesByAddress(addr_), remember nowMs, set pending_.
-    (void)nowMs;
+    if(!detect()) detect();
+    dallas_.requestTemperaturesByAddress(addr_);
+    pending_ = true;
 }
 
 bool Ds18b20Sensor::ready(uint32_t nowMs) const {
     // TODO(ds18b20): not pending, or nowMs - startedMs_ >= conversionMs_.
     (void)nowMs;
-    return true;
+    if(pending_ || nowMs - startedMs_ >= conversionMs_) return true;
+    return false;
 }
 
 bool Ds18b20Sensor::read(Reading& out, uint32_t nowMs) {
@@ -53,4 +60,16 @@ bool Ds18b20Sensor::read(Reading& out, uint32_t nowMs) {
     (void)POWER_ON_RESET_C;
     out.fail(FAULT_NOT_READY, nowMs);
     return false;
+
+    out.raw = dallas_.getTemp(addr_);
+
+    if (out.raw == DEVICE_DISCONNECTED_RAW){
+        out.fail(FAULT_NO_DEVICE, nowMs);
+        found_ = false;
+    }
+    float tC = dallas_.rawToCelsius(out.raw);
+    if(tC == POWER_ON_RESET_C){
+        out.fail(FAULT_TIMEOUT,nowMs);
+    }
+    out.set(tC,out.raw,nowMs);
 }
