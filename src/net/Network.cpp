@@ -10,16 +10,23 @@ bool Network::begin() {
 }
 
 void Network::poll(uint32_t nowMs) {
-    // TODO(network): refresh status_ from WiFi.status(); while not
-    // connected, call WiFi.begin(ssid_, pass_) at most every retryMs_
-    // (use lastAttemptMs_). examples/ConnectWithWPA does this in a
-    // blocking while-loop in setup(); here it is one attempt per call so
-    // loop() keeps running. WiFi.begin() itself still blocks a few seconds
-    // (outline 5.3, 12).
-    (void)nowMs;
+   status_ = WiFi.status();
+    if (status_ != WL_CONNECTED) {
+        if (nowMs - lastAttemptMs_ >= retryMs_) {
+            WiFi.begin(ssid_, pass_);
+            lastAttemptMs_ = nowMs;
+        }
+    }
 }
 
+
 void Network::printInfo(Print& out) const {
-    // TODO(network): SSID, IP, RSSI, as in examples/ConnectWithWPA printCurrentNet().
-    (void)out;
+     out.print("SSID: ");
+    out.println(WiFi.SSID());
+
+    out.print("RSSI: ");
+    out.println(WiFi.RSSI());
+
+    out.print("IP: ");
+    out.println(WiFi.localIP());
 }
