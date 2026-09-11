@@ -47,10 +47,29 @@ Never `git add -A` without reading `git status`. `src/secrets.h`,
 
     pio run                  # firmware builds
     pio test -e native       # native tests pass
+    pio check                # runs cppcheck and clangtidy
+ Warnings and static analysis
 
-A `lib/` change preferably comes with a test (`docs/native_tests.md`, section 6).
-A `src/` change is checked on the board with the matching integration
-test from outline 11; note the result for the PR.
+pio run now shows compiler warnings for our own code. It did not before: the Arduino core passes -w, which muted everything. Fix warnings in files you touch before opening a PR. A warning in a file you did not touch is not yours.
+ 
+Before opening a PR, also run:
+ 
+pio check -e uno_r4_wifi
+The first run downloads cppcheck and clang-tidy, after that it takes about 90 seconds. It checks src/ and lib/ only. Read the lines that name your files. Severity medium and high you fix or explain in the PR body. low is style; fix it if it is cheap.
+ 
+If a finding is wrong for a good reason, silence it on that line and say why:
+
+ ```
+  // cppcheck-suppress unreachableCode ; why
+  foo();  // NOLINT(bugprone-narrowing-conversions) why
+  What it does and does not catch: the compiler and the analyzers find dead code after a return, sign mix-ups, unused 
+  // cppcheck-suppress unreachableCode ; why
+  foo();  // NOLINT(bugprone-narrowing-conversions) why
+ ```
+  What it does and does not catch: the compiler and the analyzers find dead code after a return, sign mix-ups, unused parameters and uninitialised members. 
+  They do not find an inverted condition or a wrong state transition. Those only fall to running the code on the board or to the reviewer.
+ 
+Settings live in `platformio.ini` `(check_*)`, `.clang-tidy` and `unmute_warnings.py`
 
 If `main` moved, rebase now, before anyone reviews:
 
@@ -108,13 +127,7 @@ talking to the other author first.
 - **Branch is a mess:** new branch from `main`, `git cherry-pick` what
   is worth keeping, delete the old one.
 
-## 8. Enforcement
 
-GitHub can only enforce this on a public repo or with the owner on
-GitHub Pro. Once either is true: Settings > Rules > Rulesets, new branch
-ruleset for `main`, require a pull request with one approval, block
-force pushes, block deletion. Also turn on Settings > General > Pull
-Requests > "Automatically delete head branches".
 
 Until then it is a team rule. A push to `main` is visible in the history
 and is handled as in section 7.
