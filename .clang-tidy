@@ -1,0 +1,22 @@
+# clang-tidy configuration for `pio check` (check_flags in platformio.ini).
+# Bug-oriented checks on; the readability checks that only argue about
+# names, digits and braces are off. Framework and library headers are not
+# ours: only headers under src/ and lib/ are reported.
+Checks: >
+  -*,
+  bugprone-*,
+  clang-analyzer-*,
+  clang-diagnostic-*,
+  readability-*,
+  -readability-identifier-length,
+  -readability-magic-numbers,
+  -readability-uppercase-literal-suffix,
+  -readability-braces-around-statements,
+  -readability-implicit-bool-conversion,
+  -readability-isolate-declaration,
+  -readability-else-after-return,
+  -readability-convert-member-functions-to-static,
+  -readability-named-parameter,
+  -bugprone-easily-swappable-parameters
+HeaderFilterRegex: '/IoT25S-Projekt1-G1[^/]*/(src|lib)/'
+ExtraArgs: ['-Wunreachable-code', '-Wunreachable-code-return']
