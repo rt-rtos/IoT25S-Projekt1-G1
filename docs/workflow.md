@@ -8,7 +8,8 @@ flowchart LR
     A["update main"] --> B["branch"]
     B --> C["commit"]
     C --> D["build + test"]
-    D --> E["push, open PR"]
+    D --> D2["pio check"]
+    D2 --> E["push, open PR"]
     E --> F["review"]
     F -->|changes requested| C
     F -->|approved| G["squash merge, delete branch"]
