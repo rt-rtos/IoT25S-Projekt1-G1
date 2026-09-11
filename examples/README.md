@@ -10,9 +10,9 @@ framework package to see the original.
 | `WiFiSimpleSender` | ArduinoMqttClient 0.1.8 | `Telemetry`: basic publish loop |
 | `WiFiAdvancedCallback` | ArduinoMqttClient 0.1.8 | `Telemetry`: Last Will, retain, QoS, subscribe callback (cmd topic) |
 | `WiFiSimpleReceiveCallback` | ArduinoMqttClient 0.1.8 | `Telemetry`: receive callback |
-| `WaitForConversion2` | DallasTemperature 4.0.5 | `Ds18b20Sensor`: async (non-blocking) conversion |
-| `Simple` | DallasTemperature 4.0.5 | `Ds18b20Sensor`: minimal read |
-| `Tester` | DallasTemperature 4.0.5 | Bench check: device count, address, resolution, parasite power (clone detection) |
+| `WaitForConversion2` | DallasTemperature 4.0.6 | `Ds18b20Sensor`: async (non-blocking) conversion. Uses by-index calls; the by-address calls the driver needs are listed in `src/sensors/Ds18b20Sensor.cpp` |
+| `Simple` | DallasTemperature 4.0.6 | `Ds18b20Sensor`: minimal read |
+| `Tester` | DallasTemperature 4.0.6 | Bench check: device count, address, resolution, parasite power (clone detection) |
 | `DS18x20_Temperature` | OneWire 2.3.8 | Raw 1-Wire protocol: presence, scratchpad, CRC-8, resolution bits |
 | `ConnectWithWPA` | WiFiS3 (core 1.6.0) | `Network`: connect, status, RSSI |
 | `WiFiUdpNtpClient` | WiFiS3 (core 1.6.0) | Future: NTP time on the node (outline section 12) |

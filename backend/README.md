@@ -45,6 +45,7 @@ The node has no clock. The backend stamps each row on ingest; `seq` and
 2. Flow: `mqtt in` (`microhydros/+/telemetry`) -> `json` -> `function`
    (pull `device_id` from `msg.topic`, add `received_at`) -> `sqlite`
    (`INSERT`). Keep the SQLite file under `/data` so it lives in the volume.
+   Node by node below.
 3. Table, matching the flat payload:
 
        CREATE TABLE IF NOT EXISTS telemetry (
@@ -63,3 +64,75 @@ The node has no clock. The backend stamps each row on ingest; `seq` and
    stored rows, not something the node does.
 6. Export the flow (Menu -> Export -> all flows) to `node-red/flows.json`
    and commit it so the setup is reproducible.
+
+## Ingest flow in detail (step 2)
+
+Four nodes wired left to right. Each one reads or rewrites `msg.payload`
+and `msg.topic` and passes the message on.
+
+1. `mqtt in`. Broker host is `mosquitto`, not `localhost`: Node-RED runs
+   in its own container, and Compose gives each service a DNS name equal
+   to its service name. Topic `microhydros/+/telemetry`; `+` matches one
+   level, so every node id but not the `status` topic. Output:
+   `msg.topic` is the full topic, `msg.payload` the JSON as a string.
+
+2. `json`. Parses the string into an object, so `msg.payload.t_in` is
+   24.1 and `msg.payload.t_water` is `null`. Optional (`mqtt in` can
+   output a parsed object), kept so a parse error has a visible place to
+   land.
+
+3. `function`. Builds the row. The payload lacks two columns: the device
+   id, which is the middle part of the topic, and the timestamp, which
+   the backend supplies because the node has no clock. Values go into
+   `msg.params` with `$` names for the prepared statement:
+
+       const parts = msg.topic.split("/");   // ["microhydros", "node01", "telemetry"]
+       const p = msg.payload;
+       msg.params = {
+           $received_at:   new Date().toISOString(),
+           $device_id:     parts[1],
+           $seq:           p.seq,
+           $uptime_s:      p.uptime_s,
+           $t_in:          p.t_in,
+           $rh_in:         p.rh_in,
+           $t_out:         p.t_out,
+           $t_water:       p.t_water,
+           $fault_t_in:    p.faults.t_in,
+           $fault_rh_in:   p.faults.rh_in,
+           $fault_t_out:   p.faults.t_out,
+           $fault_t_water: p.faults.t_water,
+       };
+       return msg;
+
+   A JSON `null` becomes a JavaScript `null` and is bound as SQL `NULL`,
+   which is why an invalid channel is `null` in the payload and not a
+   sentinel number.
+
+4. `sqlite` (`node-red-node-sqlite`). Mode "Prepared Statement", database
+   `/data/telemetry.db`, statement:
+
+       INSERT INTO telemetry (received_at, device_id, seq, uptime_s,
+                              t_in, rh_in, t_out, t_water,
+                              fault_t_in, fault_rh_in, fault_t_out, fault_t_water)
+       VALUES ($received_at, $device_id, $seq, $uptime_s,
+               $t_in, $rh_in, $t_out, $t_water,
+               $fault_t_in, $fault_rh_in, $fault_t_out, $fault_t_water);
+
+   Bound values are never pasted into the SQL text, so strings and nulls
+   need no quoting. Building the SQL string in the function instead
+   ("Via msg.topic" mode) works but is where quoting bugs come from.
+
+The table must exist before the first insert: a second flow, `inject`
+set to fire once at startup -> `sqlite` with the `CREATE TABLE IF NOT
+EXISTS` from step 3, same database file.
+
+Why `/data`: the compose file mounts the `node-red-data` volume there.
+The rest of the container filesystem is discarded whenever the container
+is recreated (image update, config change), and a database anywhere else
+loses its rows with it.
+
+Checking: a `debug` node on the function output shows `msg.params` in
+the sidebar; publish the sample message from "Start" and the row should
+appear. An `inject` -> `sqlite` in "Via msg.topic" mode sending
+`SELECT * FROM telemetry ORDER BY received_at DESC LIMIT 5` makes a
+query button in the editor.

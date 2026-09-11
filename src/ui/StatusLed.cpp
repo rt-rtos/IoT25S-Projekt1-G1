@@ -1,7 +1,10 @@
 #include "ui/StatusLed.h"
 
-// Frames are three packed uint32_t for the 12x8 matrix; see
-// examples/DisplaySingleFrame/frames.h for the format and a few icons.
+// A frame is uint32_t[3] (96 bits, one per LED, row-major 12x8), shown
+// with matrix_.loadFrame(frame). See examples/DisplaySingleFrame/frames.h
+// for the layout and a few ready-made icons. Draw new ones in the Arduino
+// LED Matrix Editor (docs.arduino.cc, "LED Matrix Editor") and paste the
+// array.
 
 void StatusLed::begin() {
     matrix_.begin();
@@ -26,6 +29,8 @@ void StatusLed::update(uint32_t nowMs) {
 }
 
 void StatusLed::render() {
-    // TODO(led): one frame per state, fault_ overrides with a warning frame.
+    // TODO(led): static const uint32_t frames[4][3] indexed by state_
+    // (BOOT, WIFI_CONNECTING, MQTT_CONNECTING, ONLINE); if fault_, load
+    // a warning frame instead. matrix_.loadFrame(...).
     matrix_.clear();
 }

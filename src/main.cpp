@@ -61,8 +61,10 @@ static uint32_t  lastSampleMs     = 0;
 
 static void onSerialCommand(const char* cmd, const char* arg) {
     // TODO(firmware): "scenario <name>" -> shtSource.setScenarioByName (only
-    // when SHT4X_SIMULATED), "sample <s>" -> sampleIntervalMs with the
-    // SAMPLE_INTERVAL_MIN_MS floor, "help".
+    // when SHT4X_SIMULATED), "sample <s>" -> sampleIntervalMs =
+    // strtoul(arg, nullptr, 10) * 1000, refused (message, no change) when 0
+    // or below SAMPLE_INTERVAL_MIN_MS; print the value that took effect.
+    // "help" lists the three. Unknown command -> "unknown: <cmd>".
     Serial.print("cmd: "); Serial.print(cmd); Serial.print(" "); Serial.println(arg);
 }
 
@@ -89,6 +91,9 @@ void setup() {
     Serial.begin(SERIAL_BAUD);
     uint32_t t0 = millis();
     while (!Serial && millis() - t0 < 3000) {}
+    // TODO(firmware): print free RAM here (risk row "Uno R4 SRAM", outline
+    // 10), e.g. the gap between a stack local's address and the heap top
+    // from malloc(1), so the number is in every boot log for tests.md.
 
     led.begin();
     Serial.println("MicroHydros climate node " DEVICE_ID " (type 'help')");
