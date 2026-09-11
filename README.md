@@ -39,6 +39,7 @@ PlatformIO Core (`pio`).
     pio run -t upload                        # flash the board
     pio device monitor                       # serial log, 115200 baud
     pio test -e native                       # PC tests of the pure modules
+    pio check                                # Runs cppcheck and clangtidy
 
 Libraries are declared in `platformio.ini` and fetched automatically:
 ArduinoMqttClient, OneWire, DallasTemperature. WiFiS3, Wire and
