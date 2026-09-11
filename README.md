@@ -34,12 +34,20 @@ A few terms that appear throughout, explained once:
 PlatformIO project. Install the PlatformIO IDE extension in VS Code or
 PlatformIO Core (`pio`).
 
+**One time**
+```
     cp src/secrets.h.example src/secrets.h   # fill in Wi-Fi and broker
+```
+**pio commands:**
+```
     pio run                                  # build for uno_r4_wifi
     pio run -t upload                        # flash the board
     pio device monitor                       # serial log, 115200 baud
     pio test -e native                       # PC tests of the pure modules
-    pio check                                # Runs cppcheck and clangtidy
+    pio check -e uno_r4_wifi                 # Runs cppcheck and clangtidy
+    or
+    pio check -e native
+```
 
 Libraries are declared in `platformio.ini` and fetched automatically:
 ArduinoMqttClient, OneWire, DallasTemperature. WiFiS3, Wire and
