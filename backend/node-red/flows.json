@@ -1,0 +1,186 @@
+[
+    {
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "a971358406d77bd3",
+        "type": "mqtt-broker",
+        "name": "microhydros",
+        "broker": "mosquitto",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "f70a7f1ed5c4eb38",
+        "type": "sqlitedb",
+        "db": "/data/telemetry.db",
+        "mode": "RWC"
+    },
+    {
+        "id": "c7002d707b357308",
+        "type": "sqlitedb",
+        "db": "",
+        "mode": "RWC"
+    },
+    {
+        "id": "3cc11d24.ff01a2",
+        "type": "comment",
+        "z": "f6f2187d.f17ca8",
+        "name": "WARNING: please check you have started this container with a volume that is mounted to /data\\n otherwise any flow changes are lost when you redeploy or upgrade the container\\n (e.g. upgrade to a more recent node-red docker image).\\n  If you are using named volumes you can ignore this warning.\\n Double click or see info side panel to learn how to start Node-RED in Docker to save your work",
+        "info": "\nTo start docker with a bind mount volume (-v option), for example:\n\n```\ndocker run -it -p 1880:1880 -v /home/user/node_red_data:/data --name mynodered nodered/node-red\n```\n\nwhere `/home/user/node_red_data` is a directory on your host machine where you want to store your flows.\n\nIf you do not do this then you can experiment and redploy flows, but if you restart or upgrade the container the flows will be disconnected and lost. \n\nThey will still exist in a hidden data volume, which can be recovered using standard docker techniques, but that is much more complex than just starting with a named volume as described above.",
+        "x": 350,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "d1a5e61bd2090797",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "mqtt in",
+        "topic": "microhydros/+/telemetry",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "a971358406d77bd3",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 350,
+        "y": 460,
+        "wires": [
+            [
+                "c66639a54d05b76d"
+            ]
+        ]
+    },
+    {
+        "id": "c66639a54d05b76d",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "telemetry",
+        "func": "// Row builder: MQTT telemetry -> params for the sqlite prepared statement.\n// Topic is microhydros/<device_id>/telemetry; the middle part is the device.\n// The node has no clock, so received_at is stamped here on ingest.\n\nconst parts = msg.topic.split(\"/\");\nconst p = msg.payload;\n\nif (parts.length < 3 || typeof p !== \"object\" || p === null) {\n    node.warn(\"dropped message with bad topic or payload: \" + msg.topic);\n    return null;\n}\n\nconst faults = p.faults || {};\n\nmsg.params = {\n    $received_at:   new Date().toISOString(),\n    $device_id:     parts[1],\n    $seq:           p.seq,\n    $uptime_s:      p.uptime_s,\n    $t_in:          p.t_in,\n    $rh_in:         p.rh_in,\n    $t_out:         p.t_out,\n    $t_water:       p.t_water,\n    $fault_t_in:    faults.t_in,\n    $fault_rh_in:   faults.rh_in,\n    $fault_t_out:   faults.t_out,\n    $fault_t_water: faults.t_water,\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 460,
+        "wires": [
+            [
+                "2ef141b08d0338e6",
+                "33f7027bd0af7a95"
+            ]
+        ]
+    },
+    {
+        "id": "2ef141b08d0338e6",
+        "type": "sqlite",
+        "z": "f6f2187d.f17ca8",
+        "mydb": "f70a7f1ed5c4eb38",
+        "sqlquery": "prepared",
+        "sql": "INSERT INTO telemetry (received_at, device_id, seq, uptime_s,\n                       t_in, rh_in, t_out, t_water,\n                       fault_t_in, fault_rh_in, fault_t_out, fault_t_water)\nVALUES ($received_at, $device_id, $seq, $uptime_s,\n        $t_in, $rh_in, $t_out, $t_water,\n        $fault_t_in, $fault_rh_in, $fault_t_out, $fault_t_water);",
+        "name": "telemetry",
+        "x": 900,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "75d5305563f12a96",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "create table",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 600,
+        "wires": [
+            [
+                "3466f6bb710c8b4e"
+            ]
+        ]
+    },
+    {
+        "id": "3466f6bb710c8b4e",
+        "type": "sqlite",
+        "z": "f6f2187d.f17ca8",
+        "mydb": "f70a7f1ed5c4eb38",
+        "sqlquery": "fixed",
+        "sql": "CREATE TABLE IF NOT EXISTS telemetry (\n  received_at TEXT NOT NULL,\n  device_id   TEXT NOT NULL,\n  seq         INTEGER,\n  uptime_s    INTEGER,\n  t_in REAL, rh_in REAL, t_out REAL, t_water REAL,\n  fault_t_in INTEGER, fault_rh_in INTEGER,\n  fault_t_out INTEGER, fault_t_water INTEGER\n);",
+        "name": "create DB",
+        "x": 360,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "33f7027bd0af7a95",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "params",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "1276246334ef9f1b",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-node-sqlite": "2.0.1"
+        }
+    }
+]
