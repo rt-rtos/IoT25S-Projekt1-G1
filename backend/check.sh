@@ -11,6 +11,8 @@ export MSYS_NO_PATHCONV=1   # Git Bash: keep /data/... arguments as they are
 pass() { printf '  ok    %s\n' "$1"; }
 fail() { printf '  FAIL  %s\n' "$1"; exit 1; }
 
+docker info >/dev/null 2>&1 || fail "docker is not running (start Docker Desktop on Windows/macOS)"
+
 # Node-RED reports UTC in its log; the same stamp filters `logs --since`.
 since=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 

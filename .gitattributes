@@ -1,0 +1,4 @@
+# Normalize text files to LF in the repo; checkout follows the platform.
+* text=auto
+# Shell scripts run under bash on every platform and must stay LF.
+*.sh text eol=lf
