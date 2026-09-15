@@ -6,3 +6,6 @@
 .vscode/extensions.json
 src/secrets.h
 compile_commands.json
+# Node-RED writes these next to the mounted flow file
+backend/node-red/.flows.json.backup
+backend/node-red/flows_cred.json

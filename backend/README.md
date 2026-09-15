@@ -9,6 +9,10 @@ editor following the steps below, then exported to `node-red/flows.json`.
     cd backend
     docker compose up -d --build
 
+The first run builds a local Node-RED image with the SQLite node baked
+in (`Dockerfile`, well under a minute, see Step 1). Later starts can drop
+`--build`; with it Compose only rebuilds when the Dockerfile changed.
+
 - Broker: `localhost:1883`, anonymous allowed (dev only).
 - Node-RED editor: http://localhost:1880
 
@@ -29,96 +33,72 @@ used by every check below:
 
 Terminal 1 should print the topic followed by the JSON on one line.
 
-## export and import the flow
+## The flow file
 
-Node-RED keeps its live `flows.json` in the `node-red-data` volume at
-`/data`. Nothing in this directory is mounted into the container, so
-`node-red/flows.json` in the repo is a snapshot: export it when the flow
-changes, commit it, and import it on another machine. The broker config
-comes with it; credentials do not, but the dev broker has none.
+`node-red/flows.json` is the live flow. The compose file bind-mounts
+this directory into the container as `/data/repo` and sets
+`FLOWS=repo/flows.json`, so every Deploy in the editor writes straight to
+the repo file and a fresh clone starts with the shared flow. Nothing to
+export or import.
 
-Export, from this directory, with the containers running:
+- Changed the flow in the editor: `git diff` shows it, commit when the
+  behaviour changed (dragging nodes only moves `x`/`y` and is not worth a
+  commit on its own).
+- Pulled someone else's change: `docker compose restart node-red` loads
+  it. Node-RED does not watch the file.
+- Two people deploying different versions of the flow produce JSON merge
+  conflicts. Keep one owner for the flow; everyone else pulls.
 
-    docker compose cp node-red:/data/flows.json node-red/flows.json
+Node-RED writes `.flows.json.backup` and `flows_cred.json` next to the
+flow; both are gitignored. Everything else (settings, palette installs,
+the SQLite file, credentials) stays in the `node-red-data` volume and is
+not committed.
 
-Import on another machine, then restart so Node-RED loads the new file:
+The container runs as uid 1000, so on Linux the checkout must be
+writable by that uid or Deploy fails with EACCES; WSL and Docker Desktop
+need nothing special.
 
-    docker compose cp node-red/flows.json node-red:/data/flows.json
-    docker compose restart node-red
+## Verify the backend
 
-The import overwrites whatever flow that machine had. Export first if any
-of it is worth keeping.
+Four checks in order, from this directory with the stack running. Each
+covers one link of the chain, and the ingest counts as working only when
+all four pass (backlog card B2). `./check.sh` does all of it in one go:
+`docker compose up -d --build`, a restart so the current flow file is
+loaded, then the four checks with a pass/fail line each. On Windows run
+it from Git Bash. The manual version:
 
-### Verify the imported flow from the host
+1. Node-RED sees the flow. List the nodes in the mounted file:
 
-Run these commands from `backend`:
+        docker compose exec -T node-red node -e "const f=require('/data/repo/flows.json');console.log(f.map(n=>n.type+(n.name?' ['+n.name+']':'')).join('\n'))"
 
-  docker compose exec -T node-red node -e 'const f=require("/data/flows.json"); console.log(f.map(n => `${n.type}${n.name ? " [" + n.name + "]" : ""}`).join("\n"))'
+    The list must contain `mqtt in [telemetry in]`, `function [row
+    builder]`, `sqlite [insert telemetry]` and `sqlite [create
+    telemetry]`. A missing file or only the image's default
+    `comment [WARNING: ...]` means the bind mount is not in effect;
+    check the `volumes` and `FLOWS` lines in the compose file.
 
-The output should include the imported nodes, such as `mqtt in [telemetry
-in]`, `function [row builder]`, and `sqlite [insert telemetry]`. If it only
-shows `tab` and the default `WARNING` comment, the import did not happen in
-the running volume. Import again and restart:
+2. Node-RED started the flow and reached the broker:
 
-  docker compose cp node-red/flows.json node-red:/data/flows.json
-  docker compose restart node-red
+        docker compose logs node-red | grep -E 'Started flows|opened /data/telemetry.db|Connected to broker'
 
-Check the host-to-Mosquitto path in two terminals. The subscriber should
-print one line:
+    Expected lines: `Started flows`, `opened /data/telemetry.db ok` and
+    `Connected to broker: mqtt://mosquitto:1883`. Without `grep`, read
+    `docker compose logs node-red` and look for the same three lines.
 
-  mosquitto_sub -h localhost -t 'microhydros/#' -v
+3. The broker delivers from the host. Run the two terminals from Start;
+    the subscriber prints the topic and the JSON. This proves Mosquitto
+    only, not that Node-RED processed anything.
 
-  mosquitto_pub -h localhost -t microhydros/node01/telemetry -f payload.json
+4. Node-RED processed the message and SQLite has the row. Publish
+    `payload.json` once more, then read the newest row straight from the
+    database file in the container:
 
-Finally open <http://localhost:1880>, click Deploy if needed, and watch the
-Debug sidebar. The imported flow should show `msg.params` at `row builder`;
-the SQLite query from Step 6 should then return one row. Seeing the message
-in `mosquitto_sub` alone verifies only the broker, not Node-RED processing.
+        docker compose exec -T node-red node -e "const s=require(require.resolve('sqlite3',{paths:['/usr/src/node-red/node_modules','/data/node_modules']}));new s.Database('/data/telemetry.db').all('SELECT * FROM telemetry ORDER BY received_at DESC LIMIT 1',(e,r)=>console.log(e||r))"
 
-### Verify the complete backend path
-
-Run the following checks in order after starting the stack:
-
-1. Check that Node-RED started the flow and connected to the internal broker:
-
-     docker compose logs node-red | grep -E 'Started flows|opened /data/telemetry.db|Connected to broker'
-
-  The log should contain `Started flows`, `opened /data/telemetry.db ok`,
-  and `Connected to broker: mqtt://mosquitto:1883`.
-
-1. Check MQTT delivery from the host in two terminals:
-
-     mosquitto_sub -h localhost -t 'microhydros/#' -v
-
-     mosquitto_pub -h localhost -t microhydros/node01/telemetry -f payload.json
-
-  The subscriber printing the topic and JSON proves only that Mosquitto
-  received and delivered the message. It does not prove that Node-RED
-  processed it.
-
-1. Check Node-RED processing in the editor. The Debug sidebar must show a
-  message from the `debug 1` node, including the parameters created by the
-  `Telemetry` function. The message should contain the `node01` device id.
-
-1. Check SQLite insertion using the query chain from Step 6 (`inject` ->
-  `sqlite` -> `debug`). Run this query and click the inject button:
-
-     SELECT * FROM telemetry ORDER BY received_at DESC LIMIT 1
-
-  The debug output must contain one row for `node01`. With the supplied
-  `payload.json`, `t_water` is `NULL` and `fault_t_water` is `1`.
-
-The backend flow is verified only when all four checks pass: startup,
-broker delivery, Node-RED processing, and SQLite insertion.
-
-The editor works too: Menu -> Export -> "all flows" -> Download, and
-Menu -> Import -> select the file -> Deploy. Same file format.
-
-Before exporting, delete the Docker image's default "WARNING: please
-check you have started this container with a volume" comment node so it
-does not end up in the repo.
-
-The SQLite file itself stays in the volume and is not committed.
+    One row for `node01` with `received_at` from just now, `t_water`
+    `null` and `fault_t_water` `1`. With the editor open the Debug
+    sidebar shows the same values as `msg.params` from `row builder`.
+    The query chain from Step 6 is the in-editor version of this check.
 
 Windows notes:
 
@@ -134,6 +114,10 @@ Windows notes:
   1883. If it is running, the docker broker cannot bind the port and
   Node-RED never sees your messages. Check `netstat -ano | findstr 1883`
   and stop the service.
+- The `docker compose exec ... node -e "..."` commands above use double
+  quotes on the outside and single quotes inside on purpose; they run
+  unchanged in bash, cmd and PowerShell. `grep` does not exist there;
+  use `findstr` or read the log.
 
 ## What the node sends
 
@@ -151,29 +135,35 @@ The node has no clock. The backend stamps each row on ingest; `seq` and
 
 ## Step 1: palette
 
-The custom Docker image installs the SQLite node automatically. The
-Dashboard 2.0 node still needs to be installed in the persistent Node-RED
-`/data` volume from Menu -> Manage palette -> Install:
+The SQLite node is part of the local image: `Dockerfile` starts from the
+pinned `nodered/node-red` release and runs `npm install` for
+`node-red-node-sqlite`, so every fresh container has it without a
+palette install. The package ships a prebuilt binary for the image's
+Alpine/Node combination, so the build takes seconds rather than a native
+compile. After changing either pin, rebuild and recreate the container:
+
+    docker compose up -d --build
+
+If a future base image has no prebuilt binary, npm falls back to
+`node-gyp` and the build fails for lack of a compiler. Then add the build
+tools to the Dockerfile:
+
+    FROM nodered/node-red:5.0.7
+    USER root
+    RUN apk add --no-cache python3 make g++
+    USER node-red
+    RUN npm install --no-update-notifier --no-audit node-red-node-sqlite@2.0.1
+
+Dashboard 2.0 is not in the image yet. Install it from the editor, Menu
+-> Manage palette -> Install:
 
 - `@flowfuse/node-red-dashboard` (Dashboard 2.0; the older
   `node-red-dashboard` also works but is no longer maintained)
 
-The SQLite node is installed automatically into the custom image during
-the Compose build. Rebuild it after changing the pinned package version:
-
-  docker compose build node-red
-  docker compose up -d
-
-The sqlite node compiles a native module and can take a few minutes. If
-the build fails, use this `Dockerfile` next to the compose file instead:
-
-    FROM nodered/node-red:latest
-    USER root
-    RUN apk add --no-cache python3 make g++
-    USER node-red
-    RUN npm install --unsafe-perm --no-update-notifier --no-audit node-red-node-sqlite@2.0.1
-
-  then run `docker compose up -d --build`.
+Palette installs land in `/data/node_modules` in the `node-red-data`
+volume. They survive container recreation but are not part of the image,
+so a new machine has to repeat this step until the package is added to
+the Dockerfile.
 
 ## Step 2: broker config and mqtt in
 
@@ -199,13 +189,14 @@ Then the `mqtt in` node itself:
 - Topic: `microhydros/+/telemetry` (`+` matches one level, so every node
   id but not the `status` topic)
 - QoS: 0
-- Output: `a parsed JSON object`
+- Output: `auto-detect (parse JSON, string or buffer)`
 - Name: `telemetry in`
 
 Deploy. The node shows a green "connected" badge within a few seconds.
-With this output setting a malformed message errors on this node and
-`msg.payload` is always an object downstream, so no separate `json` node
-is needed. `msg.topic` carries the full topic string.
+Auto-detect parses a JSON payload into an object, so no separate `json`
+node is needed. A message that is not JSON arrives as a string and
+`row builder` drops it with a warning. `msg.topic` carries the full topic
+string.
 
 ## Step 3: function node, row builder
 
@@ -299,8 +290,9 @@ that harmless.
 
 ## Step 6: check the ingest
 
-- Wire a `debug` node to `row builder`, set Output to "complete msg
-  object". Deploy.
+- Wire a `debug` node to `row builder`, set Output to `msg.` `params`
+  (type the name without a trailing space; the debug node treats it as a
+  property expression and shows `undefined` if it does not parse). Deploy.
 - Publish `payload.json` from the Start section. The debug sidebar shows
   `msg.params` with `$t_water: null` and `$fault_t_water: 1`.
 - Add a query button: `inject` (fire on click) -> `sqlite` in

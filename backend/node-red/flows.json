@@ -44,20 +44,10 @@
         "mode": "RWC"
     },
     {
-        "id": "3cc11d24.ff01a2",
-        "type": "comment",
-        "z": "f6f2187d.f17ca8",
-        "name": "WARNING: please check you have started this container with a volume that is mounted to /data\\n otherwise any flow changes are lost when you redeploy or upgrade the container\\n (e.g. upgrade to a more recent node-red docker image).\\n  If you are using named volumes you can ignore this warning.\\n Double click or see info side panel to learn how to start Node-RED in Docker to save your work",
-        "info": "\nTo start docker with a bind mount volume (-v option), for example:\n\n```\ndocker run -it -p 1880:1880 -v /home/user/node_red_data:/data --name mynodered nodered/node-red\n```\n\nwhere `/home/user/node_red_data` is a directory on your host machine where you want to store your flows.\n\nIf you do not do this then you can experiment and redploy flows, but if you restart or upgrade the container the flows will be disconnected and lost. \n\nThey will still exist in a hidden data volume, which can be recovered using standard docker techniques, but that is much more complex than just starting with a named volume as described above.",
-        "x": 350,
-        "y": 80,
-        "wires": []
-    },
-    {
         "id": "3ff955690da3ae79",
         "type": "mqtt in",
         "z": "f6f2187d.f17ca8",
-        "name": "mqtt",
+        "name": "telemetry in",
         "topic": "microhydros/+/telemetry",
         "qos": "0",
         "datatype": "auto-detect",
@@ -78,7 +68,7 @@
         "id": "d4d7b498969d62e7",
         "type": "function",
         "z": "f6f2187d.f17ca8",
-        "name": "Telemetry",
+        "name": "row builder",
         "func": "// Row builder: MQTT telemetry -> params for the sqlite prepared statement.\n// Topic is microhydros/<device_id>/telemetry; the middle part is the device.\n// The node has no clock, so received_at is stamped here on ingest.\n\nconst parts = msg.topic.split(\"/\");\nconst p = msg.payload;\n\nif (parts.length < 3 || typeof p !== \"object\" || p === null) {\n    node.warn(\"dropped message with bad topic or payload: \" + msg.topic);\n    return null;\n}\n\nconst faults = p.faults || {};\n\nmsg.params = {\n    $received_at:   new Date().toISOString(),\n    $device_id:     parts[1],\n    $seq:           p.seq,\n    $uptime_s:      p.uptime_s,\n    $t_in:          p.t_in,\n    $rh_in:         p.rh_in,\n    $t_out:         p.t_out,\n    $t_water:       p.t_water,\n    $fault_t_in:    faults.t_in,\n    $fault_rh_in:   faults.rh_in,\n    $fault_t_out:   faults.t_out,\n    $fault_t_water: faults.t_water,\n};\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
@@ -102,7 +92,7 @@
         "mydb": "0bba1715d78313ac",
         "sqlquery": "prepared",
         "sql": "INSERT INTO telemetry (received_at, device_id, seq, uptime_s,\n                       t_in, rh_in, t_out, t_water,\n                       fault_t_in, fault_rh_in, fault_t_out, fault_t_water)\nVALUES ($received_at, $device_id, $seq, $uptime_s,\n        $t_in, $rh_in, $t_out, $t_water,\n        $fault_t_in, $fault_rh_in, $fault_t_out, $fault_t_water);\n",
-        "name": "telemetry",
+        "name": "insert telemetry",
         "x": 460,
         "y": 340,
         "wires": [
@@ -116,7 +106,7 @@
         "mydb": "0bba1715d78313ac",
         "sqlquery": "fixed",
         "sql": "CREATE TABLE IF NOT EXISTS telemetry (\n  received_at TEXT NOT NULL,\n  device_id   TEXT NOT NULL,\n  seq         INTEGER,\n  uptime_s    INTEGER,\n  t_in REAL, rh_in REAL, t_out REAL, t_water REAL,\n  fault_t_in INTEGER, fault_rh_in INTEGER,\n  fault_t_out INTEGER, fault_t_water INTEGER\n);",
-        "name": "createdb",
+        "name": "create telemetry",
         "x": 380,
         "y": 400,
         "wires": [
@@ -161,7 +151,7 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "params ",
+        "complete": "params",
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
