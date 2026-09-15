@@ -75,6 +75,42 @@ Debug sidebar. The imported flow should show `msg.params` at `row builder`;
 the SQLite query from Step 6 should then return one row. Seeing the message
 in `mosquitto_sub` alone verifies only the broker, not Node-RED processing.
 
+### Verify the complete backend path
+
+Run the following checks in order after starting the stack:
+
+1. Check that Node-RED started the flow and connected to the internal broker:
+
+     docker compose logs node-red | grep -E 'Started flows|opened /data/telemetry.db|Connected to broker'
+
+  The log should contain `Started flows`, `opened /data/telemetry.db ok`,
+  and `Connected to broker: mqtt://mosquitto:1883`.
+
+1. Check MQTT delivery from the host in two terminals:
+
+     mosquitto_sub -h localhost -t 'microhydros/#' -v
+
+     mosquitto_pub -h localhost -t microhydros/node01/telemetry -f payload.json
+
+  The subscriber printing the topic and JSON proves only that Mosquitto
+  received and delivered the message. It does not prove that Node-RED
+  processed it.
+
+1. Check Node-RED processing in the editor. The Debug sidebar must show a
+  message from the `debug 1` node, including the parameters created by the
+  `Telemetry` function. The message should contain the `node01` device id.
+
+1. Check SQLite insertion using the query chain from Step 6 (`inject` ->
+  `sqlite` -> `debug`). Run this query and click the inject button:
+
+     SELECT * FROM telemetry ORDER BY received_at DESC LIMIT 1
+
+  The debug output must contain one row for `node01`. With the supplied
+  `payload.json`, `t_water` is `NULL` and `fault_t_water` is `1`.
+
+The backend flow is verified only when all four checks pass: startup,
+broker delivery, Node-RED processing, and SQLite insertion.
+
 The editor works too: Menu -> Export -> "all flows" -> Download, and
 Menu -> Import -> select the file -> Deploy. Same file format.
 
