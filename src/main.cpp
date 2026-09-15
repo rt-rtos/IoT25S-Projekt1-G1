@@ -77,6 +77,45 @@ static void logSnapshot(const Snapshot& s) {
 }
 
 static void runStateMachine(uint32_t nowMs) {
+    
+    static void runStateMachine(uint32_t nowMs) {
+    
+        switch(state){        
+            case Boot:
+                sensors.begin();
+                state = WifiConnecting;
+            break;
+    
+            case WifiConnecting:
+                network.poll(millis);
+                if (network.connected == true){
+                    state = MqttConnecting;
+                }
+            break;
+            
+            case MqttConnecting:
+                if (network.connected == false){
+                    state = WifiConnecting;
+                    break;
+                }
+                telemetry.poll(millis);
+                if (telemetry.connected() == true){
+                    state = Online;
+                    break;
+                };
+            break;
+    
+            case Online:
+                if (network.connected == false){
+                    state = WifiConnecting;
+                    break;
+                }
+                if(mqtt.connected() == false){
+                    state = MqttConnecting;
+                };
+            break;
+        }
+    
     // TODO(firmware): transitions per outline 5.3:
     //   Boot -> WifiConnecting
     //   WifiConnecting: network.poll(); connected -> MqttConnecting
@@ -118,8 +157,16 @@ void loop() {
         validity.check(current, previous);
         logSnapshot(current);
         previous = current;
+
         // TODO(firmware): when Online, telemetry.publish(current, {SHT_SRC, "hw", "hw"})
         // and led.blinkPublish(now) on success.
+        if(network.connected == true && telemetry.connected == true){
+            if(!telemetry.publish(current, {SHT_SRC, "hw", "hw"} )){
+                led.blinkPublish(millis);
+            };
+        };
+
+
         (void)SHT_SRC;
     }
 
