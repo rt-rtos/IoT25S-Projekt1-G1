@@ -17,7 +17,8 @@ services:
       - mosquitto-data:/mosquitto/data
 
   node-red:
-    image: nodered/node-red:latest
+    build: .
+    image: microhydros-node-red:local
     container_name: microhydros-node-red
     restart: unless-stopped
     ports:

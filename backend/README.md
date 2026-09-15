@@ -7,7 +7,7 @@ editor following the steps below, then exported to `node-red/flows.json`.
 ## Start
 
     cd backend
-    docker compose up -d
+    docker compose up -d --build
 
 - Broker: `localhost:1883`, anonymous allowed (dev only).
 - Node-RED editor: http://localhost:1880
@@ -49,6 +49,32 @@ Import on another machine, then restart so Node-RED loads the new file:
 The import overwrites whatever flow that machine had. Export first if any
 of it is worth keeping.
 
+### Verify the imported flow from the host
+
+Run these commands from `backend`:
+
+  docker compose exec -T node-red node -e 'const f=require("/data/flows.json"); console.log(f.map(n => `${n.type}${n.name ? " [" + n.name + "]" : ""}`).join("\n"))'
+
+The output should include the imported nodes, such as `mqtt in [telemetry
+in]`, `function [row builder]`, and `sqlite [insert telemetry]`. If it only
+shows `tab` and the default `WARNING` comment, the import did not happen in
+the running volume. Import again and restart:
+
+  docker compose cp node-red/flows.json node-red:/data/flows.json
+  docker compose restart node-red
+
+Check the host-to-Mosquitto path in two terminals. The subscriber should
+print one line:
+
+  mosquitto_sub -h localhost -t 'microhydros/#' -v
+
+  mosquitto_pub -h localhost -t microhydros/node01/telemetry -f payload.json
+
+Finally open <http://localhost:1880>, click Deploy if needed, and watch the
+Debug sidebar. The imported flow should show `msg.params` at `row builder`;
+the SQLite query from Step 6 should then return one row. Seeing the message
+in `mosquitto_sub` alone verifies only the broker, not Node-RED processing.
+
 The editor works too: Menu -> Export -> "all flows" -> Download, and
 Menu -> Import -> select the file -> Deploy. Same file format.
 
@@ -57,7 +83,6 @@ check you have started this container with a volume" comment node so it
 does not end up in the repo.
 
 The SQLite file itself stays in the volume and is not committed.
-
 
 Windows notes:
 
@@ -90,23 +115,29 @@ The node has no clock. The backend stamps each row on ingest; `seq` and
 
 ## Step 1: palette
 
-Menu -> Manage palette -> Install tab. Install:
+The custom Docker image installs the SQLite node automatically. The
+Dashboard 2.0 node still needs to be installed in the persistent Node-RED
+`/data` volume from Menu -> Manage palette -> Install:
 
-- `node-red-node-sqlite`
 - `@flowfuse/node-red-dashboard` (Dashboard 2.0; the older
   `node-red-dashboard` also works but is no longer maintained)
 
-The sqlite node compiles a native module on install and can take a few
-minutes. If it fails in the container, add a `Dockerfile` next to the
-compose file:
+The SQLite node is installed automatically into the custom image during
+the Compose build. Rebuild it after changing the pinned package version:
+
+  docker compose build node-red
+  docker compose up -d
+
+The sqlite node compiles a native module and can take a few minutes. If
+the build fails, use this `Dockerfile` next to the compose file instead:
 
     FROM nodered/node-red:latest
     USER root
     RUN apk add --no-cache python3 make g++
     USER node-red
+    RUN npm install --unsafe-perm --no-update-notifier --no-audit node-red-node-sqlite@2.0.1
 
-and replace `image: nodered/node-red:latest` with `build: .` under the
-`node-red` service, then `docker compose up -d --build`.
+  then run `docker compose up -d --build`.
 
 ## Step 2: broker config and mqtt in
 
