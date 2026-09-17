@@ -47,7 +47,7 @@ static WiFiClient wifiClient;
 static const TelemetryConfig telemetryCfg = {
     MQTT_HOST, MQTT_PORT, MQTT_USER, MQTT_PASS, DEVICE_ID,
     MQTT_TOPIC_TELEMETRY, MQTT_TOPIC_STATUS, nullptr,
-    MQTT_RETRY_MS, MQTT_KEEPALIVE_MS, MQTT_CONNECT_TIMEOUT_MS,
+    MQTT_RETRY_MS, MQTT_RETRY_MAX_MS, MQTT_KEEPALIVE_MS, MQTT_CONNECT_TIMEOUT_MS,
 };
 static Telemetry     telemetry(wifiClient, telemetryCfg);
 static StatusLed     led;

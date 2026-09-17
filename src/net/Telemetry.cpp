@@ -43,14 +43,26 @@ Telemetry::Telemetry(Client& transport, const TelemetryConfig& cfg)
         
 
 void Telemetry::poll(uint32_t nowMs) {
-     if (mqtt_.connected()) {
+    if (mqtt_.connected()) {
         mqtt_.poll();
-    } else {
-        if (nowMs - lastAttemptMs_ >= cfg_.retryMs) {
-            connect();
-            lastAttemptMs_ = nowMs;
-        }
+        backoffMs_ = 0;   // a live link resets the back-off
+        return;
     }
+    if (lastAttemptMs_ != 0 && (nowMs - lastAttemptMs_) < backoffMs_) return;
+    lastAttemptMs_ = nowMs;
+
+    if (connect()) {
+        Serial.println("mqtt: connected");
+        return;
+    }
+    if (backoffMs_ == 0) {
+        backoffMs_ = cfg_.retryMs;
+    } else {
+        uint32_t next = backoffMs_ * 2;
+        backoffMs_ = next > cfg_.retryMaxMs ? cfg_.retryMaxMs : next;
+    }
+    Serial.print("mqtt: connect failed, error "); Serial.print(lastError_);
+    Serial.print(", next try in ms ");          Serial.println(backoffMs_);
 }
 
 bool Telemetry::connected() {
