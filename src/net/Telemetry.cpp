@@ -1,5 +1,5 @@
 #include "net/Telemetry.h"
-#include <cstring.h>
+#include <cstring>
 
 Telemetry* Telemetry::instance_ = nullptr;
 
@@ -43,12 +43,6 @@ Telemetry::Telemetry(Client& transport, const TelemetryConfig& cfg)
         
 
 void Telemetry::poll(uint32_t nowMs) {
-<<<<<<< HEAD
-    // TODO(telemetry): if connected, mqtt_.poll() (keep-alives, delivers
-    // incoming messages to dispatch); otherwise call connect() at most every
-    // cfg_.retryMs using lastAttemptMs_. See examples/WiFiSimpleSender loop().
-    (void)nowMs;
-=======
      if (mqtt_.connected()) {
         mqtt_.poll();
     } else {
@@ -57,7 +51,6 @@ void Telemetry::poll(uint32_t nowMs) {
             lastAttemptMs_ = nowMs;
         }
     }
->>>>>>> 1d2e718 (N2/N3: implement Telemetry begin/connect/poll/publish/dispatch)
 }
 
 bool Telemetry::connected() {
@@ -83,13 +76,6 @@ void Telemetry::dispatch(int size) {
 }
 
 void Telemetry::handleMessage(int size) {
-<<<<<<< HEAD
-    // TODO(telemetry): while mqtt_.available() and room in buf_, buf_[n++] =
-    // mqtt_.read(); terminate; call handler_(buf_, n) if set. Drain the rest
-    // if size exceeds buf_. See examples/WiFiSimpleReceiveCallback
-    // onMqttMessage(). mqtt_.messageTopic() gives the topic if ever needed.
-    (void)size;
-=======
       size_t n = (size_t)size < sizeof(buf_) - 1 ? (size_t)size : sizeof(buf_) - 1;
 
     size_t i = 0;
@@ -98,6 +84,5 @@ void Telemetry::handleMessage(int size) {
     }
     buf_[i] = '\0';  
     if (handler_) handler_(buf_, i);
->>>>>>> 1d2e718 (N2/N3: implement Telemetry begin/connect/poll/publish/dispatch)
 }
 
