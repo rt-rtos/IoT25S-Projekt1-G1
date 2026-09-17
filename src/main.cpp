@@ -77,44 +77,43 @@ static void logSnapshot(const Snapshot& s) {
 }
 
 static void runStateMachine(uint32_t nowMs) {
-    
-    static void runStateMachine(uint32_t nowMs) {
-    
-        switch(state){        
-            case Boot:
-                sensors.begin();
+
+    switch(state){        
+        case NodeState::Boot:
+            state = WifiConnecting;
+        break;
+
+        case NodeState::WifiConnecting:
+            network.poll(nowMs);
+            if (network.connected()){
+                state = MqttConnecting;
+            }
+        break;
+        
+        case NodeState::MqttConnecting:
+            if (!network.connected()){
                 state = WifiConnecting;
-            break;
-    
-            case WifiConnecting:
-                network.poll(millis);
-                if (network.connected == true){
-                    state = MqttConnecting;
-                }
-            break;
-            
-            case MqttConnecting:
-                if (network.connected == false){
-                    state = WifiConnecting;
-                    break;
-                }
-                telemetry.poll(millis);
-                if (telemetry.connected() == true){
-                    state = Online;
-                    break;
-                };
-            break;
-    
-            case Online:
-                if (network.connected == false){
-                    state = WifiConnecting;
-                    break;
-                }
-                if(mqtt.connected() == false){
-                    state = MqttConnecting;
-                };
-            break;
-        }
+                break;
+            }
+            telemetry.poll(nowMs);
+            if (telemetry.connected()){
+                state = Online;
+                break;
+            };
+        break;
+
+        case NodeState::Online:
+            network.poll(nowMs);
+            if (!network.connected()){
+                state = WifiConnecting;
+                break;
+            }
+            telemetry.poll(nowMs);
+            if(!telemetry.connected()){
+                state = MqttConnecting;
+            };
+        break;
+    }
     
     // TODO(firmware): transitions per outline 5.3:
     //   Boot -> WifiConnecting
