@@ -1,7 +1,8 @@
 #include "sensors/Ds18b20Sensor.h"
 
-// DS18B20 returns this after power-on if a conversion never ran.
-static constexpr float POWER_ON_RESET_C = 85.0f;
+// DS18B20 returns 85.0 C after power-on if a conversion never ran. Kept
+// as the raw 1/128 C word so the check is an integer compare.
+static constexpr int32_t POWER_ON_RESET_RAW = 85 * 128;
 
 // The example (examples/WaitForConversion2) addresses the device by index.
 // This driver keeps the ROM address from detect() and uses the *ByAddress
@@ -20,37 +21,56 @@ Ds18b20Sensor::Ds18b20Sensor(uint8_t pin, uint8_t resolutionBits)
     : bus_(pin), dallas_(&bus_), resolutionBits_(resolutionBits) {}
 
 bool Ds18b20Sensor::detect() {
-    // TODO(ds18b20): dallas_.begin(), getAddress(addr_, 0) -> found_,
-    // setResolution(addr_, resolutionBits_), conversionMs_ from
-    // DallasTemperature::millisToWaitForConversion(resolutionBits_).
+    dallas_.begin();
+    found_ = dallas_.getAddress(addr_, 0);
+    if (found_) {
+        dallas_.setResolution(addr_, resolutionBits_);
+        conversionMs_ = DallasTemperature::millisToWaitForConversion(resolutionBits_);
+    }
     return found_;
 }
 
 bool Ds18b20Sensor::begin() {
-    // TODO(ds18b20): setWaitForConversion(false) so requests never block,
-    // then detect(). See examples/WaitForConversion2 setup().
+    dallas_.setWaitForConversion(false);
     return detect();
 }
 
 void Ds18b20Sensor::start(uint32_t nowMs) {
-    // TODO(ds18b20): if not found_, try detect() again (replug recovery);
-    // requestTemperaturesByAddress(addr_), remember nowMs, set pending_.
-    (void)nowMs;
+    // A probe missing at begin() or lost in read() is searched for again
+    // here, so a replug recovers on the next cycle without a reboot.
+    if (!found_ && !detect()) {
+        pending_ = false;
+        return;
+    }
+    dallas_.requestTemperaturesByAddress(addr_);
+    startedMs_ = nowMs;
+    pending_   = true;
 }
 
 bool Ds18b20Sensor::ready(uint32_t nowMs) const {
-    // TODO(ds18b20): not pending, or nowMs - startedMs_ >= conversionMs_.
-    (void)nowMs;
-    return true;
+    return !pending_ || (nowMs - startedMs_) >= conversionMs_;
 }
 
 bool Ds18b20Sensor::read(Reading& out, uint32_t nowMs) {
-    // TODO(ds18b20): raw = dallas_.getTemp(addr_);   (int32_t, see list above)
-    //   raw == DEVICE_DISCONNECTED_RAW -> FAULT_NO_DEVICE, found_ = false,
-    //   rawToCelsius(raw) == POWER_ON_RESET_C -> FAULT_TIMEOUT (conversion
-    //   never ran: first read after power-up, or start() was skipped),
-    //   otherwise out.set(tC, raw, nowMs). Clear pending_ in every branch.
-    (void)POWER_ON_RESET_C;
-    out.fail(FAULT_NOT_READY, nowMs);
-    return false;
+    if (!pending_) {
+        // Nothing was requested: no probe on the bus, or start() was skipped.
+        out.fail(found_ ? FAULT_NOT_READY : FAULT_NO_DEVICE, nowMs);
+        return false;
+    }
+    pending_ = false;
+
+    // Signed local on purpose: the disconnect sentinel is negative and
+    // Reading::raw is unsigned.
+    int32_t raw = dallas_.getTemp(addr_);
+    if (raw == DEVICE_DISCONNECTED_RAW) {
+        found_ = false;
+        out.fail(FAULT_NO_DEVICE, nowMs);
+        return false;
+    }
+    if (raw == POWER_ON_RESET_RAW) {
+        out.fail(FAULT_TIMEOUT, nowMs);
+        return false;
+    }
+    out.set(DallasTemperature::rawToCelsius(raw), (uint32_t)raw, nowMs);
+    return true;
 }
