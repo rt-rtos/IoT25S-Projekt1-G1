@@ -77,13 +77,44 @@ static void logSnapshot(const Snapshot& s) {
 }
 
 static void runStateMachine(uint32_t nowMs) {
-    // TODO(firmware): transitions per outline 5.3:
-    //   Boot -> WifiConnecting
-    //   WifiConnecting: network.poll(); connected -> MqttConnecting
-    //   MqttConnecting: network.poll(); Wi-Fi lost -> WifiConnecting;
-    //                   telemetry.poll(); connected -> Online
-    //   Online: network.poll(); Wi-Fi lost -> WifiConnecting;
-    //           telemetry.poll(); broker lost -> MqttConnecting
+
+    switch(state){        
+        case NodeState::Boot:
+            state = NodeState::WifiConnecting;
+        break;
+
+        case NodeState::WifiConnecting:
+            network.poll(nowMs);
+            if (network.connected()){
+                state = NodeState::MqttConnecting;
+            }
+        break;
+        
+        case NodeState::MqttConnecting:
+            if (!network.connected()){
+                state = NodeState::WifiConnecting;
+                break;
+            }
+            telemetry.poll(nowMs);
+            if (telemetry.connected()){
+                state = NodeState::Online;
+                break;
+            };
+        break;
+
+        case NodeState::Online:
+            network.poll(nowMs);
+            if (!network.connected()){
+                state = NodeState::WifiConnecting;
+                break;
+            }
+            telemetry.poll(nowMs);
+            if(!telemetry.connected()){
+                state = NodeState::MqttConnecting;
+            };
+        break;
+    }
+    
     (void)nowMs;
 }
 
@@ -118,8 +149,14 @@ void loop() {
         validity.check(current, previous);
         logSnapshot(current);
         previous = current;
-        // TODO(firmware): when Online, telemetry.publish(current, {SHT_SRC, "hw", "hw"})
-        // and led.blinkPublish(now) on success.
+
+        if(state == NodeState::Online){
+            if(!telemetry.publish(current, {SHT_SRC, "hw", "hw"} )){
+                led.blinkPublish(now);
+            };
+        };
+
+
         (void)SHT_SRC;
     }
 
