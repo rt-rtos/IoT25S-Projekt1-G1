@@ -178,12 +178,22 @@ publishing only happens in Online.
 
 One line per sample, default every 10 s, value and fault code per channel:
 
-    #12 t_in=24.10/NONE rh_in=61.0/NONE t_out=20.30/NONE t_water=nan/NO_DEVICE
+| seq | uptime_s | t_in | rh_in | t_out | t_water | fault t_in | fault rh_in | fault t_out | fault t_water | sht40 | ds18b20 | ntc |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---|
+| 19 | 191 | 22.0 | 65.0 | 26.1 | 24.6 | 0 | 0 | 0 | 0 | sim | hw | hw |
+| 20 | 201 | 22.0 | 65.0 | 26.3 | 24.6 | 0 | 0 | 0 | 0 | sim | hw | hw |
+| 21 | 211 | 22.0 | 65.0 | 26.3 | 24.6 | 0 | 0 | 0 | 0 | sim | hw | hw |
+| 22 | 221 | 22.0 | 65.0 | 26.3 | 24.6 | 0 | 0 | 0 | 0 | sim | hw | hw |
 
-Fault codes: `NONE` (valid), `NO_DEVICE` (unplugged, no ACK),
-`CRC`, `TIMEOUT` (conversion never finished), `RANGE`, `RATE`, `STUCK`
-(rejected by validation), `NOT_READY` (never sampled). An invalid channel
-is published as `null` with its fault code, never as a fake number.
+Fault codes: 
+- `NONE` (valid),
+- `NO_DEVICE` (unplugged, no ACK),
+- `CRC`, `TIMEOUT` (conversion never finished),
+- `RANGE`,
+- `RATE`,
+- `STUCK`(rejected by validation),
+- `NOT_READY` (never sampled).
+An invalid channel is published as `null` with its fault code, never as a fake number.
 
 Watch the data from any machine with the mosquitto clients:
 
