@@ -53,6 +53,148 @@ Libraries are declared in `platformio.ini` and fetched automatically:
 ArduinoMqttClient, OneWire, DallasTemperature. WiFiS3, Wire and
 Arduino_LED_Matrix come with the board core.
 
+## Using the device
+
+### Wiring
+
+Power, the serial log and the serial commands all go over the USB-C port.
+Pins are set in `src/config.h`; the full table is outline section 7.
+
+| Board pin       | Connects to                        | Notes                                                                                   |
+| --------------- | ---------------------------------- | --------------------------------------------------------------------------------------- |
+| D2              | DS18B20 data                       | 4.7 k pull-up from D2 to 5 V. Sensor VDD to 5 V, GND to GND (no parasite power)         |
+| A0              | NTC divider midpoint               | 10 k 1 % from 5 V to A0, NTC from A0 to GND, 100 nF from A0 to GND against noise        |
+| Qwiic (`Wire1`) | SHT40 breakout, when one is fitted | 3.3 V I2C at 0x44. Leave empty while `SHT4X_SIMULATED` is 1 (the default)              |
+| LED matrix      | on the board                       | Connection state, fault present, publish blink (see Running)                            |
+
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {
+  'primaryColor': '#1f3a5f',
+  'primaryTextColor': '#ffffff',
+  'primaryBorderColor': '#1f3a5f',
+  'lineColor': '#7a8699',
+  'git0': '#1f3a5f',
+  'gitBranchLabel0': '#ffffff',
+  'cScale0': '#1f4e79',
+  'cScaleLabel0': '#ffffff',
+  'cScale1': '#2e6b3a',
+  'cScaleLabel1': '#ffffff',
+  'cScale2': '#7a4a12',
+  'cScaleLabel2': '#ffffff',
+  'cScale3': '#5b3a8a',
+  'cScaleLabel3': '#ffffff',
+  'cScale4': '#8a2e2e',
+  'cScaleLabel4': '#ffffff',
+  'cScale5': '#2f6b7a',
+  'cScaleLabel5': '#ffffff',
+  'cScale6': '#6b2e5a',
+  'cScaleLabel6': '#ffffff',
+  'cScale7': '#3f4f5f',
+  'cScaleLabel7': '#ffffff',
+  'cScale8': '#4a5d23',
+  'cScaleLabel8': '#ffffff',
+  'cScale9': '#6b4a2e',
+  'cScaleLabel9': '#ffffff',
+  'cScale10': '#2e4a6b',
+  'cScaleLabel10': '#ffffff',
+  'cScale11': '#5f2e3f',
+  'cScaleLabel11': '#ffffff'
+}}}%%
+mindmap
+  root((Arduino Uno R4 WiFi))
+    D2
+      DS18B20 DATA
+      4.7 k pull-up to 5 V
+    A0
+      10 k 1 % to 5 V
+      NTC 10 k to GND
+      100 nF to GND
+    5 V
+      DS18B20 VDD
+      divider to A0
+      pull-up to D2
+    GND
+      DS18B20 GND
+      NTC and 100 nF return
+    Optional QWIIC/1-Wire 
+      SHT40 breakout 0x44
+      3.3 V I2C, optional
+    LED matrix
+      state, fault, publish blink
+    USB-C
+      power
+      serial log 115200
+```
+
+The NTC probe is a bare 10 k bead on a twisted pair, sealed in two layers
+of adhesive heat-shrink. Measure its leakage resistance (megohm range)
+before it goes into nutrient solution.
+
+### Setup
+
+1. Have a broker running. The project one is in `backend/`:
+
+        cd backend && docker compose up -d --build
+
+   Any Mosquitto works. Note the LAN IP of the machine it runs on; the
+   node must reach it on port 1883.
+
+2. Credentials and broker address:
+
+        cp src/secrets.h.example src/secrets.h
+
+   Fill in `SECRET_SSID`, `SECRET_PASS` and `MQTT_HOST`. The board's
+   Wi-Fi module is 2.4 GHz only. `MQTT_USER` and `MQTT_PASS` stay empty
+   for the anonymous dev broker.
+
+3. Check `src/config.h`. `DEVICE_ID` must be unique per node; it is the
+   middle part of every topic. `SHT4X_SIMULATED` is 1 until a real SHT40
+   is on the Qwiic connector. `SAMPLE_INTERVAL_MS` is the default sample
+   and publish period.
+
+4. Flash and open the log:
+
+        pio run -t upload
+        pio device monitor
+
+### Running
+
+The node boots, prints a banner and warns if a sensor did not answer.
+It then walks the connection states and logs every transition:
+
+    state: Boot -> WifiConnecting
+    state: WifiConnecting -> MqttConnecting      (SSID, RSSI and IP follow)
+    state: MqttConnecting -> Online
+
+If Wi-Fi or the broker drops, the node falls back to the matching state
+and retries every 5 s. Sampling and validation continue in every state;
+publishing only happens in Online.
+
+One line per sample, default every 10 s, value and fault code per channel:
+
+    #12 t_in=24.10/NONE rh_in=61.0/NONE t_out=20.30/NONE t_water=nan/NO_DEVICE
+
+Fault codes: `NONE` (valid), `NO_DEVICE` (unplugged, no ACK),
+`CRC`, `TIMEOUT` (conversion never finished), `RANGE`, `RATE`, `STUCK`
+(rejected by validation), `NOT_READY` (never sampled). An invalid channel
+is published as `null` with its fault code, never as a fake number.
+
+Watch the data from any machine with the mosquitto clients:
+
+    mosquitto_sub -h <broker ip> -t "microhydros/#" -v
+
+Each sample arrives on `microhydros/<device_id>/telemetry` as one flat
+JSON object. `microhydros/<device_id>/status` holds `online` or
+`offline` (retained; `offline` is the Last Will, so it also appears when
+the node loses power). No averaging on the node; the backend stores the
+series and averages in queries.
+
+Serial commands (`scenario`, `sample`, `help`, see `ui/SerialCommand.h`)
+and the LED matrix frames are stubs and stay so: the parser, the handler
+in `main.cpp` and the frames are deprioritized.
+The sample period is `SAMPLE_INTERVAL_MS` in `config.h`; the emulator
+runs its default `STEADY` scenario.
+
 ## Layout
 
     src/          Arduino-dependent code, one directory per area:
@@ -97,16 +239,8 @@ Nothing goes into `main` directly: branch, pull request, one approval,
 squash merge. Step by step in `docs/workflow.md`. Native tests and how
 to extend them: `docs/native_tests.md`.
 
-## Runtime notes
+## More
 
-- Every sample (default every 10 s) is published as one flat JSON object
-  on `microhydros/<device_id>/telemetry`. There is no averaging on the
-  node; the backend stores the series and averages in queries.
-- Commands go over the USB serial port at 115200 baud, one per line:
-  `scenario <steady|heatup|cooldown|stuck|badcrc>` (emulator only),
-  `sample <seconds>`, `help`. The MQTT cmd topic is not subscribed.
-- Wi-Fi association and the MQTT connect block for a few seconds each.
-  Sampling pauses during a reconnect attempt and resumes afterwards.
-
-Wiring, sensor motivation, MQTT topics and the test plan are in the
-architecture outline (docs to follow).
+Sensor motivation, MQTT payload format, the full wiring table and the test
+plan: `docs/projekt1_architecture_outline_v3.md`. Test records:
+`docs/tests.md`.
