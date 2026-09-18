@@ -12,10 +12,12 @@ class Network {
 public:
     Network(const char* ssid, const char* pass, uint32_t retryMs);
 
-    // false if the Wi-Fi module does not answer at all.
+    // false until the Wi-Fi module has both associated and received a DHCP address.
     bool begin();
     void poll(uint32_t nowMs);
-    bool connected() const { return status_ == WL_CONNECTED; }
+    bool connected() const {
+        return status_ == WL_CONNECTED && WiFi.localIP() != IPAddress(0, 0, 0, 0);
+    }
     int  status() const { return status_; }
     long rssi() const { return WiFi.RSSI(); }
     void printInfo(Print& out) const;

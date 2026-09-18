@@ -119,6 +119,11 @@ Windows notes:
   unchanged in bash, cmd and PowerShell. `grep` does not exist there;
   use `findstr` or read the log.
 
+### Watch Arduino Payloads being sent:
+
+    docker compose exec mosquitto \
+    mosquitto_sub -h localhost -p 1883 -t 'microhydros/#' -v
+
 ## What the node sends
 
 Topics (`<device_id>` is `node01` by default, see `src/config.h`):

@@ -10,6 +10,35 @@ The `time` filter prefixes every line with the PC clock, which is what the
 actual column needs. Card D10 adds the remaining levels; this file starts
 with the reconnect tests from card N5.
 
+## Useful Commands
+
+**Live Logs**
+        
+    docker compose exec mosquitto   mosquitto_sub -h localhost -p 1883 -t 'microhydros/#' -v
+
+**Build or Rebuild + Test Backend**
+    
+    ./check.sh
+
+**Check Backend Logs for Connections**
+
+    docker compose logs -f mosquitto
+
+**Serial Monitor with successful config**
+
+```
+MicroHydros climate node node01 (type 'help')
+state: Boot -> WifiConnecting
+state: WifiConnecting -> MqttConnecting
+SSID: RasmusSSID
+RSSI: -43
+IP: 192.168.1.2
+mqtt: connected
+state: MqttConnecting -> Online
+```
+
+
+
 ## Integration: reconnect (card N5)
 
 Setup: the node on the bench with `SHT4X_SIMULATED 1`, the broker from
@@ -97,6 +126,436 @@ Notes:
 
 No entries yet. Outline 11 lists the tests; they are run on the board
 and logged from the serial monitor.
+
+### End to End: Arduino to Backend test
+
+Ran full Demo workflow with all connected hardware verifying end to end behaviour. Arduino boots, connects, sends payloads to the backend telemtry.db.
+
+Node01 Connected:
+
+    microhydros-mosquitto  | 1789732396: New connection from 172.18.112.1:59348 on port 1883.
+    microhydros-mosquitto  | 1789732396: New client connected from 172.18.112.1:59348 as node01 (p4, c1, k60).
+
+Payload Verification Logs:
+
+    mosquitto_sub -h localhost -p 1883 -t 'microhydros/#' -v
+    microhydros/node01/status online
+
+**MD Table Format**
+
+| seq | uptime_s | t_in | rh_in | t_out | t_water | fault t_in | fault rh_in | fault t_out | fault t_water | sht40 | ds18b20 | ntc |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---|
+| 19 | 191 | 22.0 | 65.0 | 26.1 | 24.6 | 0 | 0 | 0 | 0 | sim | hw | hw |
+| 20 | 201 | 22.0 | 65.0 | 26.3 | 24.6 | 0 | 0 | 0 | 0 | sim | hw | hw |
+| 21 | 211 | 22.0 | 65.0 | 26.3 | 24.6 | 0 | 0 | 0 | 0 | sim | hw | hw |
+| 22 | 221 | 22.0 | 65.0 | 26.3 | 24.6 | 0 | 0 | 0 | 0 | sim | hw | hw |
+| 23 | 231 | 22.0 | 65.0 | 26.3 | 24.6 | 0 | 0 | 0 | 0 | sim | hw | hw |
+| 24 | 241 | 22.0 | 65.0 | 26.3 | 24.6 | 0 | 0 | 0 | 0 | sim | hw | hw |
+| 25 | 251 | 22.0 | 65.0 | 26.3 | 24.6 | 0 | 0 | 0 | 0 | sim | hw | hw |
+| 26 | 261 | 22.0 | 65.0 | 26.3 | 24.6 | 0 | 0 | 0 | 0 | sim | hw | hw |
+| 27 | 271 | 22.0 | 65.0 | 26.1 | 24.6 | 0 | 0 | 0 | 0 | sim | hw | hw |
+| 28 | 281 | 22.0 | 65.0 | 26.1 | 24.6 | 0 | 0 | 0 | 0 | sim | hw | hw |
+| 29 | 291 | 22.0 | 65.0 | 26.1 | 24.6 | 0 | 0 | 0 | 0 | sim | hw | hw |
+| 30 | 301 | null | null | 26.3 | 24.6 | 6 | 6 | 0 | 0 | sim | hw | hw |
+| 31 | 311 | 22.0 | 65.0 | 26.4 | 24.6 | 0 | 0 | 0 | 0 | sim | hw | hw |
+| 32 | 321 | 22.0 | 65.0 | 26.4 | 24.6 | 0 | 0 | 0 | 0 | sim | hw | hw |
+| 33 | 331 | 22.0 | 65.0 | 26.4 | 24.6 | 0 | 0 | 0 | 0 | sim | hw | hw |
+
+**JSON Live Logs**
+
+<details>
+
+```js
+
+{
+  "seq": 19,
+  "uptime_s": 191,
+  "t_in": 22.0,
+  "rh_in": 65.0,
+  "t_out": 26.1,
+  "t_water": 24.6,
+  "faults": {
+    "t_in": 0,
+    "rh_in": 0,
+    "t_out": 0,
+    "t_water": 0
+  },
+  "src": {
+    "sht40": "sim",
+    "ds18b20": "hw",
+    "ntc": "hw"
+  }
+}
+{
+  "seq": 20,
+  "uptime_s": 201,
+  "t_in": 22.0,
+  "rh_in": 65.0,
+  "t_out": 26.3,
+  "t_water": 24.6,
+  "faults": {
+    "t_in": 0,
+    "rh_in": 0,
+    "t_out": 0,
+    "t_water": 0
+  },
+  "src": {
+    "sht40": "sim",
+    "ds18b20": "hw",
+    "ntc": "hw"
+  }
+}
+{
+  "seq": 21,
+  "uptime_s": 211,
+  "t_in": 22.0,
+  "rh_in": 65.0,
+  "t_out": 26.3,
+  "t_water": 24.6,
+  "faults": {
+    "t_in": 0,
+    "rh_in": 0,
+    "t_out": 0,
+    "t_water": 0
+  },
+  "src": {
+    "sht40": "sim",
+    "ds18b20": "hw",
+    "ntc": "hw"
+  }
+}
+{
+  "seq": 22,
+  "uptime_s": 221,
+  "t_in": 22.0,
+  "rh_in": 65.0,
+  "t_out": 26.3,
+  "t_water": 24.6,
+  "faults": {
+    "t_in": 0,
+    "rh_in": 0,
+    "t_out": 0,
+    "t_water": 0
+  },
+  "src": {
+    "sht40": "sim",
+    "ds18b20": "hw",
+    "ntc": "hw"
+  }
+}
+{
+  "seq": 23,
+  "uptime_s": 231,
+  "t_in": 22.0,
+  "rh_in": 65.0,
+  "t_out": 26.3,
+  "t_water": 24.6,
+  "faults": {
+    "t_in": 0,
+    "rh_in": 0,
+    "t_out": 0,
+    "t_water": 0
+  },
+  "src": {
+    "sht40": "sim",
+    "ds18b20": "hw",
+    "ntc": "hw"
+  }
+}
+{
+  "seq": 24,
+  "uptime_s": 241,
+  "t_in": 22.0,
+  "rh_in": 65.0,
+  "t_out": 26.3,
+  "t_water": 24.6,
+  "faults": {
+    "t_in": 0,
+    "rh_in": 0,
+    "t_out": 0,
+    "t_water": 0
+  },
+  "src": {
+    "sht40": "sim",
+    "ds18b20": "hw",
+    "ntc": "hw"
+  }
+}
+{
+  "seq": 25,
+  "uptime_s": 251,
+  "t_in": 22.0,
+  "rh_in": 65.0,
+  "t_out": 26.3,
+  "t_water": 24.6,
+  "faults": {
+    "t_in": 0,
+    "rh_in": 0,
+    "t_out": 0,
+    "t_water": 0
+  },
+  "src": {
+    "sht40": "sim",
+    "ds18b20": "hw",
+    "ntc": "hw"
+  }
+}
+{
+  "seq": 26,
+  "uptime_s": 261,
+  "t_in": 22.0,
+  "rh_in": 65.0,
+  "t_out": 26.3,
+  "t_water": 24.6,
+  "faults": {
+    "t_in": 0,
+    "rh_in": 0,
+    "t_out": 0,
+    "t_water": 0
+  },
+  "src": {
+    "sht40": "sim",
+    "ds18b20": "hw",
+    "ntc": "hw"
+  }
+}
+{
+  "seq": 27,
+  "uptime_s": 271,
+  "t_in": 22.0,
+  "rh_in": 65.0,
+  "t_out": 26.1,
+  "t_water": 24.6,
+  "faults": {
+    "t_in": 0,
+    "rh_in": 0,
+    "t_out": 0,
+    "t_water": 0
+  },
+  "src": {
+    "sht40": "sim",
+    "ds18b20": "hw",
+    "ntc": "hw"
+  }
+}
+{
+  "seq": 28,
+  "uptime_s": 281,
+  "t_in": 22.0,
+  "rh_in": 65.0,
+  "t_out": 26.1,
+  "t_water": 24.6,
+  "faults": {
+    "t_in": 0,
+    "rh_in": 0,
+    "t_out": 0,
+    "t_water": 0
+  },
+  "src": {
+    "sht40": "sim",
+    "ds18b20": "hw",
+    "ntc": "hw"
+  }
+}
+{
+  "seq": 29,
+  "uptime_s": 291,
+  "t_in": 22.0,
+  "rh_in": 65.0,
+  "t_out": 26.1,
+  "t_water": 24.6,
+  "faults": {
+    "t_in": 0,
+    "rh_in": 0,
+    "t_out": 0,
+    "t_water": 0
+  },
+  "src": {
+    "sht40": "sim",
+    "ds18b20": "hw",
+    "ntc": "hw"
+  }
+}
+{
+  "seq": 30,
+  "uptime_s": 301,
+  "t_in": null,
+  "rh_in": null,
+  "t_out": 26.3,
+  "t_water": 24.6,
+  "faults": {
+    "t_in": 6,
+    "rh_in": 6,
+    "t_out": 0,
+    "t_water": 0
+  },
+  "src": {
+    "sht40": "sim",
+    "ds18b20": "hw",
+    "ntc": "hw"
+  }
+}
+{
+  "seq": 31,
+  "uptime_s": 311,
+  "t_in": 22.0,
+  "rh_in": 65.0,
+  "t_out": 26.4,
+  "t_water": 24.6,
+  "faults": {
+    "t_in": 0,
+    "rh_in": 0,
+    "t_out": 0,
+    "t_water": 0
+  },
+  "src": {
+    "sht40": "sim",
+    "ds18b20": "hw",
+    "ntc": "hw"
+  }
+}
+{
+  "seq": 32,
+  "uptime_s": 321,
+  "t_in": 22.0,
+  "rh_in": 65.0,
+  "t_out": 26.4,
+  "t_water": 24.6,
+  "faults": {
+    "t_in": 0,
+    "rh_in": 0,
+    "t_out": 0,
+    "t_water": 0
+  },
+  "src": {
+    "sht40": "sim",
+    "ds18b20": "hw",
+    "ntc": "hw"
+  }
+}
+{
+  "seq": 33,
+  "uptime_s": 331,
+  "t_in": 22.0,
+  "rh_in": 65.0,
+  "t_out": 26.4,
+  "t_water": 24.6,
+  "faults": {
+    "t_in": 0,
+    "rh_in": 0,
+    "t_out": 0,
+    "t_water": 0
+  },
+  "src": {
+    "sht40": "sim",
+    "ds18b20": "hw",
+    "ntc": "hw"
+  }
+}
+```
+
+</details>
+
+**JSON Long Soak - NTC + Dallas align**
+
+```js
+{
+  "seq": 160,
+  "uptime_s": 1605,
+  "t_in": 22.0,
+  "rh_in": 65.0,
+  "t_out": 25.2,
+  "t_water": 25.0,
+  "faults": {
+    "t_in": 0,
+    "rh_in": 0,
+    "t_out": 0,
+    "t_water": 0
+  },
+  "src": {
+    "sht40": "sim",
+    "ds18b20": "hw",
+    "ntc": "hw"
+  }
+}
+{
+  "seq": 161,
+  "uptime_s": 1615,
+  "t_in": 22.0,
+  "rh_in": 65.0,
+  "t_out": 25.2,
+  "t_water": 25.0,
+  "faults": {
+    "t_in": 0,
+    "rh_in": 0,
+    "t_out": 0,
+    "t_water": 0
+  },
+  "src": {
+    "sht40": "sim",
+    "ds18b20": "hw",
+    "ntc": "hw"
+  }
+}
+{
+  "seq": 162,
+  "uptime_s": 1625,
+  "t_in": 22.0,
+  "rh_in": 65.0,
+  "t_out": 25.2,
+  "t_water": 25.1,
+  "faults": {
+    "t_in": 0,
+    "rh_in": 0,
+    "t_out": 0,
+    "t_water": 0
+  },
+  "src": {
+    "sht40": "sim",
+    "ds18b20": "hw",
+    "ntc": "hw"
+  }
+}
+{
+  "seq": 163,
+  "uptime_s": 1635,
+  "t_in": 22.0,
+  "rh_in": 65.0,
+  "t_out": 25.3,
+  "t_water": 25.2,
+  "faults": {
+    "t_in": 0,
+    "rh_in": 0,
+    "t_out": 0,
+    "t_water": 0
+  },
+  "src": {
+    "sht40": "sim",
+    "ds18b20": "hw",
+    "ntc": "hw"
+  }
+}
+{
+  "seq": 164,
+  "uptime_s": 1645,
+  "t_in": 22.0,
+  "rh_in": 65.0,
+  "t_out": 25.4,
+  "t_water": 25.2,
+  "faults": {
+    "t_in": 0,
+    "rh_in": 0,
+    "t_out": 0,
+    "t_water": 0
+  },
+  "src": {
+    "sht40": "sim",
+    "ds18b20": "hw",
+    "ntc": "hw"
+  }
+}
+```
+
 
 ## System
 
