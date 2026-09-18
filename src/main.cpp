@@ -76,46 +76,49 @@ static void logSnapshot(const Snapshot& s) {
     Serial.print(" t_water="); Serial.print(s.tWater.value, 2); Serial.print("/"); Serial.println(faultName(s.tWater.fault));
 }
 
-static void runStateMachine(uint32_t nowMs) {
+static const char* stateName(NodeState s) {
+    switch (s) {
+        case NodeState::Boot:           return "Boot";
+        case NodeState::WifiConnecting: return "WifiConnecting";
+        case NodeState::MqttConnecting: return "MqttConnecting";
+        case NodeState::Online:         return "Online";
+    }
+    return "?";
+}
 
-    switch(state){        
+static void runStateMachine(uint32_t nowMs) {
+    const NodeState before = state;
+
+    switch (state) {
         case NodeState::Boot:
             state = NodeState::WifiConnecting;
-        break;
+            break;
 
         case NodeState::WifiConnecting:
             network.poll(nowMs);
-            if (network.connected()){
-                state = NodeState::MqttConnecting;
-            }
-        break;
-        
+            if (network.connected()) state = NodeState::MqttConnecting;
+            break;
+
         case NodeState::MqttConnecting:
-            if (!network.connected()){
-                state = NodeState::WifiConnecting;
-                break;
-            }
+            network.poll(nowMs);
+            if (!network.connected()) { state = NodeState::WifiConnecting; break; }
             telemetry.poll(nowMs);
-            if (telemetry.connected()){
-                state = NodeState::Online;
-                break;
-            };
-        break;
+            if (telemetry.connected()) state = NodeState::Online;
+            break;
 
         case NodeState::Online:
             network.poll(nowMs);
-            if (!network.connected()){
-                state = NodeState::WifiConnecting;
-                break;
-            }
+            if (!network.connected()) { state = NodeState::WifiConnecting; break; }
             telemetry.poll(nowMs);
-            if(!telemetry.connected()){
-                state = NodeState::MqttConnecting;
-            };
-        break;
+            if (!telemetry.connected()) state = NodeState::MqttConnecting;
+            break;
     }
-    
-    (void)nowMs;
+
+    if (state != before) {
+        Serial.print("state: "); Serial.print(stateName(before));
+        Serial.print(" -> ");    Serial.println(stateName(state));
+        if (before == NodeState::WifiConnecting) network.printInfo(Serial);
+    }
 }
 
 void setup() {
@@ -150,16 +153,11 @@ void loop() {
         logSnapshot(current);
         previous = current;
 
-        if(state == NodeState::Online){
-            if(!telemetry.publish(current, {SHT_SRC, "hw", "hw"} )){
-                led.blinkPublish(now);
-            };
-        };
-
-
-        (void)SHT_SRC;
+        if (state == NodeState::Online) {
+            if (telemetry.publish(current, {SHT_SRC, "hw", "hw"})) led.blinkPublish(now);
+            else Serial.println("publish failed");
+        }
     }
 
     // TODO(firmware): map state to StatusLed::State, led.show(state, any channel invalid), led.update(now).
-    (void)state; (void)telemetry; (void)led;
 }
