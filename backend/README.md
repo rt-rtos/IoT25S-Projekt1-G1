@@ -399,7 +399,7 @@ websocket, no browser refresh needed.
     // One output per channel. A faulted channel shows the fault name
     // instead of a stale number; the codes are the Fault enum in
     // lib/Reading/Reading.h and the value is null in the payload.
-    const FAULT = ["ok", "NO_DEVICE", "CRC", "TIMEOUT", "RANGE",
+    const FAULT = ["NONE", "NO_DEVICE", "CRC", "TIMEOUT", "RANGE",
                    "RATE", "STUCK", "NOT_READY"];
     const p = msg.payload;
     const f = p.faults || {};
