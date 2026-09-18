@@ -80,24 +80,24 @@ static void runStateMachine(uint32_t nowMs) {
 
     switch(state){        
         case NodeState::Boot:
-            state = WifiConnecting;
+            state = NodeState::WifiConnecting;
         break;
 
         case NodeState::WifiConnecting:
             network.poll(nowMs);
             if (network.connected()){
-                state = MqttConnecting;
+                state = NodeState::MqttConnecting;
             }
         break;
         
         case NodeState::MqttConnecting:
             if (!network.connected()){
-                state = WifiConnecting;
+                state = NodeState::WifiConnecting;
                 break;
             }
             telemetry.poll(nowMs);
             if (telemetry.connected()){
-                state = Online;
+                state = NodeState::Online;
                 break;
             };
         break;
@@ -105,12 +105,12 @@ static void runStateMachine(uint32_t nowMs) {
         case NodeState::Online:
             network.poll(nowMs);
             if (!network.connected()){
-                state = WifiConnecting;
+                state = NodeState::WifiConnecting;
                 break;
             }
             telemetry.poll(nowMs);
             if(!telemetry.connected()){
-                state = MqttConnecting;
+                state = NodeState::MqttConnecting;
             };
         break;
     }
@@ -159,9 +159,9 @@ void loop() {
 
         // TODO(firmware): when Online, telemetry.publish(current, {SHT_SRC, "hw", "hw"})
         // and led.blinkPublish(now) on success.
-        if(network.connected == true && telemetry.connected == true){
+        if(state == NodeState::Online){
             if(!telemetry.publish(current, {SHT_SRC, "hw", "hw"} )){
-                led.blinkPublish(millis);
+                led.blinkPublish(now);
             };
         };
 
