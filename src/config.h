@@ -33,7 +33,8 @@ constexpr uint8_t DS18B20_RESOLUTION_BITS = 12;
 
 // Network (outline 5.3, 10)
 constexpr uint32_t WIFI_RETRY_MS      = 5000;
-constexpr uint32_t MQTT_RETRY_MS      = 5000;
+constexpr uint32_t MQTT_RETRY_MS      = 5000;    // first retry after a failed broker connect
+constexpr uint32_t MQTT_RETRY_MAX_MS  = 60000;   // back-off ceiling: 5, 10, 20, 40, 60, 60 s
 constexpr uint32_t MQTT_KEEPALIVE_MS  = 60000;
 constexpr uint32_t MQTT_CONNECT_TIMEOUT_MS = 5000;
 
