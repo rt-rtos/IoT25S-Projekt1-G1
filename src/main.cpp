@@ -115,13 +115,6 @@ static void runStateMachine(uint32_t nowMs) {
         break;
     }
     
-    // TODO(firmware): transitions per outline 5.3:
-    //   Boot -> WifiConnecting
-    //   WifiConnecting: network.poll(); connected -> MqttConnecting
-    //   MqttConnecting: network.poll(); Wi-Fi lost -> WifiConnecting;
-    //                   telemetry.poll(); connected -> Online
-    //   Online: network.poll(); Wi-Fi lost -> WifiConnecting;
-    //           telemetry.poll(); broker lost -> MqttConnecting
     (void)nowMs;
 }
 
@@ -157,8 +150,6 @@ void loop() {
         logSnapshot(current);
         previous = current;
 
-        // TODO(firmware): when Online, telemetry.publish(current, {SHT_SRC, "hw", "hw"})
-        // and led.blinkPublish(now) on success.
         if(state == NodeState::Online){
             if(!telemetry.publish(current, {SHT_SRC, "hw", "hw"} )){
                 led.blinkPublish(now);
