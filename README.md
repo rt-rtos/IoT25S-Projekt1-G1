@@ -68,6 +68,11 @@ Pins are set in `src/config.h`; the full table is outline section 7.
 | LED matrix      | on the board                       | Connection state, fault present, publish blink (see Running)                            |
 
 ```mermaid
+---
+config:
+  layout: tidy-tree
+---
+
 %%{init: {'theme': 'base', 'themeVariables': {
   'primaryColor': '#1f3a5f',
   'primaryTextColor': '#ffffff',
@@ -100,30 +105,31 @@ Pins are set in `src/config.h`; the full table is outline section 7.
   'cScale11': '#5f2e3f',
   'cScaleLabel11': '#ffffff'
 }}}%%
+
 mindmap
   root((Arduino Uno R4 WiFi))
-    D2
+    [D2]
       DS18B20 DATA
       4.7 k pull-up to 5 V
-    A0
+    [A0]
       10 k 1 % to 5 V
       NTC 10 k to GND
       100 nF to GND
-    5 V
+    [GND]
+      DS18B20 GND
+      NTC and 100 nF return
+    [5 V]
       DS18B20 VDD
       divider to A0
       pull-up to D2
-    GND
-      DS18B20 GND
-      NTC and 100 nF return
-    Optional QWIIC/1-Wire 
-      SHT40 breakout 0x44
-      3.3 V I2C, optional
-    LED matrix
-      state, fault, publish blink
     USB-C
       power
       serial log 115200
+    )Optional(
+      QWIIC/1-Wire
+        SHT40 breakout 0x44
+        3.3 V I2C, optional
+      LED Frames
 ```
 
 The NTC probe is a bare 10 k bead on a twisted pair, sealed in two layers
