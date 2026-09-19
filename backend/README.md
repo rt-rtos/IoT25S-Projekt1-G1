@@ -140,12 +140,15 @@ The node has no clock. The backend stamps each row on ingest; `seq` and
 
 ## Step 1: palette
 
-The SQLite node is part of the local image: `Dockerfile` starts from the
-pinned `nodered/node-red` release and runs `npm install` for
-`node-red-node-sqlite`, so every fresh container has it without a
-palette install. The package ships a prebuilt binary for the image's
-Alpine/Node combination, so the build takes seconds rather than a native
-compile. After changing either pin, rebuild and recreate the container:
+The SQLite node and Dashboard 2.0 are part of the local image:
+`Dockerfile` starts from the pinned `nodered/node-red` release and runs
+`npm install` for `node-red-node-sqlite` and
+`@flowfuse/node-red-dashboard`, so every fresh container has both
+without a palette install, and the committed flow loads on a new machine
+with no unknown node types. The SQLite package ships a prebuilt binary
+for the image's Alpine/Node combination, so the build takes seconds
+rather than a native compile. After changing any pin, rebuild and
+recreate the container:
 
     docker compose up -d --build
 
@@ -157,18 +160,16 @@ tools to the Dockerfile:
     USER root
     RUN apk add --no-cache python3 make g++
     USER node-red
-    RUN npm install --no-update-notifier --no-audit node-red-node-sqlite@2.0.1
+    RUN npm install --no-update-notifier --no-audit \
+        node-red-node-sqlite@2.0.1 \
+        @flowfuse/node-red-dashboard@1.31.0
 
-Dashboard 2.0 is not in the image yet. Install it from the editor, Menu
--> Manage palette -> Install:
-
-- `@flowfuse/node-red-dashboard` (Dashboard 2.0; the older
-  `node-red-dashboard` also works but is no longer maintained)
-
-Palette installs land in `/data/node_modules` in the `node-red-data`
-volume. They survive container recreation but are not part of the image,
-so a new machine has to repeat this step until the package is added to
-the Dockerfile.
+Anything installed from the editor (Menu -> Manage palette) lands in
+`/data/node_modules` in the `node-red-data` volume instead. It survives
+container recreation but is not part of the image, so a node type the
+committed flow depends on belongs in the Dockerfile, not in the palette
+manager. A palette copy of a package that is also in the image is
+harmless; the `/data` copy takes precedence.
 
 ## Step 2: broker config and mqtt in
 
@@ -448,7 +449,12 @@ text tiles, and on each:
 - Type `Line`, Action `Append`
 - X-axis: Type `Timescale`, Limit `24 hours` (this is what prunes old
   points; the field name varies slightly between versions)
-- Series `msg.topic`, X property `x`, Y property `y`
+- Properties: Series type `msg.` value `topic`; X type `key` value `x`;
+  Y type `key` value `y`. The type matters: `key` reads the field from
+  the point object the function sends, `msg.` reads from the message
+  itself, so `msg.` `x` looks up `msg.x`, finds nothing, and the chart
+  stays empty. Leaving Y at its default `msg.` `payload` hands the chart
+  the whole `{x, y}` object as the value, which also draws nothing.
 
 ### 8c: backfill the charts from the database
 
