@@ -1,0 +1,15 @@
+{"seq":19,"uptime_s":191,"t_in":22.0,"rh_in":65.0,"t_out":26.1,"t_water":24.6,"faults":{"t_in":0,"rh_in":0,"t_out":0,"t_water":0},"src":{"sht40":"sim","ds18b20":"hw","ntc":"hw"}}
+{"seq":20,"uptime_s":201,"t_in":22.0,"rh_in":65.0,"t_out":26.3,"t_water":24.6,"faults":{"t_in":0,"rh_in":0,"t_out":0,"t_water":0},"src":{"sht40":"sim","ds18b20":"hw","ntc":"hw"}}
+{"seq":21,"uptime_s":211,"t_in":22.0,"rh_in":65.0,"t_out":26.3,"t_water":24.6,"faults":{"t_in":0,"rh_in":0,"t_out":0,"t_water":0},"src":{"sht40":"sim","ds18b20":"hw","ntc":"hw"}}
+{"seq":22,"uptime_s":221,"t_in":22.0,"rh_in":65.0,"t_out":26.3,"t_water":24.6,"faults":{"t_in":0,"rh_in":0,"t_out":0,"t_water":0},"src":{"sht40":"sim","ds18b20":"hw","ntc":"hw"}}
+{"seq":23,"uptime_s":231,"t_in":22.0,"rh_in":65.0,"t_out":26.3,"t_water":24.6,"faults":{"t_in":0,"rh_in":0,"t_out":0,"t_water":0},"src":{"sht40":"sim","ds18b20":"hw","ntc":"hw"}}
+{"seq":24,"uptime_s":241,"t_in":22.0,"rh_in":65.0,"t_out":26.3,"t_water":24.6,"faults":{"t_in":0,"rh_in":0,"t_out":0,"t_water":0},"src":{"sht40":"sim","ds18b20":"hw","ntc":"hw"}}
+{"seq":25,"uptime_s":251,"t_in":22.0,"rh_in":65.0,"t_out":26.3,"t_water":24.6,"faults":{"t_in":0,"rh_in":0,"t_out":0,"t_water":0},"src":{"sht40":"sim","ds18b20":"hw","ntc":"hw"}}
+{"seq":26,"uptime_s":261,"t_in":22.0,"rh_in":65.0,"t_out":26.3,"t_water":24.6,"faults":{"t_in":0,"rh_in":0,"t_out":0,"t_water":0},"src":{"sht40":"sim","ds18b20":"hw","ntc":"hw"}}
+{"seq":27,"uptime_s":271,"t_in":22.0,"rh_in":65.0,"t_out":26.1,"t_water":24.6,"faults":{"t_in":0,"rh_in":0,"t_out":0,"t_water":0},"src":{"sht40":"sim","ds18b20":"hw","ntc":"hw"}}
+{"seq":28,"uptime_s":281,"t_in":22.0,"rh_in":65.0,"t_out":26.1,"t_water":24.6,"faults":{"t_in":0,"rh_in":0,"t_out":0,"t_water":0},"src":{"sht40":"sim","ds18b20":"hw","ntc":"hw"}}
+{"seq":29,"uptime_s":291,"t_in":22.0,"rh_in":65.0,"t_out":26.1,"t_water":24.6,"faults":{"t_in":0,"rh_in":0,"t_out":0,"t_water":0},"src":{"sht40":"sim","ds18b20":"hw","ntc":"hw"}}
+{"seq":30,"uptime_s":301,"t_in":null,"rh_in":null,"t_out":26.3,"t_water":24.6,"faults":{"t_in":6,"rh_in":6,"t_out":0,"t_water":0},"src":{"sht40":"sim","ds18b20":"hw","ntc":"hw"}}
+{"seq":31,"uptime_s":311,"t_in":22.0,"rh_in":65.0,"t_out":26.4,"t_water":24.6,"faults":{"t_in":0,"rh_in":0,"t_out":0,"t_water":0},"src":{"sht40":"sim","ds18b20":"hw","ntc":"hw"}}
+{"seq":32,"uptime_s":321,"t_in":22.0,"rh_in":65.0,"t_out":26.4,"t_water":24.6,"faults":{"t_in":0,"rh_in":0,"t_out":0,"t_water":0},"src":{"sht40":"sim","ds18b20":"hw","ntc":"hw"}}
+{"seq":33,"uptime_s":331,"t_in":22.0,"rh_in":65.0,"t_out":26.4,"t_water":24.6,"faults":{"t_in":0,"rh_in":0,"t_out":0,"t_water":0},"src":{"sht40":"sim","ds18b20":"hw","ntc":"hw"}}

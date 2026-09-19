@@ -140,12 +140,15 @@ The node has no clock. The backend stamps each row on ingest; `seq` and
 
 ## Step 1: palette
 
-The SQLite node is part of the local image: `Dockerfile` starts from the
-pinned `nodered/node-red` release and runs `npm install` for
-`node-red-node-sqlite`, so every fresh container has it without a
-palette install. The package ships a prebuilt binary for the image's
-Alpine/Node combination, so the build takes seconds rather than a native
-compile. After changing either pin, rebuild and recreate the container:
+The SQLite node and Dashboard 2.0 are part of the local image:
+`Dockerfile` starts from the pinned `nodered/node-red` release and runs
+`npm install` for `node-red-node-sqlite` and
+`@flowfuse/node-red-dashboard`, so every fresh container has both
+without a palette install, and the committed flow loads on a new machine
+with no unknown node types. The SQLite package ships a prebuilt binary
+for the image's Alpine/Node combination, so the build takes seconds
+rather than a native compile. After changing any pin, rebuild and
+recreate the container:
 
     docker compose up -d --build
 
@@ -157,18 +160,16 @@ tools to the Dockerfile:
     USER root
     RUN apk add --no-cache python3 make g++
     USER node-red
-    RUN npm install --no-update-notifier --no-audit node-red-node-sqlite@2.0.1
+    RUN npm install --no-update-notifier --no-audit \
+        node-red-node-sqlite@2.0.1 \
+        @flowfuse/node-red-dashboard@1.31.0
 
-Dashboard 2.0 is not in the image yet. Install it from the editor, Menu
--> Manage palette -> Install:
-
-- `@flowfuse/node-red-dashboard` (Dashboard 2.0; the older
-  `node-red-dashboard` also works but is no longer maintained)
-
-Palette installs land in `/data/node_modules` in the `node-red-data`
-volume. They survive container recreation but are not part of the image,
-so a new machine has to repeat this step until the package is added to
-the Dockerfile.
+Anything installed from the editor (Menu -> Manage palette) lands in
+`/data/node_modules` in the `node-red-data` volume instead. It survives
+container recreation but is not part of the image, so a node type the
+committed flow depends on belongs in the Dockerfile, not in the palette
+manager. A palette copy of a package that is also in the image is
+harmless; the `/data` copy takes precedence.
 
 ## Step 2: broker config and mqtt in
 
@@ -254,12 +255,12 @@ Drag a `sqlite` node, wire `row builder` to it, and configure:
 - SQL: the statement below
 - Name: `insert telemetry`
 
-    INSERT INTO telemetry (received_at, device_id, seq, uptime_s,
-                           t_in, rh_in, t_out, t_water,
-                           fault_t_in, fault_rh_in, fault_t_out, fault_t_water)
-    VALUES ($received_at, $device_id, $seq, $uptime_s,
-            $t_in, $rh_in, $t_out, $t_water,
-            $fault_t_in, $fault_rh_in, $fault_t_out, $fault_t_water);
+      INSERT INTO telemetry (received_at, device_id, seq, uptime_s,
+                             t_in, rh_in, t_out, t_water,
+                             fault_t_in, fault_rh_in, fault_t_out, fault_t_water)
+      VALUES ($received_at, $device_id, $seq, $uptime_s,
+              $t_in, $rh_in, $t_out, $t_water,
+              $fault_t_in, $fault_rh_in, $fault_t_out, $fault_t_water);
 
 Bound values are never pasted into the SQL text, so strings and nulls
 need no quoting. Building the SQL string in the function instead
@@ -448,7 +449,12 @@ text tiles, and on each:
 - Type `Line`, Action `Append`
 - X-axis: Type `Timescale`, Limit `24 hours` (this is what prunes old
   points; the field name varies slightly between versions)
-- Series `msg.topic`, X property `x`, Y property `y`
+- Properties: Series type `msg.` value `topic`; X type `key` value `x`;
+  Y type `key` value `y`. The type matters: `key` reads the field from
+  the point object the function sends, `msg.` reads from the message
+  itself, so `msg.` `x` looks up `msg.x`, finds nothing, and the chart
+  stays empty. Leaving Y at its default `msg.` `payload` hands the chart
+  the whole `{x, y}` object as the value, which also draws nothing.
 
 ### 8c: backfill the charts from the database
 
@@ -458,36 +464,36 @@ One more chain reloads the last day from SQLite:
 - `inject`: "Inject once after 1 seconds", Name `load history`.
 - `sqlite`, `Fixed Statement`, same database config as step 4:
 
-    SELECT received_at, device_id, t_in, rh_in, t_out, t_water
-    FROM telemetry
-    WHERE received_at > strftime('%Y-%m-%dT%H:%M:%fZ', 'now', '-1 day')
-    ORDER BY received_at;
+      SELECT received_at, device_id, t_in, rh_in, t_out, t_water
+      FROM telemetry
+      WHERE received_at > strftime('%Y-%m-%dT%H:%M:%fZ', 'now', '-1 day')
+      ORDER BY received_at;
 
 - `function`, Name `history points`, Outputs 4:
 
-    // Rows -> one array of {x, y} per chart. An empty array is sent first
-    // so a redeploy does not duplicate points already on the chart.
-    const rows = msg.payload || [];
-    const cols = ["t_in", "rh_in", "t_out", "t_water"];
-    const out = cols.map(() => ({}));
+      // Rows -> one array of {x, y} per chart. An empty array is sent first
+      // so a redeploy does not duplicate points already on the chart.
+      const rows = msg.payload || [];
+      const cols = ["t_in", "rh_in", "t_out", "t_water"];
+      const out = cols.map(() => ({}));
 
-    for (const r of rows) {
-        const x = Date.parse(r.received_at);
-        cols.forEach((c, i) => {
-            if (r[c] === null || r[c] === undefined) return;
-            (out[i][r.device_id] = out[i][r.device_id] || []).push({ x, y: r[c] });
-        });
-    }
+      for (const r of rows) {
+          const x = Date.parse(r.received_at);
+          cols.forEach((c, i) => {
+              if (r[c] === null || r[c] === undefined) return;
+              (out[i][r.device_id] = out[i][r.device_id] || []).push({ x, y: r[c] });
+          });
+      }
 
-    // One message per (chart, device): the chart takes the series from msg.topic.
-    cols.forEach((c, i) => {
-        node.send(cols.map((_, j) => j === i ? { payload: [] } : null));
-        for (const device of Object.keys(out[i])) {
-            node.send(cols.map((_, j) =>
-                j === i ? { topic: device, payload: out[i][device] } : null));
-        }
-    });
-    return null;
+      // One message per (chart, device): the chart takes the series from msg.topic.
+      cols.forEach((c, i) => {
+          node.send(cols.map((_, j) => j === i ? { payload: [] } : null));
+          for (const device of Object.keys(out[i])) {
+              node.send(cols.map((_, j) =>
+                  j === i ? { topic: device, payload: out[i][device] } : null));
+          }
+      });
+      return null;
 
 Wire output 1 to the `t_in` chart, 2 to `rh_in`, 3 to `t_out`, 4 to
 `t_water`, the same charts the live points go to.
@@ -495,30 +501,41 @@ Wire output 1 to the `t_in` chart, 2 to `rh_in`, 3 to `t_out`, 4 to
 ### 8d: last-seen table
 
 `ui-table` in Group `Status`, fed by the `last seen` function from step 7
-(replace or keep the debug node). The table takes the array as it is;
-columns are `device`, `status`, `last_status`, `last_sample`. Set
-Action `Replace` so each message redraws the whole table.
+(replace or keep the debug node). The table takes the array as it is.
+Columns `Auto` reads the property names from the first row and needs no
+setup. With `Manual`, add four columns whose Key (type `key`, not
+`string`) is `device`, `status`, `last_status`, `last_sample`; the Label
+is the header text and is free. Set Action `Replace` so each message
+redraws the whole table.
 
 ### 8e: check
 
-Publish a short series with changing values so the charts have something
-to draw. From this directory:
+Publish a short series so the charts have something to draw.
+`series.jsonl` holds 15 samples from the end-to-end run in
+`docs/tests.md` (seq 19 to 33), one JSON object per line; `t_out` moves
+between 26.1 and 26.4, row 30 has `t_in` and `rh_in` faulted with code
+6 (STUCK), and `t_water` is a valid 24.6 throughout. `mosquitto_pub -l`
+sends each line as its own message, and running the client inside the
+container works the same from bash, cmd and Git Bash:
 
-    for i in $(seq 1 20); do
-      jq -c --argjson i "$i" '.seq = $i | .uptime_s = $i * 10 | .t_in = 22 + ($i % 5) / 2' payload.json \
-        | mosquitto_pub -h localhost -t microhydros/node01/telemetry -s
-      sleep 1
-    done
+    docker compose exec -T mosquitto mosquitto_pub -h localhost -t microhydros/node01/telemetry -l < series.jsonl
 
-On Windows, publish `payload.json` a few times instead; a flat line is
-still a line.
+PowerShell has no `<`; pipe the file instead:
+
+    Get-Content series.jsonl | docker compose exec -T mosquitto mosquitto_pub -h localhost -t microhydros/node01/telemetry -l
+
+The 15 messages arrive within a few milliseconds, so on a 24 h axis they
+sit at one instant; the check below is that the charts draw them at
+all, and the backfill after a restart is what shows the shape.
 
 Done when:
 
-- The four tiles update within one sample of a publish, and `Water C`
-  reads `FAULT NO_DEVICE`.
-- The three valid charts show the series; the water chart stays empty
-  because every sample is faulted.
+- The four tiles show the last row: 22.0, 65.0, 26.4, 24.6. Publishing
+  `payload.json` once more flips `Water C` to `FAULT NO_DEVICE`.
+- All four charts get points; the indoor pair has one less than the
+  outdoor pair because row 30 is faulted and skipped. The `payload.json`
+  publish adds nothing to the water chart, since that sample has
+  `t_water` faulted.
 - `docker compose restart node-red`, then reload the dashboard: the
   charts come back with the stored points via 8c.
 - The status table lists `node01` with the status from step 7.
