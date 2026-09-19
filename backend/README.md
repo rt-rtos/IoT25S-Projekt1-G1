@@ -254,12 +254,12 @@ Drag a `sqlite` node, wire `row builder` to it, and configure:
 - SQL: the statement below
 - Name: `insert telemetry`
 
-    INSERT INTO telemetry (received_at, device_id, seq, uptime_s,
-                           t_in, rh_in, t_out, t_water,
-                           fault_t_in, fault_rh_in, fault_t_out, fault_t_water)
-    VALUES ($received_at, $device_id, $seq, $uptime_s,
-            $t_in, $rh_in, $t_out, $t_water,
-            $fault_t_in, $fault_rh_in, $fault_t_out, $fault_t_water);
+      INSERT INTO telemetry (received_at, device_id, seq, uptime_s,
+                             t_in, rh_in, t_out, t_water,
+                             fault_t_in, fault_rh_in, fault_t_out, fault_t_water)
+      VALUES ($received_at, $device_id, $seq, $uptime_s,
+              $t_in, $rh_in, $t_out, $t_water,
+              $fault_t_in, $fault_rh_in, $fault_t_out, $fault_t_water);
 
 Bound values are never pasted into the SQL text, so strings and nulls
 need no quoting. Building the SQL string in the function instead
@@ -458,36 +458,36 @@ One more chain reloads the last day from SQLite:
 - `inject`: "Inject once after 1 seconds", Name `load history`.
 - `sqlite`, `Fixed Statement`, same database config as step 4:
 
-    SELECT received_at, device_id, t_in, rh_in, t_out, t_water
-    FROM telemetry
-    WHERE received_at > strftime('%Y-%m-%dT%H:%M:%fZ', 'now', '-1 day')
-    ORDER BY received_at;
+      SELECT received_at, device_id, t_in, rh_in, t_out, t_water
+      FROM telemetry
+      WHERE received_at > strftime('%Y-%m-%dT%H:%M:%fZ', 'now', '-1 day')
+      ORDER BY received_at;
 
 - `function`, Name `history points`, Outputs 4:
 
-    // Rows -> one array of {x, y} per chart. An empty array is sent first
-    // so a redeploy does not duplicate points already on the chart.
-    const rows = msg.payload || [];
-    const cols = ["t_in", "rh_in", "t_out", "t_water"];
-    const out = cols.map(() => ({}));
+      // Rows -> one array of {x, y} per chart. An empty array is sent first
+      // so a redeploy does not duplicate points already on the chart.
+      const rows = msg.payload || [];
+      const cols = ["t_in", "rh_in", "t_out", "t_water"];
+      const out = cols.map(() => ({}));
 
-    for (const r of rows) {
-        const x = Date.parse(r.received_at);
-        cols.forEach((c, i) => {
-            if (r[c] === null || r[c] === undefined) return;
-            (out[i][r.device_id] = out[i][r.device_id] || []).push({ x, y: r[c] });
-        });
-    }
+      for (const r of rows) {
+          const x = Date.parse(r.received_at);
+          cols.forEach((c, i) => {
+              if (r[c] === null || r[c] === undefined) return;
+              (out[i][r.device_id] = out[i][r.device_id] || []).push({ x, y: r[c] });
+          });
+      }
 
-    // One message per (chart, device): the chart takes the series from msg.topic.
-    cols.forEach((c, i) => {
-        node.send(cols.map((_, j) => j === i ? { payload: [] } : null));
-        for (const device of Object.keys(out[i])) {
-            node.send(cols.map((_, j) =>
-                j === i ? { topic: device, payload: out[i][device] } : null));
-        }
-    });
-    return null;
+      // One message per (chart, device): the chart takes the series from msg.topic.
+      cols.forEach((c, i) => {
+          node.send(cols.map((_, j) => j === i ? { payload: [] } : null));
+          for (const device of Object.keys(out[i])) {
+              node.send(cols.map((_, j) =>
+                  j === i ? { topic: device, payload: out[i][device] } : null));
+          }
+      });
+      return null;
 
 Wire output 1 to the `t_in` chart, 2 to `rh_in`, 3 to `t_out`, 4 to
 `t_water`, the same charts the live points go to.
