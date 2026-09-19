@@ -44,6 +44,138 @@
         "mode": "RWC"
     },
     {
+        "id": "b626e9236e69e971",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-node-sqlite": "2.0.1",
+            "@flowfuse/node-red-dashboard": "1.31.0"
+        }
+    },
+    {
+        "id": "2f6fe0e33399d501",
+        "type": "ui-base",
+        "name": "My Dashboard",
+        "path": "/dashboard",
+        "appIcon": "",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "headerContent": "page",
+        "navigationStyle": "default",
+        "titleBarStyle": "default",
+        "showReconnectNotification": true,
+        "notificationDisplayTime": 1,
+        "showDisconnectNotification": true,
+        "allowInstall": false
+    },
+    {
+        "id": "cf6f7eb5340c57aa",
+        "type": "ui-theme",
+        "name": "Default Theme",
+        "colors": {
+            "surface": "#fcfcfd",
+            "primary": "#0d74ce",
+            "bgPage": "#f9f9fb",
+            "groupBg": "#ffffff",
+            "groupOutline": "#d9d9e0"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    },
+    {
+        "id": "4b2104218af19f3c",
+        "type": "ui-page",
+        "name": "MicroHydros",
+        "ui": "2f6fe0e33399d501",
+        "path": "/dashboard",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "cf6f7eb5340c57aa",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": "0",
+                "cols": "3"
+            },
+            {
+                "name": "Tablet",
+                "px": "576",
+                "cols": "6"
+            },
+            {
+                "name": "Small Desktop",
+                "px": "768",
+                "cols": "9"
+            },
+            {
+                "name": "Desktop",
+                "px": "1024",
+                "cols": "12"
+            }
+        ],
+        "order": 1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "d4d92338ceb1a266",
+        "type": "ui-group",
+        "name": "current values",
+        "page": "4b2104218af19f3c",
+        "width": 6,
+        "height": 1,
+        "order": 1,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "bdf18f1b18dd459f",
+        "type": "ui-group",
+        "name": "Charts",
+        "page": "4b2104218af19f3c",
+        "width": 6,
+        "height": 1,
+        "order": 2,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "1f391449f84bffcb",
+        "type": "ui-group",
+        "name": "Status",
+        "page": "4b2104218af19f3c",
+        "width": 6,
+        "height": 1,
+        "order": 3,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "4da789f0f9d2f13a",
+        "type": "sqlitedb",
+        "db": "",
+        "mode": "RWC"
+    },
+    {
         "id": "3ff955690da3ae79",
         "type": "mqtt in",
         "z": "f6f2187d.f17ca8",
@@ -60,7 +192,10 @@
         "y": 340,
         "wires": [
             [
-                "d4d7b498969d62e7"
+                "d4d7b498969d62e7",
+                "dbbd909a0b39973b",
+                "acb32860d7c21ca2",
+                "6f613c6a4e26d59d"
             ]
         ]
     },
@@ -147,7 +282,7 @@
         "type": "debug",
         "z": "f6f2187d.f17ca8",
         "name": "debug 1",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -160,11 +295,581 @@
         "wires": []
     },
     {
-        "id": "b626e9236e69e971",
-        "type": "global-config",
-        "env": [],
-        "modules": {
-            "node-red-node-sqlite": "2.0.1"
-        }
+        "id": "441dae431e9d6f78",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "status in",
+        "topic": "microhydros/+/status",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "23b74b51bf6897e1",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 160,
+        "y": 500,
+        "wires": [
+            [
+                "dbbd909a0b39973b"
+            ]
+        ]
+    },
+    {
+        "id": "dbbd909a0b39973b",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "last seen",
+        "func": "// Per-device last-seen table in flow context. Two inputs share this\n// node: status messages set online/offline, telemetry messages stamp\n// the last sample time. Output is the whole table for a ui-table.\nconst parts = msg.topic.split(\"/\");   // [\"microhydros\", \"<device>\", \"status\"|\"telemetry\"]\nconst device = parts[1];\nconst kind = parts[2];\nconst now = new Date().toISOString();\n\nconst seen = flow.get(\"lastSeen\") || {};\nconst entry = seen[device] ||\n    { device: device, status: \"unknown\", last_status: \"\", last_sample: \"\" };\n\nif (kind === \"status\") {\n    entry.status = String(msg.payload).trim();\n    entry.last_status = now;\n} else if (kind === \"telemetry\") {\n    entry.last_sample = now;\n}\nseen[device] = entry;\nflow.set(\"lastSeen\", seen);\n\nmsg.payload = Object.keys(seen).sort().map(d => seen[d]);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 500,
+        "wires": [
+            [
+                "5452e4cbcbbc654f",
+                "72f80f30a753010d"
+            ]
+        ]
+    },
+    {
+        "id": "acb32860d7c21ca2",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "current values",
+        "func": "// One output per channel. A faulted channel shows the fault name\n// instead of a stale number; the codes are the Fault enum in\n// lib/Reading/Reading.h and the value is null in the payload.\nconst FAULT = [\"NONE\", \"NO_DEVICE\", \"CRC\", \"TIMEOUT\", \"RANGE\",\n               \"RATE\", \"STUCK\", \"NOT_READY\"];\nconst p = msg.payload;\nconst f = p.faults || {};\nconst show = (v, code) => code ? \"FAULT \" + (FAULT[code] || code) : v;\n\nreturn [\n    { payload: show(p.t_in,    f.t_in),    topic: \"t_in\" },\n    { payload: show(p.rh_in,   f.rh_in),   topic: \"rh_in\" },\n    { payload: show(p.t_out,   f.t_out),   topic: \"t_out\" },\n    { payload: show(p.t_water, f.t_water), topic: \"t_water\" },\n];\n\nreturn msg;",
+        "outputs": 4,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 280,
+        "wires": [
+            [
+                "d21f6e1faffdc61c"
+            ],
+            [
+                "5af5307ef838a9d0"
+            ],
+            [
+                "2d4cced423d8a25b"
+            ],
+            [
+                "9c6cae22beb52fce"
+            ]
+        ]
+    },
+    {
+        "id": "2d4cced423d8a25b",
+        "type": "ui-text",
+        "z": "f6f2187d.f17ca8",
+        "group": "d4d92338ceb1a266",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "Indoor RH %",
+        "label": "Indoor RH %",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#717171",
+        "wrapText": false,
+        "className": "",
+        "value": "payload",
+        "valueType": "msg",
+        "x": 950,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "9c6cae22beb52fce",
+        "type": "ui-text",
+        "z": "f6f2187d.f17ca8",
+        "group": "d4d92338ceb1a266",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "Indoor C",
+        "label": "Indoor C",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#717171",
+        "wrapText": false,
+        "className": "",
+        "value": "payload",
+        "valueType": "msg",
+        "x": 940,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "5af5307ef838a9d0",
+        "type": "ui-text",
+        "z": "f6f2187d.f17ca8",
+        "group": "d4d92338ceb1a266",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "Outdoor C",
+        "label": "Outdoor C",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#717171",
+        "wrapText": false,
+        "className": "",
+        "value": "payload",
+        "valueType": "msg",
+        "x": 950,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "d21f6e1faffdc61c",
+        "type": "ui-text",
+        "z": "f6f2187d.f17ca8",
+        "group": "d4d92338ceb1a266",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "Water C",
+        "label": "Water C",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#717171",
+        "wrapText": false,
+        "className": "",
+        "value": "payload",
+        "valueType": "msg",
+        "x": 940,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "6f613c6a4e26d59d",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "chart points",
+        "func": "// Live points. Series is the device id so several nodes share a chart.\n// Faulted channels are skipped rather than plotted as null.\nconst device = msg.topic.split(\"/\")[1];\nconst p = msg.payload;\nconst f = p.faults || {};\nconst now = Date.now();\nconst point = (v, fault) =>\n    fault ? null : { topic: device, payload: { x: now, y: v } };\n\nreturn [\n    point(p.t_in,    f.t_in),\n    point(p.rh_in,   f.rh_in),\n    point(p.t_out,   f.t_out),\n    point(p.t_water, f.t_water),\n];\n\nreturn msg;",
+        "outputs": 4,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 540,
+        "wires": [
+            [
+                "e21fe196c44f508b"
+            ],
+            [
+                "1ae9e1b4c9523363"
+            ],
+            [
+                "adc7137a8be5079b"
+            ],
+            [
+                "64e86324c1ca9273"
+            ]
+        ]
+    },
+    {
+        "id": "64e86324c1ca9273",
+        "type": "ui-chart",
+        "z": "f6f2187d.f17ca8",
+        "group": "bdf18f1b18dd459f",
+        "name": "Indoor C",
+        "label": "Indoor C",
+        "order": 1,
+        "chartType": "line",
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisLabel": "",
+        "xAxisProperty": "x",
+        "xAxisPropertyType": "property",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "auto",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "",
+        "yAxisProperty": "y",
+        "yAxisPropertyType": "property",
+        "ymin": "",
+        "ymax": "",
+        "bins": 10,
+        "action": "append",
+        "stackSeries": false,
+        "pointShape": "circle",
+        "pointRadius": 4,
+        "showLegend": true,
+        "removeOlder": "24",
+        "removeOlderUnit": "3600",
+        "removeOlderPoints": "",
+        "colors": [
+            "#0095ff",
+            "#ff0000",
+            "#ff7f0e",
+            "#2ca02c",
+            "#a347e1",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
+        "width": 6,
+        "height": 8,
+        "className": "",
+        "interpolation": "linear",
+        "x": 940,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "adc7137a8be5079b",
+        "type": "ui-chart",
+        "z": "f6f2187d.f17ca8",
+        "group": "bdf18f1b18dd459f",
+        "name": "Indoor RH %",
+        "label": "Indoor RH %",
+        "order": 2,
+        "chartType": "line",
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisLabel": "",
+        "xAxisProperty": "x",
+        "xAxisPropertyType": "property",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "auto",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "",
+        "yAxisProperty": "y",
+        "yAxisPropertyType": "property",
+        "ymin": "",
+        "ymax": "",
+        "bins": 10,
+        "action": "append",
+        "stackSeries": false,
+        "pointShape": "circle",
+        "pointRadius": 4,
+        "showLegend": true,
+        "removeOlder": "24",
+        "removeOlderUnit": "3600",
+        "removeOlderPoints": "",
+        "colors": [
+            "#0095ff",
+            "#ff0000",
+            "#ff7f0e",
+            "#2ca02c",
+            "#a347e1",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
+        "width": 6,
+        "height": 8,
+        "className": "",
+        "interpolation": "linear",
+        "x": 950,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1ae9e1b4c9523363",
+        "type": "ui-chart",
+        "z": "f6f2187d.f17ca8",
+        "group": "bdf18f1b18dd459f",
+        "name": "Outdoor C",
+        "label": "Outdoor C",
+        "order": 3,
+        "chartType": "line",
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisLabel": "",
+        "xAxisProperty": "x",
+        "xAxisPropertyType": "property",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "auto",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "",
+        "yAxisProperty": "y",
+        "yAxisPropertyType": "property",
+        "ymin": "",
+        "ymax": "",
+        "bins": 10,
+        "action": "append",
+        "stackSeries": false,
+        "pointShape": "circle",
+        "pointRadius": 4,
+        "showLegend": true,
+        "removeOlder": "24",
+        "removeOlderUnit": "3600",
+        "removeOlderPoints": "",
+        "colors": [
+            "#0095ff",
+            "#ff0000",
+            "#ff7f0e",
+            "#2ca02c",
+            "#a347e1",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
+        "width": 6,
+        "height": 8,
+        "className": "",
+        "interpolation": "linear",
+        "x": 950,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e21fe196c44f508b",
+        "type": "ui-chart",
+        "z": "f6f2187d.f17ca8",
+        "group": "bdf18f1b18dd459f",
+        "name": "Water C",
+        "label": "Water C",
+        "order": 4,
+        "chartType": "line",
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisLabel": "",
+        "xAxisProperty": "x",
+        "xAxisPropertyType": "property",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "auto",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "",
+        "yAxisProperty": "y",
+        "yAxisPropertyType": "property",
+        "ymin": "",
+        "ymax": "",
+        "bins": 10,
+        "action": "append",
+        "stackSeries": false,
+        "pointShape": "circle",
+        "pointRadius": 4,
+        "showLegend": true,
+        "removeOlder": "24",
+        "removeOlderUnit": "3600",
+        "removeOlderPoints": "",
+        "colors": [
+            "#0095ff",
+            "#ff0000",
+            "#ff7f0e",
+            "#2ca02c",
+            "#a347e1",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
+        "width": 6,
+        "height": 8,
+        "className": "",
+        "interpolation": "linear",
+        "x": 940,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4fd3153f44fe33ce",
+        "type": "sqlite",
+        "z": "f6f2187d.f17ca8",
+        "mydb": "0bba1715d78313ac",
+        "sqlquery": "fixed",
+        "sql": "SELECT received_at, device_id, t_in, rh_in, t_out, t_water\nFROM telemetry\nWHERE received_at > strftime('%Y-%m-%dT%H:%M:%fZ', 'now', '-1 day')\nORDER BY received_at;\n",
+        "name": "",
+        "x": 350,
+        "y": 580,
+        "wires": [
+            [
+                "79f572a3d5f46222"
+            ]
+        ]
+    },
+    {
+        "id": "fe68e3e2d3b48340",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "load history",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 580,
+        "wires": [
+            [
+                "4fd3153f44fe33ce"
+            ]
+        ]
+    },
+    {
+        "id": "79f572a3d5f46222",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "history points",
+        "func": "// Rows -> one array of {x, y} per chart. An empty array is sent first\n// so a redeploy does not duplicate points already on the chart.\nconst rows = msg.payload || [];\nconst cols = [\"t_in\", \"rh_in\", \"t_out\", \"t_water\"];\nconst out = cols.map(() => ({}));\n\nfor (const r of rows) {\n    const x = Date.parse(r.received_at);\n    cols.forEach((c, i) => {\n        if (r[c] === null || r[c] === undefined) return;\n        (out[i][r.device_id] = out[i][r.device_id] || []).push({ x, y: r[c] });\n    });\n}\n\n// One message per (chart, device): the chart takes the series from msg.topic.\ncols.forEach((c, i) => {\n    node.send(cols.map((_, j) => j === i ? { payload: [] } : null));\n    for (const device of Object.keys(out[i])) {\n        node.send(cols.map((_, j) =>\n            j === i ? { topic: device, payload: out[i][device] } : null));\n    }\n});\nreturn null;\n\nreturn msg;",
+        "outputs": 4,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 660,
+        "wires": [
+            [
+                "e21fe196c44f508b"
+            ],
+            [
+                "1ae9e1b4c9523363"
+            ],
+            [
+                "adc7137a8be5079b"
+            ],
+            [
+                "64e86324c1ca9273"
+            ]
+        ]
+    },
+    {
+        "id": "72f80f30a753010d",
+        "type": "ui-table",
+        "z": "f6f2187d.f17ca8",
+        "group": "1f391449f84bffcb",
+        "name": "Status Table",
+        "label": "Status Table",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "maxrows": 0,
+        "passthru": false,
+        "autocols": false,
+        "showSearch": true,
+        "deselect": true,
+        "selectionType": "none",
+        "columns": [
+            {
+                "title": "device",
+                "key": "device",
+                "keyType": "key",
+                "type": "text",
+                "width": "",
+                "align": "start"
+            },
+            {
+                "title": "status",
+                "key": "status",
+                "keyType": "key",
+                "type": "text",
+                "width": "",
+                "align": "start"
+            },
+            {
+                "title": "last_status",
+                "key": "last_status",
+                "keyType": "key",
+                "type": "text",
+                "width": "",
+                "align": "start"
+            },
+            {
+                "title": "last_sample",
+                "key": "last_sample",
+                "keyType": "key",
+                "type": "text",
+                "width": "",
+                "align": "start"
+            }
+        ],
+        "mobileBreakpoint": "sm",
+        "mobileBreakpointType": "defaults",
+        "action": "replace",
+        "className": "",
+        "x": 810,
+        "y": 420,
+        "wires": [
+            []
+        ]
     }
 ]
