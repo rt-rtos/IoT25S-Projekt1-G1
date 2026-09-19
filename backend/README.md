@@ -495,30 +495,41 @@ Wire output 1 to the `t_in` chart, 2 to `rh_in`, 3 to `t_out`, 4 to
 ### 8d: last-seen table
 
 `ui-table` in Group `Status`, fed by the `last seen` function from step 7
-(replace or keep the debug node). The table takes the array as it is;
-columns are `device`, `status`, `last_status`, `last_sample`. Set
-Action `Replace` so each message redraws the whole table.
+(replace or keep the debug node). The table takes the array as it is.
+Columns `Auto` reads the property names from the first row and needs no
+setup. With `Manual`, add four columns whose Key (type `key`, not
+`string`) is `device`, `status`, `last_status`, `last_sample`; the Label
+is the header text and is free. Set Action `Replace` so each message
+redraws the whole table.
 
 ### 8e: check
 
-Publish a short series with changing values so the charts have something
-to draw. From this directory:
+Publish a short series so the charts have something to draw.
+`series.jsonl` holds 15 samples from the end-to-end run in
+`docs/tests.md` (seq 19 to 33), one JSON object per line; `t_out` moves
+between 26.1 and 26.4, row 30 has `t_in` and `rh_in` faulted with code
+6 (STUCK), and `t_water` is a valid 24.6 throughout. `mosquitto_pub -l`
+sends each line as its own message, and running the client inside the
+container works the same from bash, cmd and Git Bash:
 
-    for i in $(seq 1 20); do
-      jq -c --argjson i "$i" '.seq = $i | .uptime_s = $i * 10 | .t_in = 22 + ($i % 5) / 2' payload.json \
-        | mosquitto_pub -h localhost -t microhydros/node01/telemetry -s
-      sleep 1
-    done
+    docker compose exec -T mosquitto mosquitto_pub -h localhost -t microhydros/node01/telemetry -l < series.jsonl
 
-On Windows, publish `payload.json` a few times instead; a flat line is
-still a line.
+PowerShell has no `<`; pipe the file instead:
+
+    Get-Content series.jsonl | docker compose exec -T mosquitto mosquitto_pub -h localhost -t microhydros/node01/telemetry -l
+
+The 15 messages arrive within a few milliseconds, so on a 24 h axis they
+sit at one instant; the check below is that the charts draw them at
+all, and the backfill after a restart is what shows the shape.
 
 Done when:
 
-- The four tiles update within one sample of a publish, and `Water C`
-  reads `FAULT NO_DEVICE`.
-- The three valid charts show the series; the water chart stays empty
-  because every sample is faulted.
+- The four tiles show the last row: 22.0, 65.0, 26.4, 24.6. Publishing
+  `payload.json` once more flips `Water C` to `FAULT NO_DEVICE`.
+- All four charts get points; the indoor pair has one less than the
+  outdoor pair because row 30 is faulted and skipped. The `payload.json`
+  publish adds nothing to the water chart, since that sample has
+  `t_water` faulted.
 - `docker compose restart node-red`, then reload the dashboard: the
   charts come back with the stored points via 8c.
 - The status table lists `node01` with the status from step 7.
